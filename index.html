@@ -1080,55 +1080,55 @@ $('pdfFirstAlign').onclick=()=>{const active=['pdfAlignLeft','pdfAlignCenter','p
 </style>
 <script id="practice-clipboard-script">
 (()=>{
-// Internal Practice! clipboard. This does not overwrite the Windows system clipboard.
+// Practice! project clipboard, not the operating system clipboard.
 const area=document.getElementById('media');if(!area)return;
-let selected=null,clipboard=null,busy=false;
-const bar=document.createElement('div');bar.id='practiceClipboardBar';bar.innerHTML='<button data-act="cut">✂ Cut</button><button data-act="copy">⧉ Copy</button><button data-act="paste">▣ Paste</button><span id="practiceClipboardInfo" style="font-size:12px;color:#48617d"></span>';
-area.parentNode.insertBefore(bar,area);
+let selected=new Set(),anchor=null,clipboard=null,busy=false,selectionLocation='';
+const bar=document.createElement('div');bar.id='practiceClipboardBar';bar.innerHTML='<button data-act="cut">✂ Cut</button><button data-act="copy">⧉ Copy</button><button data-act="paste">▣ Paste</button><span id="practiceClipboardInfo" aria-live="polite" style="font-size:12px;color:#48617d"></span>';area.parentNode.insertBefore(bar,area);
 const menu=document.createElement('div');menu.id='practiceContextMenu';menu.hidden=true;menu.innerHTML='<button data-act="open">Open</button><button data-act="cut">✂ Cut　Ctrl+X</button><button data-act="copy">⧉ Copy　Ctrl+C</button><button data-act="paste">▣ Paste　Ctrl+V</button>';document.body.append(menu);
-const getTopic=()=>topic();
-function selectedItem(){const t=getTopic();return t?.media?.find(m=>m.id===selected)}
-function refresh(){const active=!!topicId;bar.style.display=active?'flex':'none';for(const b of bar.querySelectorAll('button'))b.disabled=busy||(b.dataset.act==='paste'?!clipboard:!selectedItem());for(const card of area.querySelectorAll('.media'))card.classList.toggle('practice-selected',card.dataset.practiceMediaId===selected);document.getElementById('practiceClipboardInfo').textContent=clipboard?(clipboard.mode==='cut'?'Cut: ':'Copied: ')+clipboard.name:''}
+const loc=()=>[subjectId||'',topicId||'',folderId||'',bucketId||''].join('|');
+const cards=()=>[...area.querySelectorAll('.media[data-practice-media-id]')];
+const visibleIds=()=>cards().filter(c=>c.offsetParent!==null).map(c=>c.dataset.practiceMediaId);
+const items=()=>{const t=topic();return t?.media?.filter(m=>selected.has(m.id))||[]};
+function refresh(){const active=!!topicId;bar.style.display=active?'flex':'none';const count=items().length;for(const b of bar.querySelectorAll('button'))b.disabled=busy||(b.dataset.act==='paste'?!clipboard:count===0);for(const c of cards())c.classList.toggle('practice-selected',selected.has(c.dataset.practiceMediaId));document.getElementById('practiceClipboardInfo').textContent=(count?count+' selected':'')+(clipboard?' · '+(clipboard.mode==='cut'?'Cut ':'Copied ')+clipboard.entries.length+' item(s)':'');}
 function hide(){menu.hidden=true}
-function pick(card){selected=card?.dataset.practiceMediaId||null;refresh()}
-function execute(action){hide();if(busy)return;
- if(action==='open'){const m=selectedItem();if(m)openMedia(m);return}
+function selectCard(card,ctrl,shift){const id=card?.dataset.practiceMediaId;if(!id)return;const ids=visibleIds();if(shift&&anchor&&ids.includes(anchor)){const a=ids.indexOf(anchor),b=ids.indexOf(id);if(!ctrl)selected.clear();for(const k of ids.slice(Math.min(a,b),Math.max(a,b)+1))selected.add(k)}else if(ctrl){if(selected.has(id))selected.delete(id);else selected.add(id);anchor=id}else{selected=new Set([id]);anchor=id}refresh()}
+function lookup(entry){const s=data.subjects.find(s=>s.id===entry.subjectId),t=s?.topics.find(t=>t.id===entry.topicId);return {t,m:t?.media.find(m=>m.id===entry.mediaId)}}
+async function execute(action){hide();if(busy)return;
+ if(action==='open'){if(items().length===1)openMedia(items()[0]);return}
  if(action==='cut'||action==='copy'){
-  const m=selectedItem();if(!m)return;clipboard={mode:action,sourceTopicId:topicId,sourceSubjectId:subjectId,mediaId:m.id,name:m.name};refresh();return;
+  const picked=items();if(!picked.length)return;clipboard={mode:action,entries:picked.map(m=>({subjectId,topicId,mediaId:m.id,name:m.name}))};refresh();return;
  }
- if(action!=='paste'||!clipboard||!getTopic())return;
- const fromSubject=data.subjects.find(s=>s.id===clipboard.sourceSubjectId);
- const fromTopic=fromSubject?.topics.find(t=>t.id===clipboard.sourceTopicId);
- const source=fromTopic?.media.find(m=>m.id===clipboard.mediaId);
- if(!source){alert('The original file is no longer available. Copy or cut it again.');clipboard=null;refresh();return}
- const dest=getTopic(),same=dest===fromTopic;
- if(clipboard.mode==='cut'&&same&&source.folderId===(folderId||undefined)&&source.bucketId===(bucketId||undefined)){clipboard=null;refresh();return}
- if(clipboard.mode==='copy'){
-  const newItem={...source,id:uid(),folderId:folderId||null,bucketId:bucketId||null};
-  // Copy cached local media as well as the JSON record, so the new item remains playable.
-  busy=true;refresh();(async()=>{
-   try{const file=audioFiles.get(source.id)||await mcbDbGet('media',source.id).catch(()=>null);
-    if(file){audioFiles.set(newItem.id,file);await mcbDbSet('media',newItem.id,file)}
-    const url=urls.get(source.id);if(url&&!file)urls.set(newItem.id,url);
-    dest.media.push(newItem);persist();selected=newItem.id;render();refresh();
-   }catch(e){alert('Copy failed: '+e.message)}finally{busy=false;refresh()}
-  })();return;
+ if(action!=='paste'||!clipboard||!topic())return;
+ const dest=topic(),entries=clipboard.entries.map(lookup);if(entries.some(e=>!e.t||!e.m)){alert('One or more source files are unavailable. Select and copy/cut again.');clipboard=null;refresh();return}
+ const destFolder=folderId||null,destBucket=bucketId||null;
+ if(clipboard.mode==='cut'){
+  // Check all sources before modifying any item.
+  for(const {t,m} of entries){const idx=t.media.indexOf(m);if(idx<0){alert('Move cancelled: a source item is missing.');return}}
+  const moved=[];for(const {t,m} of entries){if(t===dest&&(m.folderId||null)===destFolder&&(m.bucketId||null)===destBucket)continue;t.media.splice(t.media.indexOf(m),1);m.folderId=destFolder;m.bucketId=destBucket;dest.media.push(m);moved.push(m.id)}
+  clipboard=null;selected=new Set(entries.map(e=>e.m.id));anchor=entries[0]?.m.id||null;persist();render();refresh();return;
  }
- fromTopic.media.splice(fromTopic.media.indexOf(source),1);source.folderId=folderId||null;source.bucketId=bucketId||null;dest.media.push(source);clipboard=null;selected=source.id;persist();render();refresh();
+ busy=true;refresh();const created=[];
+ try{
+  // Prepare all copied media before inserting any new project records.
+  for(const {m} of entries){const n={...m,id:uid(),folderId:destFolder,bucketId:destBucket};const file=audioFiles.get(m.id)||await mcbDbGet('media',m.id).catch(()=>null);if(file){await mcbDbSet('media',n.id,file);audioFiles.set(n.id,file)}else{const url=urls.get(m.id);if(url)urls.set(n.id,url)}created.push(n)}
+  dest.media.push(...created);selected=new Set(created.map(m=>m.id));anchor=created[0]?.id||null;persist();render();
+ }catch(e){alert('Copy failed; no project items were added: '+e.message)}finally{busy=false;refresh()}
 }
 bar.addEventListener('click',e=>{const a=e.target.closest('button')?.dataset.act;if(a)execute(a)});
 menu.addEventListener('click',e=>{const a=e.target.closest('button')?.dataset.act;if(a)execute(a)});
-area.addEventListener('click',e=>{const card=e.target.closest('.media');if(card&&!e.target.closest('button'))pick(card)},true);
-area.addEventListener('contextmenu',e=>{const card=e.target.closest('.media');if(!card)return;e.preventDefault();pick(card);menu.hidden=false;menu.style.left=Math.min(e.clientX,innerWidth-190)+'px';menu.style.top=Math.min(e.clientY,innerHeight-185)+'px'});
+// Capture before the existing card click-to-open handler; double-click now opens.
+area.addEventListener('click',e=>{const card=e.target.closest('.media');if(!card||e.target.closest('button'))return;e.stopImmediatePropagation();selectCard(card,e.ctrlKey||e.metaKey,e.shiftKey)},true);
+area.addEventListener('dblclick',e=>{const card=e.target.closest('.media');if(!card||e.target.closest('button'))return;const m=topic()?.media.find(m=>m.id===card.dataset.practiceMediaId);if(m)openMedia(m)},true);
+area.addEventListener('contextmenu',e=>{const card=e.target.closest('.media');if(!card)return;e.preventDefault();const id=card.dataset.practiceMediaId;if(!selected.has(id))selectCard(card,false,false);menu.hidden=false;menu.style.left=Math.min(e.clientX,innerWidth-190)+'px';menu.style.top=Math.min(e.clientY,innerHeight-185)+'px';menu.querySelector('[data-act="open"]').disabled=items().length!==1});
 document.addEventListener('pointerdown',e=>{if(!menu.contains(e.target))hide()},true);
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){hide();return}
- if(!topicId||!e.ctrlKey||e.altKey||e.metaKey)return;
+ if(!topicId||!(e.ctrlKey||e.metaKey)||e.altKey)return;
  const el=e.target;if(el?.closest?.('input,textarea,select,[contenteditable="true"]'))return;
- const k=e.key.toLowerCase(),a=k==='x'?'cut':k==='c'?'copy':k==='v'?'paste':null;
- if(!a)return;
- if((a==='paste'&&clipboard)||(a!=='paste'&&selectedItem())){e.preventDefault();e.stopPropagation();execute(a)}
+ const k=e.key.toLowerCase();if(k==='a'){e.preventDefault();e.stopPropagation();selected=new Set(visibleIds());anchor=visibleIds()[0]||null;refresh();return}
+ const a=k==='x'?'cut':k==='c'?'copy':k==='v'?'paste':null;if(!a)return;
+ if((a==='paste'&&clipboard)||(a!=='paste'&&items().length)){e.preventDefault();e.stopPropagation();execute(a)}
 },true);
-const observer=new MutationObserver(()=>{if(selected&&!selectedItem())selected=null;refresh()});observer.observe(area,{childList:true});refresh();
+const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLocation){selected.clear();anchor=null;selectionLocation=next}const valid=new Set(topic()?.media.map(m=>m.id)||[]);for(const id of selected)if(!valid.has(id))selected.delete(id);refresh()});selectionLocation=loc();observer.observe(area,{childList:true});refresh();
 })();
 </script></body></html>
