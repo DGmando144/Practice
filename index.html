@@ -930,7 +930,7 @@ status();
 #pdfSplit.dual-on~*{}
 .pdf-workspace:has(#pdfSplit.dual-on) nav #pdfMainHand{display:none}
 .pdf-workspace:has(#pdfSplit.dual-on) nav #pdfPrev,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfNext,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfPageStatus,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfZoomOut,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfZoomIn,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfZoomSlider,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfZoomLevel,.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfZoomReset,.pdf-workspace:has(#pdfSplit.dual-on) nav .pdf-align-controls{display:none}
-.pdf-workspace:has(#pdfSplit.dual-on) nav #pdfClose{display:none} .pdf-panning{cursor:grab!important;touch-action:none}
+/* Keep the upper-banner Close PDF visible in dual-PDF mode. */ .pdf-panning{cursor:grab!important;touch-action:none}
 .pdf-panning.pdf-dragging{cursor:grabbing!important;user-select:none}
 #pdfIndependentPages.pdf-panning canvas,#pdfPages.pdf-panning canvas{pointer-events:none}
 @media(max-width:700px){#pdfFirstToolbar{gap:3px}#pdfFirstToolbar button{padding:4px}}
