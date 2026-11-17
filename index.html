@@ -1,0 +1,764 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practice! V56.0</title><style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#182b45;background:#f2f6fb}*{box-sizing:border-box}body{margin:0}header{background:#173c68;color:white;padding:16px 24px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}header h1{font-size:21px;margin:0}button,select,input{font:inherit}button{border:1px solid #c6d3e2;background:white;color:#173c68;border-radius:8px;padding:9px 12px;cursor:pointer}button:hover{background:#e9f1fc}button.primary{background:#1767b1;color:white;border-color:#1767b1}button.danger{color:#a72222}main{max-width:1050px;margin:26px auto;padding:0 18px}.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-bottom:20px}.bar h2{margin:0}.muted{color:#66788f}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}.folder,.media{background:white;border:1px solid #d5e0ed;border-radius:12px;padding:16px;min-height:125px;box-shadow:0 2px 8px #173c6810}.folder{cursor:pointer}.folder:hover,.folder.drag{border-color:#1476d4;background:#e9f3ff}.folder-icon{font-size:40px}.folder strong{display:block;margin-top:8px}.small-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.small-actions button{padding:5px 8px;font-size:12px}.drop{border:2px dashed #9db7d4;border-radius:12px;padding:18px;text-align:center;margin:18px 0;background:#f9fcff}.drop.drag{background:#dfefff}.media{min-height:unset}.media img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}.media .icon{font-size:45px;text-align:center;padding:18px}.media-title{font-weight:650;overflow-wrap:anywhere;margin:8px 0}.actions{display:flex;gap:8px;flex-wrap:wrap}.panel{background:white;border:1px solid #d5e0ed;border-radius:12px;padding:18px;margin-top:18px}.hidden{display:none!important}dialog{border:1px solid #d4e0ed;border-radius:14px;box-shadow:0 18px 60px #0003;width:min(480px,94vw)}dialog::backdrop{background:#12243b70}dialog label{display:block;margin:12px 0 4px}dialog input,dialog select{width:100%;padding:10px;border:1px solid #b5c5d7;border-radius:7px}dialog menu{padding:0;display:flex;justify-content:flex-end;gap:8px}.pill{font-size:12px;background:#e4edf8;border-radius:12px;padding:3px 8px}.viewer{position:fixed;inset:0;background:#0c1523;color:white;z-index:20;display:flex;flex-direction:column;padding:14px}.viewer nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.viewer .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}.viewer video,.viewer audio,.viewer iframe,.viewer embed{max-width:100%;max-height:100%}.viewer video,.viewer iframe,.viewer embed{width:100%;height:100%}.viewer audio{width:min(700px,95vw)}.viewer button{background:#233e62;color:white;border-color:#567}.viewer.float{inset:auto 20px 20px auto;width:min(520px,calc(100vw - 30px));height:360px;border:1px solid #6d849e;border-radius:12px;box-shadow:0 8px 30px #0006}.viewer.float .stage{min-height:100px}.note{font-size:13px;color:#738398}
+.viewer.mcb-custom-video{padding:0;background:#f2f6fb}
+.viewer.mcb-custom-video>nav{display:none}
+.viewer.mcb-custom-video>.stage{height:100dvh;flex:1 1 auto;min-height:0;display:block}
+.viewer.mcb-custom-video iframe{display:block;width:100%;height:100%;max-width:none;max-height:none}
+.viewer.mcb-youtube-view #float,.viewer.mcb-youtube-view #full{display:inline-block}
+ .media{cursor:pointer}
+/* Keep the embedded player alive while its actual player is in Document PiP. */
+.viewer.mcb-pip-active{opacity:0;pointer-events:none;z-index:-1;width:1px;height:1px;overflow:hidden;padding:0}
+.viewer.mcb-pip-active .stage{width:1px;height:1px;overflow:hidden}
+.pdf-workspace{position:fixed;inset:0;z-index:30;background:#edf2f9;display:flex;flex-direction:column}
+.pdf-workspace nav{background:#173c68;color:white;display:flex;gap:12px;align-items:center;padding:10px 16px}
+.pdf-workspace nav strong{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pdf-workspace embed{width:100%;flex:1;min-height:0;border:0}.pdf-workspace:fullscreen{width:100vw;height:100dvh}.pdf-workspace nav{position:relative;z-index:2;flex-shrink:0}.pdf-workspace nav button{white-space:nowrap}
+.viewer:not(.hidden){z-index:40}
+.mcb-media-picker{position:fixed;inset:0;z-index:200;background:#09182b9c;display:flex;align-items:center;justify-content:center;padding:20px}
+.mcb-media-picker.hidden{display:none}
+.mcb-picker-panel{background:white;color:#182b45;border-radius:14px;box-shadow:0 15px 60px #0006;width:min(530px,95vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+.mcb-picker-panel header{background:#173c68;color:white;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.mcb-picker-panel header button{background:#fff;color:#173c68}
+.mcb-picker-list{overflow:auto;padding:12px;display:grid;gap:8px}
+.mcb-picker-list button{text-align:left;background:#f1f5fa;border:1px solid #cad7e5;border-radius:8px;padding:12px;cursor:pointer;color:#182b45}
+.mcb-picker-list button:hover{background:#dfeaf9}
+.mcb-picker-panel .mcb-picker-topic{padding:10px 16px;color:#44566b;border-bottom:1px solid #dde5ef}
+
+
+/* V56.5.20: MCB-managed fullscreen, without browser fullscreen focus loss. */
+.pdf-workspace:not(.hidden),.viewer:not(.hidden):not(.mcb-pip-active){
+ position:fixed;inset:0;width:100%;height:100dvh;resize:none;
+ border:0;border-radius:0;box-shadow:none;
+}
+.pdf-workspace:not(.hidden).mcb-floated,.viewer:not(.hidden).mcb-floated:not(.mcb-pip-active){
+ inset:auto 24px 24px auto;width:min(640px,calc(100vw - 24px));
+ height:min(400px,calc(100dvh - 24px));border:1px solid #9db3cc;
+ border-radius:10px;box-shadow:0 12px 35px #0005;resize:both;overflow:hidden;
+}
+.pdf-workspace nav{cursor:move;flex-wrap:wrap}
+.viewer.mcb-custom-video:not(.hidden)>nav{display:flex}
+.viewer.mcb-custom-video>.stage{height:auto;flex:1;min-height:0}
+.viewer.mcb-custom-video:not(.hidden):not(.mcb-floated)>.stage{height:auto}
+.viewer.mcb-custom-video:not(.hidden):not(.mcb-floated) iframe{height:100%}
+.pdf-workspace.mcb-front{z-index:60!important}
+.viewer.mcb-front{z-index:60!important}
+
+/* V56.5.30: restore native PDF fullscreen; preserve second media */
+.pdf-workspace:fullscreen{inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;resize:none!important;border:0!important;border-radius:0!important}
+/* V56.5.31: PDF second media is available in the original viewer only. */
+.pdf-workspace.mcb-floated #pdfSecond{display:none!important}
+/* A native fullscreen PDF must override the floating geometry. */
+.pdf-workspace:fullscreen,.pdf-workspace:-webkit-full-screen{inset:0!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;resize:none!important;transform:none!important}
+/* V56.5.29: restore second media only on PDF; keep other controls unchanged */
+#bringFloat,#pdfSwap,#viewerSecond,#swapViewer{display:none!important}
+
+/* V56.5.75: PDF.js continuous score display and page-turn navigation */
+#pdfPages{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:16px 12px 28px;background:#77818c;text-align:center}
+#pdfPages .mcb-pdf-page{display:block;position:relative;margin:0 auto 18px;width:max-content;max-width:100%;background:#fff;box-shadow:0 3px 14px #0005}
+#pdfPages canvas{display:block;max-width:100%;height:auto}
+#pdfPages .mcb-pdf-placeholder{min-height:90px;display:flex;align-items:center;justify-content:center;color:#555;padding:20px}
+#pdfPageStatus{font-weight:700;white-space:nowrap;color:#fff;font-variant-numeric:tabular-nums}
+#pdfPrev:disabled,#pdfNext:disabled{opacity:.45;cursor:not-allowed}
+.pdf-workspace #pdfDocument[hidden],.pdf-workspace #pdfPages[hidden]{display:none!important}
+@media(max-width:650px){.pdf-workspace nav{gap:6px;padding:7px}.pdf-workspace nav button{padding:6px 8px}#pdfPages{padding:8px 4px}}
+</style><style id="mcb-v56595-thumbnails">.media img[alt="MP4 thumbnail"]{width:80px;height:45px;object-fit:contain;background:#101827;border-radius:5px;flex-shrink:0}</style><style id="mcb-v56581-project">.mcb-project-banner{font-size:17px;font-weight:700;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff}.mcb-welcome-actions{display:flex;flex-direction:column;gap:10px;margin-top:18px}.mcb-welcome-actions button{min-height:42px}#mcbExportState{color:#ffe4a5}#mcbWelcome{max-width:440px;width:calc(100% - 48px)}@media(max-width:750px){.mcb-project-banner{max-width:100%;font-size:15px}}</style><style id="mcb-v56585-welcome">#mcbWelcome .mcb-welcome-intro{display:block!important;color:#35465b!important;font-size:16px!important;line-height:1.5!important;margin:12px 0 18px!important;opacity:1!important}#mcbWelcomeRecent.primary{background:#1769cf!important;color:white!important;border-color:#1769cf!important;font-weight:700!important}#mcbWelcomeRecent.primary:hover{background:#1254a7!important}</style><style id="mcb-v56582-title">
+header .mcb-title-bar{flex:1 1 220px;min-width:190px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+header .mcb-title-caption{font-size:10px;letter-spacing:.13em;color:#c5d9f3;font-weight:700}
+header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);font-size:22px;line-height:1.25;color:#fff;font-weight:800;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+@media(max-width:750px){header .mcb-title-bar{order:2;flex-basis:100%;align-items:flex-start;text-align:left}header #projectState.mcb-project-banner{font-size:19px}}
+</style><style id="mcb-v56586-dialog-close">dialog{position:relative}dialog .mcb-dialog-x{position:absolute;right:12px;top:10px;padding:2px 9px;font-size:23px;line-height:1.2;border:0;background:transparent;color:#52657d}dialog h3{padding-right:32px}</style><style id="mcb-v56574-no-media-fullscreen">.mcb-custom-video #full{display:none!important}</style><script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><style id="mcb-metronome-dock-css">
+#mcbPracticeLayout{display:flex;align-items:flex-start;gap:16px;padding:0 16px}
+#mcbPracticeLayout>main{flex:1;min-width:0;margin:0;padding:16px 0}
+#mcbMetronomeDock{width:268px;flex:0 0 268px;position:sticky;top:12px;background:#fff;border:1px solid #c9d6e7;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px #152d4514}
+#mcbMetronomeDock>button{width:100%;text-align:left;border:0;border-radius:0;background:#173c68;color:white;padding:12px 14px;font-weight:700;cursor:pointer}
+#mcbMetronomeDock iframe{width:100%;height:430px;border:0;display:block;background:#101827}
+#mcbMetronomeDock.collapsed iframe{display:none}
+@media(max-width:750px){#mcbPracticeLayout{display:block;padding:0 10px}#mcbMetronomeDock{position:relative;top:auto;width:100%;margin-top:12px}#mcbMetronomeDock iframe{height:430px}#mcbPracticeLayout>main{padding-top:12px}}
+</style></head><body><header><h1>♫ Practice! <span class="pill">V56.5.103</span></h1><div id="mcbProjectTitleBar" class="mcb-title-bar"><span class="mcb-title-caption">CURRENT PROJECT</span><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><div class="actions"><button id="newProject">New Project</button><button id="load">Open Project</button><button id="closeProject">Close Project</button><button id="save">Save Project</button><button id="saveAs">Save Project As…</button><button id="makeCopy">Make a Copy</button><button id="exportBundle" title="Share project with its local media">Export Bundle ZIP</button><button id="importBundle">Import Bundle ZIP</button><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe></aside><main><div class="bar"><div><button id="back" class="primary hidden">← Back</button><h2 id="heading">Subjects</h2><div class="muted" id="crumb">Choose a Subject</div></div><div class="actions"><button class="primary" id="create">+ New Subject</button><button id="addFile" class="hidden">+ Add Files</button><button id="newFolder" class="hidden">+ New Folder</button><button id="newBucket" class="hidden">+ Song Bucket</button><button id="addYoutube" class="hidden">▶ Add YouTube</button><button id="bringFloat" class="hidden" title="Switch to the existing floating player">Switch Media ↔</button></div></div><div id="folders" class="grid"></div><div id="drop" class="drop">Drop media here to choose a Subject and Topic, or drop directly onto a Topic folder.</div><div id="media" class="grid"></div><p class="note">MCB remembers local media in this browser when storage permits. Shared JSON projects may need relinking on another device.</p></main></div>
+<input id="filePicker" type="file" multiple hidden accept="audio/*,video/*,.pdf,.mp3,.wav,.m4a,.ogg,.flac,.mp4,.webm,.mov"><input id="jsonPicker" type="file" hidden accept=".json,application/json"><input id="bundlePicker" type="file" hidden accept=".zip,application/zip">
+<dialog id="mcbWelcome" aria-labelledby="mcbWelcomeTitle"><h2 id="mcbWelcomeTitle">Welcome to Practice!</h2><div class="mcb-welcome-actions"><button type="button" id="mcbWelcomeRecent" class="primary">Resume Last Local Project</button><button type="button" id="mcbWelcomeOpen">Open Existing Project</button><button type="button" id="mcbWelcomeNew">Create New Project</button></div></dialog>
+<dialog id="mcbNewProjectDialog"><h3>New Project</h3><label for="mcbNewProjectName">Project name</label><input id="mcbNewProjectName" type="text" placeholder="Enter project name" maxlength="150" style="width:100%;margin:12px 0"><menu><button id="mcbNewCancel" type="button">Cancel</button><button id="mcbNewCreate" type="button" class="primary">Create Project</button></menu></dialog>
+<dialog id="mcbMakeCopyDialog" aria-labelledby="mcbMakeCopyTitle"><h3 id="mcbMakeCopyTitle">Make a Copy</h3><p>The original project will be saved first. Enter the new project name:</p><label for="mcbCopyName">New project name</label><input id="mcbCopyName" type="text" maxlength="150" style="width:100%;margin:12px 0" required><p class="note" id="mcbCopyNote"></p><menu><button id="mcbCopyCancel" type="button">Cancel</button><button id="mcbCopyConfirm" type="button" class="primary">Save Original &amp; Create Copy</button></menu></dialog>
+<dialog id="mcbSaveChangesDialog" aria-labelledby="mcbSaveChangesTitle"><h3 id="mcbSaveChangesTitle">Save Before Leaving</h3><p>This project has changed. Would you like to save your changes before continuing?</p><p><strong id="mcbSaveChangesName"></strong></p><menu><button id="mcbCancelChanges" type="button">Cancel</button><button id="mcbDiscardChanges" type="button">Leave Without Saving</button><button id="mcbSaveChanges" type="button" class="primary">Save and Continue</button></menu></dialog>
+<dialog id="missingMedia"><h3>File not available</h3><p>MCB cannot access this media file. Would you like to relink it?</p><p><strong id="missingName"></strong></p><menu style="display:flex;justify-content:flex-end;gap:10px"><button id="missingCopy" type="button">Copy Filename</button><button id="missingLater" type="button">Not Now</button><button id="missingRelink" type="button" class="primary">Relink File</button></menu></dialog>
+<dialog id="editor"><form method="dialog"><h3 id="editTitle"></h3><label id="nameLabel">Name</label><input id="editName" required><menu><button type="button" value="cancel" formnovalidate data-mcb-cancel>Cancel</button><button class="primary" id="editOk" value="ok">Save</button></menu></form></dialog>
+<dialog id="destination"><form method="dialog"><h3>Where should these files go?</h3><label>Subject</label><select id="destSubject"></select><label>Topic</label><select id="destTopic"></select><menu><button type="button" value="cancel" formnovalidate data-mcb-cancel>Cancel</button><button class="primary" value="ok">Add Files</button></menu></form></dialog>
+<dialog id="youtube"><form method="dialog"><h3>Add YouTube video</h3><label>YouTube URL</label><input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." required><p class="note">MCB attempts to retrieve the video title; you can rename it later.</p><menu><button id="youtubeCancel" type="button" formnovalidate>Cancel</button><button id="youtubeAdd" class="primary" value="ok">Add to Topic</button></menu></form></dialog>
+<section id="pdfWorkspace" class="pdf-workspace hidden"><nav><strong id="pdfTitle">Sheet music</strong><button id="pdfSecond">Open Second Media</button><button id="pdfSwap" title="Bring the other player to the foreground">Switch Media ↔</button><button id="pdfPrev" type="button" title="Previous PDF page (Left Arrow)">◀ Previous</button><span id="pdfPageStatus" aria-live="polite">Page — / —</span><button id="pdfNext" type="button" title="Next PDF page (Right Arrow)">Next ▶</button><button id="pdfFull">Full Screen</button><button id="pdfClose">Close PDF</button></nav><div id="pdfPages" role="region" aria-label="PDF pages" tabindex="0"></div><embed id="pdfDocument" type="application/pdf" hidden></section>
+<section id="viewer" class="viewer hidden"><nav><strong id="viewerTitle">Media</strong><span style="flex:1"></span><button id="viewerSecond">Open Second Media</button><button id="swapViewer" title="Bring the other player to the foreground">Switch Media ↔</button><button id="float">Float</button><button id="full">Fullscreen</button><button id="closeViewer">Close</button></nav><div id="stage" class="stage"></div></section>
+<div id="mcbSecondPicker" class="mcb-media-picker hidden" role="dialog" aria-modal="true" aria-label="Open second media"><div class="mcb-picker-panel"><header><strong>Open Second Media</strong><button id="mcbSecondCancel" type="button">Cancel ✕</button></header><div id="mcbSecondTopic" class="mcb-picker-topic"></div><div id="mcbSecondItems" class="mcb-picker-list"></div></div></div>
+<script>
+document.getElementById("mcbMetronomeToggle").addEventListener("click",function(){const dock=document.getElementById("mcbMetronomeDock");const opened=dock.classList.toggle("collapsed")===false;this.setAttribute("aria-expanded",String(opened));this.textContent=opened?"♫ Metronome ▾":"♫ Metronome ▸";});
+const $=id=>document.getElementById(id);const uid=()=>crypto.randomUUID?.()||String(Date.now()+Math.random());let data={subjects:[{id:uid(),name:'Mandolin',topics:[{id:uid(),name:'Fiddle Tunes',media:[]},{id:uid(),name:'Gypsy Jazz Tunes',media:[]},{id:uid(),name:'Technique',media:[]}]},{id:uid(),name:'Jazz Study',topics:[{id:uid(),name:'Jazz Study',media:[]}]},{id:uid(),name:'Songwriting',topics:[{id:uid(),name:'Melody',media:[]},{id:uid(),name:'Andrea Stolpe',media:[]}]}]};let subjectId=null,topicId=null,folderId=null,bucketId=null,pendingFiles=[],urls=new Map(),audioFiles=new Map();const subject=()=>data.subjects.find(s=>s.id===subjectId),topic=()=>subject()?.topics.find(t=>t.id===topicId);const currentFolder=()=>topic()?.folders?.find(f=>f.id===folderId);const currentBucket=()=>currentFolder()?.buckets?.find(b=>b.id===bucketId);const mediaContainer=()=>currentBucket()||currentFolder()||topic();const mediaAtLocation=m=>bucketId?m.bucketId===bucketId:folderId?m.folderId===folderId&&!m.bucketId:!m.folderId&&!m.bucketId;const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function persist(){try{localStorage.setItem('MCB_V56_0',JSON.stringify(data))}catch(e){console.warn(e)};mcbMarkDirty()}/* Projects open through the welcome dialog; do not silently restore the old working set. */
+function render(){let level=topicId?'media':subjectId?'topics':'subjects';$('heading').textContent=level==='subjects'?'Subjects':level==='topics'?'Practice Room':'Practice Room';$('crumb').textContent=level==='subjects'?'Choose a Subject':level==='topics'?subject().name:subject().name+' / '+topic().name;$('back').classList.toggle('hidden',level==='subjects');$('create').textContent=level==='subjects'?'+ New Subject':level==='topics'?'+ New Topic':'+ New Folder';$('create').classList.toggle('hidden',level==='media');$('addFile').classList.toggle('hidden',level!=='media');$('addYoutube').classList.toggle('hidden',level!=='media');$('newFolder').classList.toggle('hidden',level!=='media'||!!folderId);$('newBucket').classList.toggle('hidden',level!=='media'||!folderId||!!bucketId);$('folders').replaceChildren();$('media').replaceChildren();let list=level==='subjects'?data.subjects:level==='topics'?subject().topics:[];list.forEach(item=>{const card=document.createElement('div');card.className='folder';card.innerHTML='<div class="folder-icon">📁</div><strong>'+esc(item.name)+'</strong><div class="muted">'+(level==='subjects'?item.topics.length+' topics':item.media.length+' media items')+'</div><div class="small-actions"><button data-action="rename">Rename</button><button data-action="delete" class="danger">Delete</button></div>';card.onclick=e=>{if(e.target.closest('button')){let action=e.target.dataset.action;if(action==='rename')editName('Rename '+(level==='subjects'?'Subject':'Topic'),item.name,n=>{item.name=n;persist();render()});else if(confirm('Delete '+item.name+' and its contents?')){list.splice(list.indexOf(item),1);persist();render()}return}if(level==='subjects'){subjectId=item.id;topicId=null}else {topicId=item.id;folderId=null;bucketId=null}render()};if(level==='topics'){card.ondragover=e=>{e.preventDefault();card.classList.add('drag')};card.ondragleave=()=>card.classList.remove('drag');card.ondrop=e=>{e.preventDefault();e.stopPropagation();card.classList.remove('drag');addFiles([...e.dataTransfer.files],subjectId,item.id)}}$('folders').append(card)});if(level==='media'){let select=document.createElement('select');select.setAttribute('aria-label','Topic');subject().topics.forEach(t=>{let o=new Option(t.name,t.id);select.add(o)});select.value=topicId;select.onchange=()=>{topicId=select.value;folderId=null;bucketId=null;render()};$('crumb').append('  ');$('crumb').append(select);if(folderId){const loc=document.createElement('span');loc.textContent=' / '+currentFolder()?.name+(bucketId?' / '+currentBucket()?.name:'');$('crumb').append(loc)}renderSongFolders();topic().media.filter(mediaAtLocation).forEach(m=>{let card=document.createElement('div');card.className='media';let thumb=m.kind==='youtube'?'<img alt="YouTube thumbnail" src="https://img.youtube.com/vi/'+encodeURIComponent(m.videoId)+'/hqdefault.jpg">':m.kind==='video'&&m.thumb?'<img alt="MP4 thumbnail" src="'+m.thumb+'" loading="lazy">':'<div class="icon">'+(m.kind==='pdf'?'📄':m.kind==='video'?'🎬':'🎵')+'</div>';card.innerHTML=thumb+'<div class="media-title">'+esc(m.name)+'</div><div class="actions"><button data-action="open">Open</button><button data-action="rename">Rename</button><button data-action="relink">Relink</button><button data-action="remove" class="danger">Remove</button></div>';card.onclick=e=>{if(!e.target.closest('button'))openMedia(m)};card.querySelector('[data-action="open"]').onclick=()=>openMedia(m);card.querySelector('[data-action="rename"]').onclick=()=>editName('Rename media',m.name,n=>{m.name=n;persist();render()});card.querySelector('[data-action="relink"]').onclick=()=>mcbAskRelink(m);card.querySelector('[data-action="remove"]').onclick=()=>{if(confirm('Remove '+m.name+'?')){topic().media.splice(topic().media.indexOf(m),1);persist();render()}};$('media').append(card)})} $('drop').textContent=level==='subjects'?'Drop files here to select a Subject and Topic':level==='topics'?'Drop files onto a Topic folder, or here to choose a destination':'Drop files here to add them to '+(currentBucket()?.name||currentFolder()?.name||topic().name)}
+// Practice! V56.5.103: one Topic folder level plus Song Buckets inside folders.
+// Media stays in topic.media with folderId/bucketId references, preserving ZIP and JSON compatibility.
+function renderSongFolders(){
+ const t=topic();if(!t)return;t.folders??=[];
+ const items=bucketId?[]:folderId?(currentFolder()?.buckets||[]):t.folders;
+ for(const entry of items){
+  const isBucket=!!folderId;const card=document.createElement('div');card.className='folder';
+  const count=t.media.filter(m=>isBucket?m.bucketId===entry.id:m.folderId===entry.id).length;
+  card.innerHTML='<div class="folder-icon">'+(isBucket?'🎵':'📁')+'</div><strong>'+esc(entry.name)+'</strong><div class="muted">'+count+' media items</div><div class="small-actions"><button data-action="rename">Rename</button><button data-action="delete" class="danger">Delete</button></div>';
+  card.onclick=e=>{const action=e.target.closest('button')?.dataset.action;
+   if(action==='rename'){editName('Rename '+(isBucket?'Song Bucket':'Folder'),entry.name,n=>{entry.name=n;persist();render()});return}
+   if(action==='delete'){
+    const affected=t.media.filter(m=>isBucket?m.bucketId===entry.id:m.folderId===entry.id);
+    if(!confirm('Delete '+entry.name+' and '+affected.length+' contained media item(s)?'))return;
+    t.media=t.media.filter(m=>!affected.includes(m));
+    if(isBucket)currentFolder().buckets=currentFolder().buckets.filter(b=>b!==entry);
+    else t.folders=t.folders.filter(f=>f!==entry);
+    persist();render();return;
+   }
+   if(isBucket)bucketId=entry.id;else {folderId=entry.id;bucketId=null}render();
+  };
+  card.ondragover=e=>{e.preventDefault();card.classList.add('drag')};
+  card.ondragleave=()=>card.classList.remove('drag');
+  card.ondrop=e=>{e.preventDefault();e.stopPropagation();card.classList.remove('drag');
+   const oldFolder=folderId,oldBucket=bucketId;folderId=isBucket?oldFolder:entry.id;bucketId=isBucket?entry.id:null;
+   addFiles([...e.dataTransfer.files],subjectId,topicId);folderId=oldFolder;bucketId=oldBucket;render()};
+  $('folders').append(card);
+ }
+}
+$('newFolder').onclick=()=>editName('New Folder','',name=>{const t=topic();t.folders??=[];t.folders.push({id:uid(),name,buckets:[]});persist();render()});
+$('newBucket').onclick=()=>editName('New Song Bucket','',name=>{const f=currentFolder();if(!f)return;f.buckets??=[];f.buckets.push({id:uid(),name});persist();render()});
+// V56.5.95: tiny video preview, captured locally once; no player changes.
+async function mcbMakeVideoThumb(m,file){
+ if(!m||m.kind!=='video'||m.thumb||!file)return;
+ let video=document.createElement('video'),url=URL.createObjectURL(file);
+ video.muted=true;video.playsInline=true;video.preload='auto';
+ try{
+  await new Promise((resolve,reject)=>{
+   let settled=false;const timer=setTimeout(()=>finish(false),7000);
+   function finish(ok){if(settled)return;settled=true;clearTimeout(timer);ok?resolve():reject(new Error('Preview unavailable'))}
+   video.onloadedmetadata=()=>{try{video.currentTime=Math.min(2,Math.max(0,(video.duration||0)-0.1))}catch(e){finish(false)}};
+   video.onseeked=()=>finish(true);video.onerror=()=>finish(false);
+   video.src=url;video.load();
+  });
+  const c=document.createElement('canvas');c.width=80;c.height=45;
+  const ctx=c.getContext('2d');ctx.fillStyle='#111';ctx.fillRect(0,0,80,45);
+  const ratio=Math.min(80/video.videoWidth,45/video.videoHeight),w=video.videoWidth*ratio,h=video.videoHeight*ratio;
+  if(!Number.isFinite(ratio)||ratio<=0)return;
+  ctx.drawImage(video,(80-w)/2,(45-h)/2,w,h);
+  let result=c.toDataURL('image/webp',0.36);
+  if(!result.startsWith('data:image/webp'))result=c.toDataURL('image/jpeg',0.36);
+  if(result.length>5000){result=c.toDataURL('image/jpeg',0.22)}
+  if(result.length>7000)return; // protect portable JSON from unusually large images
+  m.thumb=result;persist();render();
+ }catch(e){console.debug('MCB thumbnail fallback for',m.name,e)}
+ finally{video.removeAttribute('src');video.load();URL.revokeObjectURL(url)}
+}
+function mcbQueueThumb(m,file){if(m&&m.kind==='video'&&!m.thumb&&file)mcbMakeVideoThumb(m,file).catch(()=>{});}
+function editName(title,value,cb){$('editTitle').textContent=title;$('editName').value=value;$('editor').showModal();$('editName').focus();$('editor').onclose=()=>{if($('editor').returnValue==='ok'&&$('editName').value.trim())cb($('editName').value.trim())}}$('create').onclick=()=>{if(!subjectId)editName('New Subject','',n=>{data.subjects.push({id:uid(),name:n,topics:[]});persist();render()});else if(!topicId)editName('New Topic','',n=>{subject().topics.push({id:uid(),name:n,media:[]});persist();render()})};$('back').onclick=()=>{if(bucketId)bucketId=null;else if(folderId)folderId=null;else if(topicId)topicId=null;else subjectId=null;render()};function kind(n){return /\.pdf$/i.test(n)?'pdf':/\.(mp4|webm|mov|m4v)$/i.test(n)?'video':'audio'}function addFiles(files,sid,tid){if(!files.length)return;let s=data.subjects.find(s=>s.id===sid),t=s?.topics.find(t=>t.id===tid);if(!t){pendingFiles=files;$('destSubject').replaceChildren();data.subjects.forEach(x=>$('destSubject').add(new Option(x.name,x.id)));$('destSubject').value=subjectId||data.subjects[0]?.id||'';updateDestTopics();$('destination').showModal();return}files.forEach(f=>{let id=uid();urls.set(id,URL.createObjectURL(f));audioFiles.set(id,f);mcbRememberMedia(id,f);let item={id,name:f.name,kind:kind(f.name),local:true};if(sid===subjectId&&tid===topicId){if(folderId)item.folderId=folderId;if(bucketId)item.bucketId=bucketId}t.media.push(item);mcbQueueThumb(item,f)});persist();render()}function updateDestTopics(){$('destTopic').replaceChildren();let s=data.subjects.find(x=>x.id===$('destSubject').value);s?.topics.forEach(t=>$('destTopic').add(new Option(t.name,t.id)))}$('destSubject').onchange=updateDestTopics;$('destination').onclose=()=>{if($('destination').returnValue==='ok')addFiles(pendingFiles,$('destSubject').value,$('destTopic').value);pendingFiles=[]};const onPicked=()=>addFiles([...$('filePicker').files],subjectId,topicId);$('filePicker').onchange=onPicked;$('addFile').onclick=()=>$('filePicker').click();const drop=$('drop');drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag')};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');addFiles([...e.dataTransfer.files],subjectId,topicId)};
+function ytId(s){try{let u=new URL(s);if(u.hostname.includes('youtu.be'))return u.pathname.split('/')[1];if(u.hostname.includes('youtube.com'))return u.searchParams.get('v')||u.pathname.split('/').filter(Boolean).pop()}catch(e){}return null}async function ytTitle(url){try{let r=await fetch('https://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json');if(r.ok)return (await r.json()).title}catch(e){}return 'YouTube video'}$('addYoutube').onclick=()=>{$('youtubeUrl').value='';$('youtube').returnValue='cancel';$('youtube').showModal();$('youtubeUrl').focus()};$('youtubeCancel').onclick=()=>{$('youtube').close('cancel')};$('youtube').onclose=async()=>{if($('youtube').returnValue!=='ok')return;let url=$('youtubeUrl').value.trim(),videoId=ytId(url);if(!videoId){alert('Please enter a valid YouTube video URL');return}let t=topic();let m={id:uid(),kind:'youtube',name:'Loading YouTube title…',url,videoId};if(folderId)m.folderId=folderId;if(bucketId)m.bucketId=bucketId;t.media.push(m);persist();render();m.name=await ytTitle(url);persist();render()};
+// V56.5.76 project files and local-media cache. JSON stays portable; browser handles stay local.
+let mcbProjectHandle=null,mcbProjectName='No Project Open',mcbDirty=false,mcbLoading=false,mcbStartupSuppressed=false,mcbLastSaveDirectory=null,mcbExportNeeded=false;
+const mcbIsPortable=()=>!window.showSaveFilePicker;
+const mcbDbPromise=new Promise((resolve,reject)=>{const req=indexedDB.open('MCB_Project_Files_V1',1);req.onupgradeneeded=()=>{const db=req.result;db.createObjectStore('settings');db.createObjectStore('media')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
+async function mcbDbGet(store,key){const db=await mcbDbPromise;return new Promise((resolve,reject)=>{const r=db.transaction(store,'readonly').objectStore(store).get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function mcbDbSet(store,key,val){const db=await mcbDbPromise;return new Promise((resolve,reject)=>{const r=db.transaction(store,'readwrite').objectStore(store).put(val,key);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}
+function mcbNotify(message){const n=$('mcbNotice');n.textContent=message;n.style.display='block'}
+function mcbProjectStatus(){const el=$('projectState');if(el)el.textContent=mcbProjectName+(mcbDirty?' • Unsaved changes':'');const ex=$('mcbExportState');if(ex)ex.textContent=mcbIsPortable()&&mcbExportNeeded?'Export needed for other devices':'';document.title=(mcbProjectName+(mcbDirty?' • Unsaved changes':''))+' — Practice!'}
+function mcbSetExportNeeded(v){mcbExportNeeded=!!v;try{localStorage.setItem('MCB_Export_Needed',String(mcbExportNeeded))}catch(e){}mcbProjectStatus()}
+function mcbLocalSnapshot(){return {version:'56.5.90',projectName:mcbProjectName,subjects:data.subjects,exportNeeded:mcbExportNeeded,savedAt:new Date().toISOString()}}
+async function mcbKeepLocalCopy(){
+ if(mcbProjectName==='No Project Open')return false;
+ const snapshot=mcbLocalSnapshot();let idbOk=false,localOk=false;
+ try{await mcbDbSet('settings','lastLocalSnapshot',snapshot);idbOk=true}catch(e){console.warn('IndexedDB local snapshot failed',e)}
+ try{localStorage.setItem('MCB_Local_Project_V1',JSON.stringify(snapshot));localOk=true}catch(e){console.warn('localStorage snapshot failed',e)}
+ if(!idbOk&&!localOk)mcbNotify('Local recovery copy could not be saved. Please export a JSON backup.');
+ return idbOk||localOk;
+}
+async function mcbReadLocalCopy(){
+ try{const saved=await mcbDbGet('settings','lastLocalSnapshot');if(saved&&Array.isArray(saved.subjects))return saved}catch(e){}
+ try{const raw=localStorage.getItem('MCB_Local_Project_V1');if(raw){const saved=JSON.parse(raw);if(Array.isArray(saved.subjects))return saved}}catch(e){}
+ return null;
+}
+async function mcbSaveLocal(){
+ if(mcbProjectName==='No Project Open'){mcbNotify('Create or open a project before saving.');return false}
+ mcbSetExportNeeded(true);
+ if(!await mcbKeepLocalCopy())return false;
+ mcbSetClean();mcbNotify('Project saved locally. Use Save Project As to export JSON for other devices.');return true;
+}
+async function mcbResumeLocal(){
+ try{const saved=await mcbReadLocalCopy();if(!saved){mcbNotify('No local recovery project found. Open an existing JSON project instead.');return false}
+ await mcbApplyProject(saved,null,(saved.projectName||'Local Project')+'.json');mcbSetExportNeeded(!!saved.exportNeeded);mcbSetClean();return true}
+ catch(e){mcbNotify('Could not resume local project: '+e.message);return false}
+}
+
+function mcbMarkDirty(){if(mcbLoading)return;mcbDirty=true;if(mcbIsPortable())mcbSetExportNeeded(true);mcbProjectStatus()}
+function mcbSetClean(){mcbDirty=false;mcbProjectStatus()}
+function mcbFileBase(filename){return String(filename||'').replace(/\.json$/i,'')}
+function mcbJson(){return JSON.stringify({version:'56.5.81',projectName:mcbProjectName,...data},null,2)}
+async function mcbSaveAs(){if(!window.showSaveFilePicker){const blob=new Blob([mcbJson()],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(mcbProjectName==='Untitled Project'?'MCB_Project':mcbProjectName.replace(/\.json$/i,''))+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000);mcbNotify('JSON exported as '+a.download+'. Keep this filename when uploading to Drive so the project banner matches. If you rename it in Drive, reopen that file to synchronize the displayed name.');return true}try{const handle=await window.showSaveFilePicker({id:'mcb-project-save',startIn:mcbLastSaveDirectory||'documents',suggestedName:(mcbProjectName==='Untitled Project'?'MCB_Project':mcbProjectName.replace(/\.json$/i,''))+'.json',types:[{description:'MCB JSON project',accept:{'application/json':['.json']}}]});const savedName=handle.name.replace(/\.json$/i,'');const writer=await handle.createWritable();await writer.write(JSON.stringify({version:'56.5.81',projectName:savedName,...data},null,2));await writer.close();mcbProjectHandle=handle;mcbProjectName=savedName;try{await mcbDbSet('settings','lastProject',handle);mcbLastSaveDirectory=handle;await mcbDbSet('settings','lastSaveDirectory',handle)}catch(e){console.warn('File handle not remembered',e)}mcbSetExportNeeded(false);mcbSetClean();await mcbKeepLocalCopy();return true}catch(e){if(e.name!=='AbortError')alert('Could not save project: '+e.message);return false}}
+async function mcbSave(){if(mcbIsPortable())return mcbSaveLocal();if(!mcbProjectHandle)return mcbSaveAs();try{mcbProjectName=mcbFileBase(mcbProjectHandle.name);const writer=await mcbProjectHandle.createWritable();await writer.write(mcbJson());await writer.close();mcbSetClean();await mcbKeepLocalCopy();return true}catch(e){alert('Could not save to the current project file: '+e.message);return false}}
+async function mcbCheckDirty(){
+ if(!mcbDirty)return true;
+ const dlg=$('mcbSaveChangesDialog');$('mcbSaveChangesName').textContent=mcbProjectName;
+ return await new Promise(resolve=>{
+  let settled=false;
+  const finish=v=>{if(settled)return;settled=true;dlg.close();resolve(v)};
+  $('mcbCancelChanges').onclick=()=>finish(false);
+  $('mcbDiscardChanges').onclick=()=>finish(true);
+  $('mcbSaveChanges').onclick=async()=>{
+   const btn=$('mcbSaveChanges');btn.disabled=true;
+   try{if(await mcbSave())finish(true)}finally{btn.disabled=false}
+  };
+  dlg.oncancel=e=>{e.preventDefault();finish(false)};
+  dlg.showModal();
+ });
+}
+async function mcbApplyProject(json,handle=null,name='Opened Project'){if(!Array.isArray(json.subjects))throw Error('Not a valid MCB project');mcbLoading=true;data={subjects:json.subjects};subjectId=topicId=folderId=bucketId=null;mcbProjectHandle=handle;mcbProjectName=mcbFileBase(handle?.name||name||json.projectName||'Opened Project');persist();mcbLoading=false;mcbSetClean();mcbSetExportNeeded(false);render();await mcbRestoreMedia();if(handle)await mcbDbSet('settings','lastProject',handle)}
+async function mcbOpenHandle(handle){const file=await handle.getFile();const parsed=JSON.parse(await file.text());await mcbApplyProject(parsed,handle,handle.name)}
+async function mcbNewProject(){
+ if(!await mcbCheckDirty())return;
+ const chosenName=await new Promise(resolve=>{
+  const dlg=$('mcbNewProjectDialog'),input=$('mcbNewProjectName');input.value='';
+  let settled=false;const done=v=>{if(settled)return;settled=true;dlg.close();resolve(v)};
+  $('mcbNewCancel').onclick=()=>done(null);
+  $('mcbNewCreate').onclick=()=>{const v=input.value.trim();if(v)done(v);else input.focus()};
+  dlg.oncancel=e=>{e.preventDefault();done(null)};
+  dlg.showModal();input.focus();
+ });
+ if(!chosenName)return;
+ mcbStartupSuppressed=true;
+ mcbLoading=true;
+ for(const u of urls.values())try{URL.revokeObjectURL(u)}catch(e){}
+ urls.clear();audioFiles.clear();
+ data={subjects:[]};subjectId=null;topicId=null;pendingFiles=[];
+ mcbProjectHandle=null;mcbProjectName=chosenName;mcbSetExportNeeded(true);
+ try{localStorage.setItem('MCB_V56_0',JSON.stringify(data))}catch(e){}
+ try{await mcbDbSet('settings','lastProject',null)}catch(e){console.warn(e)}
+ document.querySelectorAll('header .actions button[data-mcb-reopen]').forEach(b=>b.remove());
+ mcbLoading=false;mcbDirty=true;mcbProjectStatus();render();
+}
+async function mcbCloseProject(){
+ if(!await mcbCheckDirty())return;
+ mcbStartupSuppressed=true;
+ // Close visible media before clearing the project; leave the application open.
+ try{closeViewer()}catch(e){console.warn(e)}
+ try{mcbClosePDF()}catch(e){console.warn(e)}
+ mcbLoading=true;
+ for(const u of urls.values())try{URL.revokeObjectURL(u)}catch(e){}
+ urls.clear();audioFiles.clear();pendingFiles=[];
+ data={subjects:[]};subjectId=null;topicId=null;
+ mcbProjectHandle=null;mcbProjectName='No Project Open';mcbSetExportNeeded(false);/* Keep the last successfully saved local snapshot for Welcome > Resume. */
+ try{localStorage.removeItem('MCB_V56_0')}catch(e){console.warn(e)}
+ try{await mcbDbSet('settings','lastProject',null)}catch(e){console.warn(e)}
+ document.querySelectorAll('header .actions button[data-mcb-reopen]').forEach(b=>b.remove());
+ mcbLoading=false;mcbSetClean();render();
+}
+$('closeProject').onclick=()=>mcbCloseProject();
+$('newProject').onclick=()=>mcbNewProject();
+$('save').onclick=()=>mcbSave();$('saveAs').onclick=()=>mcbSaveAs();
+
+// V56.5.91: Save original, name new project, create a separate JSON, then open the copy.
+function mcbAskCopyName(){return new Promise(resolve=>{
+ const dlg=$('mcbMakeCopyDialog'),input=$('mcbCopyName');
+ input.value=mcbProjectName+' - Copy';
+ $('mcbCopyNote').textContent=mcbIsPortable()?'On iPad, Save Project protects the original in browser storage. The new copy is also downloaded as JSON; finish uploading it to Google Drive.':'Choose a different JSON file for the copy. The original file is never overwritten.';
+ let done=false;const finish=v=>{if(done)return;done=true;dlg.close();resolve(v)};
+ $('mcbCopyCancel').onclick=()=>finish(null);
+ $('mcbCopyConfirm').onclick=()=>{const name=input.value.trim().replace(/\.json$/i,'');if(!name){input.focus();return}if(name===mcbProjectName){mcbNotify('Please give the copy a different project name.');input.focus();return}finish(name)};
+ dlg.oncancel=e=>{e.preventDefault();finish(null)};
+ input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('mcbCopyConfirm').click()}};
+ dlg.showModal();input.focus();input.select();
+})}
+async function mcbMakeCopy(){
+ if(mcbProjectName==='No Project Open'){mcbNotify('Open or create a project before making a copy.');return}
+ const btn=$('makeCopy');if(btn.disabled)return;btn.disabled=true;
+ try{
+  const newName=await mcbAskCopyName();if(!newName)return;
+  // Save the original BEFORE creating or switching. Cancel/failure leaves the original active.
+  if(!await mcbSave()){mcbNotify('Original was not saved. Copy canceled.');return}
+  let copyJson=JSON.stringify({version:'56.5.92',projectName:newName,...data},null,2);
+  if(window.showSaveFilePicker){
+   let handle;
+   try{handle=await window.showSaveFilePicker({id:'mcb-project-copy',startIn:mcbLastSaveDirectory||'documents',suggestedName:newName+'.json',types:[{description:'MCB JSON project',accept:{'application/json':['.json']}}]})}
+   catch(e){if(e.name!=='AbortError')mcbNotify('Could not choose copy destination: '+e.message);return}
+   if(mcbProjectHandle&&typeof handle.isSameEntry==='function'&&await handle.isSameEntry(mcbProjectHandle)){
+    mcbNotify('Copy canceled: choose a different file. The original cannot be overwritten.');return;
+   }
+   try{copyJson=JSON.stringify({version:'56.5.92',projectName:mcbFileBase(handle.name),...data},null,2);const writer=await handle.createWritable();await writer.write(copyJson);await writer.close()}
+   catch(e){mcbNotify('Could not create copy: '+e.message);return}
+   mcbProjectHandle=handle;mcbProjectName=mcbFileBase(handle.name);mcbLastSaveDirectory=handle;
+   try{await mcbDbSet('settings','lastProject',handle);await mcbDbSet('settings','lastSaveDirectory',handle)}catch(e){console.warn(e)}
+   mcbSetExportNeeded(false);mcbSetClean();await mcbKeepLocalCopy();render();mcbNotify('Copy created and opened: '+mcbProjectName);return;
+  }
+  // iPad/portable: download is initiated, but browser cannot confirm external Drive upload.
+  // Keep the new project in local recovery storage and clearly disclose export status.
+  const blob=new Blob([copyJson],{type:'application/json'}),url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=newName.replace(/[\/:*?"<>|]/g,'_')+'.json';document.body.append(a);
+  try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),15000)}
+  mcbProjectHandle=null;mcbProjectName=newName;mcbSetExportNeeded(true);mcbSetClean();
+  const saved=await mcbKeepLocalCopy();render();
+  mcbNotify(saved?'Copy opened locally: '+newName+'. Keep the exported filename unchanged when uploading to Drive, or reopen the renamed file to synchronize the banner. Upload is not verified.':'Copy opened, but local recovery failed. Complete the JSON export and keep a backup.');
+ }catch(e){console.error(e);mcbNotify('Make a Copy failed: '+e.message)}finally{btn.disabled=false}
+}
+$('makeCopy').onclick=()=>mcbMakeCopy();
+
+
+// V56.5.103 experimental portable bundle. ZIP uses standard STORE entries (no compression).
+const mcbZipEnc=new TextEncoder(),mcbZipDec=new TextDecoder();
+const mcbZipTable=(()=>{let t=[];for(let i=0;i<256;i++){let c=i;for(let j=0;j<8;j++)c=c&1?0xedb88320^(c>>>1):c>>>1;t.push(c>>>0)}return t})();
+function mcbZipCRC(bytes){let c=0xffffffff;for(let i=0;i<bytes.length;i++)c=mcbZipTable[(c^bytes[i])&255]^(c>>>8);return (c^0xffffffff)>>>0}
+function mcbZipMake(entries){let local=[],central=[],offset=0;for(const [name,bytes] of entries){const n=mcbZipEnc.encode(name),crc=mcbZipCRC(bytes),h=new Uint8Array(30+n.length),v=new DataView(h.buffer);v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x800,true);v.setUint32(14,crc,true);v.setUint32(18,bytes.length,true);v.setUint32(22,bytes.length,true);v.setUint16(26,n.length,true);h.set(n,30);local.push(h,bytes);const c=new Uint8Array(46+n.length),w=new DataView(c.buffer);w.setUint32(0,0x02014b50,true);w.setUint16(4,20,true);w.setUint16(6,20,true);w.setUint16(8,0x800,true);w.setUint32(16,crc,true);w.setUint32(20,bytes.length,true);w.setUint32(24,bytes.length,true);w.setUint16(28,n.length,true);w.setUint32(42,offset,true);c.set(n,46);central.push(c);offset+=h.length+bytes.length}const centralSize=central.reduce((n,b)=>n+b.length,0),end=new Uint8Array(22),v=new DataView(end.buffer);v.setUint32(0,0x06054b50,true);v.setUint16(8,entries.length,true);v.setUint16(10,entries.length,true);v.setUint32(12,centralSize,true);v.setUint32(16,offset,true);return new Blob([...local,...central,end],{type:'application/zip'})}
+function mcbZipRead(buf){const a=new Uint8Array(buf),v=new DataView(buf),out=new Map();let e=-1;for(let i=a.length-22;i>=Math.max(0,a.length-65557);i--){if(v.getUint32(i,true)===0x06054b50){e=i;break}}if(e<0)throw Error('Invalid ZIP');let count=v.getUint16(e+10,true),pos=v.getUint32(e+16,true);if(count>10000)throw Error('Too many files');for(let i=0;i<count;i++){if(v.getUint32(pos,true)!==0x02014b50)throw Error('ZIP directory is invalid');const method=v.getUint16(pos+10,true),crc=v.getUint32(pos+16,true),size=v.getUint32(pos+20,true),nlen=v.getUint16(pos+28,true),extra=v.getUint16(pos+30,true),comment=v.getUint16(pos+32,true),off=v.getUint32(pos+42,true),name=mcbZipDec.decode(a.subarray(pos+46,pos+46+nlen));if(method!==0)throw Error('This test importer supports only uncompressed bundle ZIPs');if(off+30>a.length||v.getUint32(off,true)!==0x04034b50)throw Error('Invalid ZIP file entry');const start=off+30+v.getUint16(off+26,true)+v.getUint16(off+28,true);if(start+size>a.length)throw Error('Truncated ZIP');const bytes=a.slice(start,start+size);if(mcbZipCRC(bytes)!==crc)throw Error('ZIP checksum mismatch: '+name);if(out.has(name))throw Error('Duplicate bundle entry');out.set(name,bytes);pos+=46+nlen+extra+comment}return out}
+function mcbBundleMedia(){return (data.subjects||[]).flatMap(s=>(s.topics||[]).flatMap(t=>(t.media||[]))).filter(m=>m.kind!=='youtube')}
+async function mcbExportBundle(){const btn=$('exportBundle');btn.disabled=true;try{const media=mcbBundleMedia(),entries=[],missing=[],manifest={format:'MCB-bundle-1',projectName:mcbProjectName,createdAt:new Date().toISOString(),files:{}};for(let i=0;i<media.length;i++){const m=media[i];mcbNotify('Preparing bundle media '+(i+1)+' of '+media.length+'…');let f=audioFiles.get(m.id);if(!f)try{f=await mcbDbGet('media',m.id)}catch(e){}if(!f){missing.push(m.name);continue}const path='media/'+i+'_'+String(f.name||m.name).replace(/[\\/]/g,'_');manifest.files[m.id]={path,name:f.name||m.name,type:f.type||''};entries.push([path,new Uint8Array(await f.arrayBuffer())])}if(missing.length&&!confirm('Some media are not available in this browser and will NOT be included:\n'+missing.slice(0,12).join('\n')+(missing.length>12?'\n…and more':'')+'\n\nExport incomplete bundle anyway?'))return;entries.unshift(['project.json',mcbZipEnc.encode(mcbJson())],['bundle-manifest.json',mcbZipEnc.encode(JSON.stringify(manifest,null,2))]);const blob=mcbZipMake(entries),name=(mcbProjectName==='No Project Open'?'MCB_Project':mcbProjectName).replace(/[\\/:*?"<>|]/g,'_')+'.mcb.zip';const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);mcbNotify('Bundle downloaded: '+name+' ('+entries.length+' ZIP entries; '+missing.length+' missing media). ZIP is not compressed.')}catch(e){alert('Bundle export failed: '+e.message)}finally{btn.disabled=false}}
+async function mcbImportBundle(file){if(!await mcbCheckDirty())return;const btn=$('importBundle');btn.disabled=true;try{mcbNotify('Reading bundle…');const z=mcbZipRead(await file.arrayBuffer());if(!z.has('project.json')||!z.has('bundle-manifest.json'))throw Error('Not an MCB bundle');const proj=JSON.parse(mcbZipDec.decode(z.get('project.json'))),manifest=JSON.parse(mcbZipDec.decode(z.get('bundle-manifest.json')));if(manifest.format!=='MCB-bundle-1'||!Array.isArray(proj.subjects))throw Error('Unsupported bundle');const pending=[];for(const s of proj.subjects)for(const t of s.topics||[])for(const m of t.media||[]){const original=m.id;m.id=uid();if(m.kind==='youtube')continue;const entry=manifest.files?.[original];if(entry){const bytes=z.get(entry.path);if(!bytes)throw Error('Missing bundle entry: '+entry.path);pending.push({m,file:new File([bytes],entry.name||m.name,{type:entry.type||'application/octet-stream'})})}}await mcbApplyProject(proj,null,(manifest.projectName||'Imported Bundle')+'.json');for(let i=0;i<pending.length;i++){const {m,file:f}=pending[i];audioFiles.set(m.id,f);urls.set(m.id,URL.createObjectURL(f));await mcbRememberMedia(m.id,f);mcbQueueThumb(m,f)}render();mcbSetExportNeeded(true);await mcbKeepLocalCopy();mcbNotify('Bundle imported: '+pending.length+' media files restored. Save a new project JSON when ready.')}catch(e){alert('Bundle import failed: '+e.message)}finally{btn.disabled=false}}
+$('exportBundle').onclick=()=>mcbExportBundle();$('importBundle').onclick=()=>{$('bundlePicker').value='';$('bundlePicker').click()};$('bundlePicker').onchange=async()=>{const f=$('bundlePicker').files?.[0];if(f)await mcbImportBundle(f);$('bundlePicker').value=''};
+
+$('load').onclick=async()=>{if(!await mcbCheckDirty())return;if(window.showOpenFilePicker){try{const [handle]=await showOpenFilePicker({id:'mcb-project-save',startIn:mcbLastSaveDirectory||'documents',multiple:false,types:[{description:'MCB JSON project',accept:{'application/json':['.json']}}]});if(handle){mcbLastSaveDirectory=handle;await mcbDbSet('settings','lastSaveDirectory',handle);await mcbOpenHandle(handle)}}catch(e){if(e.name!=='AbortError')alert('Could not open project: '+e.message)}}else {$('jsonPicker').value='';$('jsonPicker').click()}};
+$('jsonPicker').onchange=async()=>{const f=$('jsonPicker').files?.[0];if(!f)return;try{await mcbApplyProject(JSON.parse(await f.text()),null,f.name)}catch(e){alert('Could not open project: '+e.message)}$('jsonPicker').value=''};
+async function mcbRememberMedia(id,file){try{await mcbDbSet('media',id,file)}catch(e){console.warn('Media storage unavailable:',e)}}
+async function mcbRestoreMedia(){const tasks=[];for(const subj of data.subjects||[])for(const top of subj.topics||[])for(const m of top.media||[]){if(m.kind==='youtube'||audioFiles.has(m.id))continue;tasks.push((async()=>{try{const f=await mcbDbGet('media',m.id);if(f){audioFiles.set(m.id,f);urls.set(m.id,URL.createObjectURL(f));mcbQueueThumb(m,f)}}catch(e){console.warn(e)}})())}await Promise.all(tasks)}
+let mcbMissingItem=null;
+function mcbAskRelink(m){mcbMissingItem=m;$('missingName').textContent=m.fileName||m.name;$('missingMedia').showModal()}
+$('missingLater').onclick=()=>$('missingMedia').close();
+function mcbMissingFilename(){return mcbMissingItem?.fileName||mcbMissingItem?.name||''}
+function mcbCopyMissingName(){const name=mcbMissingFilename();if(!name)return;try{const promise=navigator.clipboard?.writeText(name);if(promise){promise.catch(()=>mcbNotify('Clipboard copy was blocked. Tap Copy Filename and allow paste access.'));return} }catch(e){}const temp=document.createElement('textarea');temp.value=name;temp.style.position='fixed';temp.style.opacity='0';document.body.append(temp);temp.select();try{document.execCommand('copy')}catch(e){mcbNotify('Clipboard access unavailable; copy the filename shown in the dialog.')}temp.remove()}
+$('missingCopy').onclick=()=>mcbCopyMissingName();
+$('missingRelink').onclick=()=>{const m=mcbMissingItem;if(!m)return;mcbCopyMissingName();$('missingMedia').close();mcbRelinkFile(m)};
+
+function mcbRelinkFile(m){const input=$('filePicker');input.value='';input.multiple=false;input.onchange=async()=>{const f=input.files?.[0];if(f){const old=urls.get(m.id);if(old)URL.revokeObjectURL(old);urls.set(m.id,URL.createObjectURL(f));audioFiles.set(m.id,f);m.name=f.name;m.kind=kind(f.name);mcbRememberMedia(m.id,f);delete m.thumb;mcbQueueThumb(m,f);persist();render()}input.value='';input.multiple=true;input.onchange=onPicked};input.click()}
+// V56.5.90: cancellation must bypass HTML required-field validation.
+for(const dlg of document.querySelectorAll('dialog')){
+ if(dlg.id==='mcbWelcome')continue;
+ const title=dlg.querySelector('h2,h3');
+ if(title){
+  const x=document.createElement('button');
+  x.type='button';x.textContent='×';x.setAttribute('aria-label','Close dialog');
+  x.className='mcb-dialog-x';
+  title.insertAdjacentElement('afterend',x);
+  x.addEventListener('click',()=>mcbCancelDialog(dlg));
+ }
+ for(const b of dlg.querySelectorAll('[data-mcb-cancel]')){
+  b.addEventListener('click',()=>mcbCancelDialog(dlg));
+ }
+}
+function mcbCancelDialog(dlg){
+ if(!dlg.open)return;
+ if(dlg.id==='mcbNewProjectDialog'){$('mcbNewCancel').click();return}
+ if(dlg.id==='mcbSaveChangesDialog'){$('mcbCancelChanges').click();return}
+ if(dlg.id==='missingMedia'){$('missingLater').click();return}
+ dlg.close('cancel');
+}
+// Dialog keyboard convention: Enter confirms the primary action; Escape cancels.
+// Use capture to stop background player keyboard shortcuts while a modal is open.
+document.addEventListener('keydown',e=>{
+ const dlg=[...document.querySelectorAll('dialog[open]')].at(-1);
+ if(!dlg)return;
+ if(e.key==='Escape'){
+  e.preventDefault();e.stopImmediatePropagation();
+  if(dlg.id==='mcbWelcome'){dlg.close('cancel');return}
+  mcbCancelDialog(dlg);return;
+ }
+ if(e.key!=='Enter'||e.shiftKey||e.ctrlKey||e.metaKey||e.altKey||e.target?.matches('textarea,[contenteditable="true"]'))return;
+ e.preventDefault();e.stopImmediatePropagation();
+ const actions={mcbNewProjectDialog:'mcbNewCreate',mcbSaveChangesDialog:'mcbSaveChanges',missingMedia:'missingRelink',editor:'editOk',youtube:'youtubeAdd'};
+ const id=actions[dlg.id];
+ if(id){const btn=$(id);if(btn&&!btn.disabled){if(dlg.id==='youtube'&&!$('youtubeUrl').checkValidity()){$('youtubeUrl').reportValidity();return}if(dlg.id==='editor'&&!$('editName').value.trim())return;btn.click()}return}
+ if(dlg.id==='destination'){const btn=dlg.querySelector('button[value="ok"]');if(btn)btn.click()}
+},true);
+window.addEventListener('beforeunload',e=>{if(mcbDirty){e.preventDefault();e.returnValue=''}});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&!e.altKey){const k=e.key.toLowerCase();if(k==='s'){e.preventDefault();if(e.shiftKey)mcbSaveAs();else mcbSave()}else if(k==='o'){e.preventDefault();$('load').click()}}});
+async function mcbShowWelcome(){const dlg=$('mcbWelcome');const recent=$('mcbWelcomeRecent');const saved=await mcbReadLocalCopy();recent.hidden=false;recent.disabled=!saved;recent.title=saved?'Resume your locally saved project':'No locally saved project is available yet';recent.textContent=saved?'Resume Last Local Project — '+(saved.projectName||'Local Project'):'Resume Last Local Project (no local save yet)';dlg.showModal()}
+$('mcbWelcomeOpen').onclick=()=>{$('mcbWelcome').close();$('load').click()};
+$('mcbWelcomeNew').onclick=()=>{$('mcbWelcome').close();$('newProject').click()};
+$('mcbWelcomeRecent').onclick=async()=>{if(await mcbResumeLocal())$('mcbWelcome').close()};
+$('mcbWelcome').addEventListener('cancel',e=>e.preventDefault());
+(async()=>{mcbProjectStatus();try{mcbLastSaveDirectory=await mcbDbGet('settings','lastSaveDirectory')}catch(e){}await mcbShowWelcome()})();
+
+function mcbClosePDF(){
+ if(document.fullscreenElement===$('pdfWorkspace'))document.exitFullscreen().catch(()=>{});
+ $('pdfWorkspace').classList.add('hidden');
+ mcbPdfSession++; if(mcbPdfRenderObserver){mcbPdfRenderObserver.disconnect();mcbPdfRenderObserver=null} $('pdfPages').onscroll=null; mcbPdfDocument=null; mcbPdfCurrent=1; $('pdfPages').replaceChildren(); $('pdfPages').hidden=false; $('pdfDocument').hidden=true; $('pdfDocument').removeAttribute('src'); mcbPdfUpdateControls();
+ $('pdfWorkspace').classList.remove('mcb-floated','mcb-front');
+}
+// V56.5.15: Track one named floating YouTube window, never create a second.
+const MCB_FLOAT_NAME='MCB_Float_Player';
+let mcbFloatWindow=null;
+let mcbFloatKnown=false;
+function mcbFloatIsOpen(){
+ try{return !!mcbFloatWindow && !mcbFloatWindow.closed}catch(e){return false}
+}
+function mcbRefreshFloatButton(){
+ if(mcbFloatKnown&&!mcbFloatIsOpen())mcbFloatKnown=false;
+ $('bringFloat').classList.toggle('hidden',!mcbFloatKnown);
+}
+function mcbFloatUrl(state){
+ const url=new URL('youtube-player.html',location.href);
+ url.searchParams.set('video',state.url||'');
+ url.hash='mcbState='+encodeURIComponent(JSON.stringify(state));
+ return url.href;
+}
+function mcbOpenOrReuseFloat(state){
+ const url=mcbFloatUrl(state);
+ let popup=null;
+ if(mcbFloatIsOpen()){
+  popup=mcbFloatWindow;
+  // Reusing the existing window replaces its video and stops the old one.
+  try{popup.location.replace(url)}catch(e){popup=null}
+ }
+ if(!popup){
+  // Reuse the same named window even if a prior page reload lost the JS handle.
+  const w=640;
+  const h=400;
+  const left=Math.round(window.screenX+Math.max(20,window.outerWidth-w-40));
+  const top=Math.round(window.screenY+65);
+  popup=window.open(url,MCB_FLOAT_NAME,`popup=yes,left=${left},top=${top},width=${w},height=${h},resizable=yes`);
+ }
+ if(!popup){alert('Chrome blocked the player window. Allow popups for this site, then click Float again.');return false}
+ mcbFloatWindow=popup;window.MCB_floatWindow=popup;mcbFloatKnown=true;mcbRefreshFloatButton();
+ try{popup.focus()}catch(e){}
+ return true;
+}
+let mcbFront='viewer';
+function mcbRaise(which){
+ mcbFront=which;
+ $('pdfWorkspace').classList.toggle('mcb-front',which==='pdf');
+ $('viewer').classList.toggle('mcb-front',which==='viewer');
+}
+function mcbSwapToFloat(){
+ const pdfOpen=!$('pdfWorkspace').classList.contains('hidden');
+ const viewerOpen=!$('viewer').classList.contains('hidden')&&!$('viewer').classList.contains('mcb-pip-active');
+ if(pdfOpen&&viewerOpen){mcbRaise(mcbFront==='pdf'?'viewer':'pdf');return}
+ if(mcbFloatIsOpen()){
+  // When a popup is behind MCB, focus it; do not resize either window.
+  try{mcbFloatWindow.focus()}catch(e){}
+  return;
+ }
+ if(pdfOpen||viewerOpen){mcbRaise(pdfOpen?'pdf':'viewer');return}
+ alert('Open a second resource to switch between players.');
+}
+$('bringFloat').onclick=()=>{};
+$('pdfSwap').onclick=()=>{};
+$('swapViewer').onclick=()=>{};
+window.addEventListener('message',e=>{
+ if(e.origin!==location.origin)return;
+ if(e.data?.type==='MCB_FLOAT_CLOSED'){mcbFloatKnown=false;mcbFloatWindow=null;mcbRefreshFloatButton()}
+});
+// V56.5.18: choose from the current Topic without closing the first resource.
+let mcbSecondMode=false;
+function mcbCloseSecondPicker(){$('mcbSecondPicker').classList.add('hidden')}
+function mcbOpenSecondPicker(){
+ const t=topic();
+ if(!t){alert('Open a Topic in the Practice Room before choosing a second resource.');return}
+ const list=$('mcbSecondItems');list.replaceChildren();
+ $('mcbSecondTopic').textContent='Current Topic: '+subject().name+' / '+t.name;
+ if(!t.media.length){const note=document.createElement('p');note.textContent='No media in this Topic yet. Close this panel and add media to the Topic first.';list.append(note)}
+ t.media.forEach(m=>{
+  const b=document.createElement('button');b.type='button';
+  b.textContent=(m.kind==='pdf'?'📄 ':m.kind==='youtube'?'▶ ':m.kind==='video'?'🎬 ':'🎵 ')+m.name;
+  b.onclick=()=>{mcbCloseSecondPicker();mcbSecondMode=true;try{mcbOpenSecondResource(m)}finally{mcbSecondMode=false}};
+  list.append(b);
+ });
+ $('mcbSecondPicker').classList.remove('hidden');
+}
+function mcbOpenSecondResource(m){
+ // A floated YouTube video is a separate slot; the PDF beneath remains intact.
+ if(m.kind==='youtube'){
+  const state={url:m.url||('https://www.youtube.com/watch?v='+m.videoId)};
+  if(mcbOpenOrReuseFloat(state))return;
+ }
+ // Keep an existing PDF workspace alive underneath the second media overlay.
+ if(!$('pdfWorkspace').classList.contains('hidden')){
+  if(m.kind==='pdf'){
+   const src=urls.get(m.id);if(!src){alert('Please Relink this PDF first.');return}
+   closeViewer(true);
+   $('viewerTitle').textContent=m.name;
+   const embed=document.createElement('embed');embed.type='application/pdf';embed.src=src;
+   embed.style.cssText='width:100%;height:100%;border:0';
+   $('stage').append(embed);$('viewer').classList.remove('hidden','float');mcbRaise('viewer');return;
+  }
+  openMedia(m);return;
+ }
+ // With an external floating player, normal Practice Room replacement applies.
+ openMedia(m);
+}
+$('mcbSecondCancel').onclick=mcbCloseSecondPicker;
+$('mcbSecondPicker').addEventListener('click',e=>{if(e.target===$('mcbSecondPicker'))mcbCloseSecondPicker()});
+$('pdfSecond').onclick=mcbOpenSecondPicker;
+$('viewerSecond').onclick=()=>{};
+window.MCB_openSecondMedia=()=>{if(!$('pdfWorkspace').classList.contains('hidden'))mcbOpenSecondPicker()};
+window.addEventListener('message',e=>{if(false)mcbOpenSecondPicker()});
+function openMedia(m){
+ // Every new Practice Room resource replaces the previous one; the separate
+ // Chrome Float window is deliberately untouched.
+ if(!mcbSecondMode && $('pdfWorkspace').classList.contains('hidden'))mcbClosePDF();
+ if(!$('viewer').classList.contains('mcb-pip-active'))closeViewer(mcbSecondMode);
+ if(m.kind==='youtube'&&mcbFloatIsOpen()){
+  const state={url:m.url||('https://www.youtube.com/watch?v='+m.videoId)};
+  mcbOpenOrReuseFloat(state);
+  return;
+ }
+ if(m.kind==='pdf'){
+  const src=urls.get(m.id);
+  if(!src){mcbAskRelink(m);return;}
+  $('pdfTitle').textContent=m.name;
+  mcbOpenPdfPages(src);
+  $('pdfWorkspace').classList.remove('hidden');
+  $('pdfWorkspace').classList.remove('mcb-floated');mcbRaise('pdf');
+  return;
+ }
+ const stage=$('stage');stage.replaceChildren();$('viewerTitle').textContent=m.name;
+ if(m.kind==='audio'||m.kind==='video'){
+  const file=audioFiles.get(m.id);
+  if(!file){mcbAskRelink(m);return;}
+  const frame=document.createElement('iframe');frame.title='Original V55 Media Player';
+  frame.style.cssText='width:100%;height:100%;border:0;background:#fff;';
+  frame.allow='autoplay;fullscreen;picture-in-picture';frame.allowFullscreen=true;
+  frame.addEventListener('load',()=>{
+    try{frame.contentWindow.postMessage({type:'MCB_V563_MEDIA',file,name:m.name,kind:m.kind},'*')}
+    catch(err){alert('Could not hand MP3 to player: '+err.message);closeViewer()}
+  },{once:true});
+  frame.addEventListener('error',()=>{alert('Could not load original audio player.');closeViewer()});
+  frame.src='original-v55-audio.html';stage.append(frame);
+ }else{
+  let el;
+  if(m.kind==='youtube'){el=document.createElement('iframe');el.src='youtube-player.html?video='+encodeURIComponent(m.url||('https://www.youtube.com/watch?v='+m.videoId));el.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';el.allowFullscreen=true}
+  else{let src=urls.get(m.id);if(!src){mcbAskRelink(m);return}el=document.createElement(m.kind==='pdf'?'embed':'video');el.src=src;if(m.kind!=='pdf')el.controls=true;if(m.kind==='video')el.playsInline=true}
+  stage.append(el);if(el.play)el.play().catch(()=>{});
+ }
+ $('viewer').classList.remove('hidden','float');
+ $('viewer').classList.toggle('mcb-custom-video',m.kind==='video'||m.kind==='audio');
+ $('viewer').classList.toggle('mcb-youtube-view',m.kind==='youtube');
+ $('viewer').classList.remove('mcb-floated');mcbRaise('viewer');
+}
+// The original V55 player is embedded. Only the top-level page can request Document PiP.
+// This function is called directly during the player's Float click, preserving user activation.
+// Expand the existing embedded player after it returns from Picture-in-Picture.
+// No requestFullscreen() here: Chrome forbids it in Document PiP and focus switches.
+window.MCB_expandEmbeddedMedia=()=>{
+ const viewer=$('viewer');
+ viewer.classList.remove('hidden','mcb-pip-active','mcb-floated','float');
+ viewer.style.left='';viewer.style.top='';viewer.style.right='';viewer.style.bottom='';
+ viewer.style.width='';viewer.style.height='';
+ mcbRaise('viewer');
+};
+window.MCB_openEmbeddedVideoPiP=async function(host, onOpened, onClosed, mediaType="video"){
+ if(!window.documentPictureInPicture)throw new Error('This browser does not support Document Picture-in-Picture.');
+ const pip=await window.documentPictureInPicture.requestWindow(mediaType==="audio"?{width:1180,height:230}:{width:640,height:400});
+ const sourceDoc=host.ownerDocument;
+ const anchor=sourceDoc.createComment('V55 video float return point');
+ host.parentNode.insertBefore(anchor,host);
+ for(const sheet of sourceDoc.styleSheets){
+  try{const style=pip.document.createElement('style');style.textContent=Array.from(sheet.cssRules).map(rule=>rule.cssText).join('\n');pip.document.head.append(style)}catch(e){}
+ }
+ pip.document.body.style.cssText='margin:0;width:100%;height:100dvh;overflow:hidden;background:#fff';
+ const floatStyle=pip.document.createElement('style');
+ floatStyle.textContent='html,body{min-width:0!important;min-height:0!important} .pip-video-player{width:100%!important;height:100%!important;max-width:none!important;min-width:0!important;inset:0!important;position:relative!important;margin:0!important;overflow:auto!important} .pip-audio-player{position:relative!important;inset:0!important;width:100%!important;max-width:none!important;min-width:0!important;height:100%!important;margin:0!important;box-shadow:none!important;overflow:hidden!important;resize:none!important} .pip-audio-player.mini-media-player.floating-player{width:100%!important;max-width:100%!important;min-width:0!important;height:100%!important;box-sizing:border-box!important} .pip-audio-player.mini-media-player.floating-player>.media-tools{width:100%!important;max-width:100%!important;box-sizing:border-box!important} .pip-audio-player .media-tools.mcb-audio-transport .media-control-scroll{width:100%!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important} .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip{display:flex!important;flex-flow:row nowrap!important;width:max-content!important;min-width:0!important;max-width:none!important;align-items:flex-start!important;gap:3px!important} .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip>.mcb-audio-tail{display:flex!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;flex-flow:row nowrap!important;align-items:flex-start!important;gap:6px!important;margin:0!important;padding:0!important}';
+ pip.document.head.append(floatStyle);
+ pip.document.body.append(host);
+ // Reveal the underlying Practice Room, not the empty V55 iframe background.
+ $('viewer').classList.add('mcb-pip-active');
+ let restored=false;
+ const restore=()=>{
+  if(restored)return;restored=true;
+  if(anchor.parentNode)anchor.replaceWith(host);
+  $('viewer').classList.remove('mcb-pip-active');
+  try{onClosed()}catch(e){console.error(e)}
+ };
+ pip.addEventListener('pagehide',restore,{once:true});
+ try{onOpened(pip,restore)}catch(e){restore();pip.close();throw e}
+ return pip;
+};
+window.addEventListener('message',event=>{
+  if(event.origin!==window.location.origin && event.origin!=='null')return;
+  if(!event.data || typeof event.data.type!=='string')return;
+  if(event.data?.type==='MCB_V56_YOUTUBE_CLOSE'){closeViewer();render();return;}
+  if(event.data?.type==='MCB_V563_CLOSE'){
+    closeViewer(true);
+    return;
+  }
+  if(event.data?.type==='MCB_V563_ERROR'){
+    alert('Audio player could not open: '+event.data.message);
+    closeViewer(true);
+  }
+});
+window.MCB_returnToTopic=()=>{closeViewer(true);render();};
+(function(){
+ const panel=$('pdfWorkspace'),bar=panel.querySelector('nav');
+ let drag=null;
+ bar.addEventListener('pointerdown',e=>{
+  if(e.target.closest('button')||!panel.classList.contains('mcb-floated'))return;
+  const r=panel.getBoundingClientRect();
+  drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:r.left,top:r.top};
+  panel.style.right='auto';panel.style.bottom='auto';
+  panel.style.left=r.left+'px';panel.style.top=r.top+'px';
+  bar.setPointerCapture(e.pointerId);
+ });
+ bar.addEventListener('pointermove',e=>{
+  if(!drag||e.pointerId!==drag.id)return;
+  panel.style.left=Math.max(0,Math.min(innerWidth-80,drag.left+e.clientX-drag.x))+'px';
+  panel.style.top=Math.max(0,Math.min(innerHeight-60,drag.top+e.clientY-drag.y))+'px';
+ });
+ ['pointerup','pointercancel'].forEach(type=>bar.addEventListener(type,()=>drag=null));
+})();
+// V56.5.75: continuous PDF.js pages; buttons/keyboard use the same page navigation.
+let mcbPdfSession=0, mcbPdfDocument=null, mcbPdfCurrent=1, mcbPdfRenderObserver=null;
+function mcbPdfUpdateControls(){
+ const total=mcbPdfDocument?.numPages||0;
+ $('pdfPageStatus').textContent=total?'Page '+mcbPdfCurrent+' / '+total:'Page — / —';
+ $('pdfPrev').disabled=!total||mcbPdfCurrent<=1;
+ $('pdfNext').disabled=!total||mcbPdfCurrent>=total;
+}
+function mcbPdfGoTo(page){
+ if(!mcbPdfDocument)return;
+ mcbPdfCurrent=Math.max(1,Math.min(mcbPdfDocument.numPages,page));
+ mcbPdfUpdateControls();
+ const target=$('pdfPages').querySelector('[data-pdf-page="'+mcbPdfCurrent+'"]');
+ if(target)target.scrollIntoView({block:'start',behavior:'auto'});
+}
+$('pdfPrev').onclick=()=>mcbPdfGoTo(mcbPdfCurrent-1);
+$('pdfNext').onclick=()=>mcbPdfGoTo(mcbPdfCurrent+1);
+document.addEventListener('keydown',e=>{
+ if($('pdfWorkspace').classList.contains('hidden')||!mcbPdfDocument||e.altKey||e.ctrlKey||e.metaKey)return;
+ if(e.target.closest('input,textarea,select,[contenteditable="true"],dialog[open]'))return;
+ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+  e.preventDefault();e.stopImmediatePropagation();mcbPdfGoTo(mcbPdfCurrent+(e.key==='ArrowRight'?1:-1));
+ }
+},true);
+async function mcbOpenPdfPages(src){
+ const session=++mcbPdfSession, host=$('pdfPages');
+ mcbPdfDocument=null;mcbPdfCurrent=1;mcbPdfUpdateControls();
+ host.hidden=false;$('pdfDocument').hidden=true;host.replaceChildren();host.scrollTop=0;
+ const loading=document.createElement('p');loading.className='mcb-pdf-placeholder';loading.textContent='Loading PDF pages…';host.append(loading);
+ try{
+  if(!window.pdfjsLib)throw new Error('PDF.js could not load (check internet connection).');
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const bytes=await (await fetch(src)).arrayBuffer();
+  if(session!==mcbPdfSession)return;
+  const pdf=await window.pdfjsLib.getDocument({data:new Uint8Array(bytes)}).promise;
+  if(session!==mcbPdfSession)return;
+  mcbPdfDocument=pdf;mcbPdfUpdateControls();host.replaceChildren();
+  const pages=[];
+  for(let n=1;n<=pdf.numPages;n++){
+   const item=document.createElement('section');item.className='mcb-pdf-page';item.dataset.pdfPage=n;
+   item.setAttribute('aria-label','PDF page '+n);
+   const placeholder=document.createElement('div');placeholder.className='mcb-pdf-placeholder';placeholder.textContent='Page '+n;item.append(placeholder);host.append(item);pages.push(item);
+  }
+  // Render only visible/nearby pages, so large scores remain responsive.
+  const pending=new Set(),rendered=new Set();let running=false;
+  async function renderPage(n){
+   if(session!==mcbPdfSession||rendered.has(n))return;
+   const item=pages[n-1],page=await pdf.getPage(n);
+   if(session!==mcbPdfSession)return;
+   const base=page.getViewport({scale:1});
+   const scale=Math.min(2,Math.max(.6,(host.clientWidth-36)/base.width));
+   const viewport=page.getViewport({scale});
+   const canvas=document.createElement('canvas');const dpr=Math.min(window.devicePixelRatio||1,2);
+   canvas.width=Math.round(viewport.width*dpr);canvas.height=Math.round(viewport.height*dpr);
+   canvas.style.width=viewport.width+'px';canvas.style.height=viewport.height+'px';
+   const ctx=canvas.getContext('2d');
+   await page.render({canvasContext:ctx,viewport,transform:dpr===1?null:[dpr,0,0,dpr,0,0]}).promise;
+   if(session!==mcbPdfSession)return;
+   item.replaceChildren(canvas);rendered.add(n);
+  }
+  async function drain(){if(running)return;running=true;while(pending.size&&session===mcbPdfSession){const n=pending.values().next().value;pending.delete(n);try{await renderPage(n)}catch(err){pages[n-1].textContent='Unable to render page '+n;console.warn(err)}}running=false}
+  function queue(n){if(n<1||n>pdf.numPages||rendered.has(n))return;pending.add(n);drain()}
+  const observer=new IntersectionObserver(entries=>{
+   if(session!==mcbPdfSession){observer.disconnect();return}
+   for(const entry of entries)if(entry.isIntersecting){const n=Number(entry.target.dataset.pdfPage);queue(n);queue(n+1)}
+  },{root:host,rootMargin:'900px 0px'});
+  if(mcbPdfRenderObserver)mcbPdfRenderObserver.disconnect();mcbPdfRenderObserver=observer;
+  pages.forEach(item=>observer.observe(item));queue(1);
+  let scrollQueued=false;
+  host.onscroll=()=>{if(scrollQueued||session!==mcbPdfSession)return;scrollQueued=true;requestAnimationFrame(()=>{
+   scrollQueued=false;if(session!==mcbPdfSession)return;
+   const top=host.getBoundingClientRect().top+16;
+   let closest=1,best=Infinity;
+   pages.forEach((item,i)=>{const r=item.getBoundingClientRect();if(r.bottom<top)return;const delta=Math.abs(r.top-top);if(delta<best){best=delta;closest=i+1}});
+   if(closest!==mcbPdfCurrent){mcbPdfCurrent=closest;mcbPdfUpdateControls()}
+  })};
+ }catch(err){
+  if(session!==mcbPdfSession)return;
+  console.warn('PDF.js unavailable; native PDF fallback',err);
+  host.hidden=true;$('pdfDocument').hidden=false;$('pdfDocument').src=src;
+  $('pdfPageStatus').textContent='Native PDF view';
+  // Native Chrome PDF controls still work, but MCB page buttons cannot drive the embedded viewer.
+ }
+}
+
+$('pdfClose').onclick=mcbClosePDF;
+// V56.5.32: PDFs remain in the original MCB viewer. No PDF Float control.
+$('pdfFull').onclick=()=>{
+ const panel=$('pdfWorkspace');
+ if(document.fullscreenElement===panel){
+  document.exitFullscreen().catch(err=>console.warn('PDF exit fullscreen failed:',err));
+  return;
+ }
+ // Do not await any other operation before requestFullscreen: browser user
+ // activation is required, and the original PDF viewer is the target.
+ if(document.fullscreenElement){
+  console.warn('Another element is fullscreen; exit it before expanding the PDF.');
+  return;
+ }
+ panel.style.removeProperty('left');panel.style.removeProperty('top');
+ panel.style.removeProperty('right');panel.style.removeProperty('bottom');
+ mcbRaise('pdf');
+ if(typeof panel.requestFullscreen!=='function'){
+  alert('PDF fullscreen is not supported in this browser.');return;
+ }
+ panel.requestFullscreen().catch(err=>{
+  console.warn('PDF fullscreen unavailable:',err);
+  alert('Chrome could not enter PDF fullscreen: '+err.message);
+ });
+};
+document.addEventListener('fullscreenchange',()=>{
+ $('pdfFull').textContent=document.fullscreenElement===$('pdfWorkspace')?'Exit Full Screen':'Full Screen';
+});
+window.MCB_switchMedia=()=>{};
+function closeViewer(preservePDF=false){if(!preservePDF)mcbClosePDF();$('viewer').classList.remove('mcb-pip-active');let stage=$('stage');stage.querySelectorAll('video,audio').forEach(e=>e.pause());stage.replaceChildren();$('viewer').classList.add('hidden');$('viewer').classList.remove('mcb-custom-video');$('viewer').classList.remove('mcb-youtube-view');if(document.fullscreenElement===$('viewer'))document.exitFullscreen().catch(()=>{})}$('closeViewer').onclick=()=>{if(mcbEmbeddedAction('close'))return;closeViewer(!$('pdfWorkspace').classList.contains('hidden'));};// Snapshot the YouTube practice state before changing iframe document ownership.
+const mcbYouTubeSnapshots=new WeakMap();
+function mcbCaptureYouTube(frame){
+ try{const state=frame?.contentWindow?.MCB_exportYouTubeState?.();if(state)mcbYouTubeSnapshots.set(frame,state)}catch(e){}
+}
+function mcbRestoreYouTube(frame){
+ const state=mcbYouTubeSnapshots.get(frame);if(!state)return;
+ try{frame.contentWindow?.MCB_importYouTubeState?.(state)}catch(e){}
+}
+// Give the original Course Builder tab a stable window target. A popup can
+// activate it with window.open('', name) even when opener.focus() is ignored.
+if(!window.name)window.name='MCB_Practice_Room';
+function mcbShowPracticeRoom(){
+ if(!$('viewer').classList.contains('mcb-pip-active'))closeViewer(true);
+ render();
+ try{window.focus()}catch(e){}
+}
+window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data?.type==='MCB_SHOW_PRACTICE_ROOM')mcbShowPracticeRoom();});
+
+window.addEventListener('message',e=>{
+ if(e.origin!==location.origin||e.data?.type!=='MCB_MONITOR_RETURN')return;
+ const viewer=$('viewer');const frame=viewer.querySelector('.mcb-youtube-view iframe')||viewer.querySelector('iframe[src*="youtube-player"]');
+ if(frame){
+  viewer.classList.remove('hidden','float','mcb-floated');mcbRaise('viewer');
+  if(e.data.state){try{frame.contentWindow?.MCB_importYouTubeState?.(e.data.state)}catch(err){console.warn(err)}}
+ }
+ try{if(mcbFloatIsOpen())mcbFloatWindow.close()}catch(err){}
+ mcbFloatWindow=null;mcbFloatKnown=false;mcbRefreshFloatButton();
+ try{window.focus()}catch(err){}
+});
+
+function mcbEmbeddedAction(action){
+ const frame=$('stage').querySelector('iframe');
+ if(!frame||!$('viewer').classList.contains('mcb-custom-video'))return false;
+ try{const fn=frame.contentWindow.MCB_managedPlayerAction;
+  if(typeof fn!=='function'){alert('Player is still loading. Try again.');return true}
+  fn(action);return true;
+ }catch(e){alert('Player control unavailable: '+e.message);return true}
+}
+$('float').onclick=()=>{
+ if(mcbEmbeddedAction('float'))return;
+ if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+ const frame=$('stage').querySelector('iframe');
+ if(!frame||!$('viewer').classList.contains('mcb-youtube-view')){$('viewer').classList.add('mcb-floated');mcbRaise('viewer');return;}
+ mcbCaptureYouTube(frame);
+ const snapshot=mcbYouTubeSnapshots.get(frame)||{};
+ if(!mcbOpenOrReuseFloat(snapshot))return;
+ try{frame.contentWindow?.MCB_pauseForExternalWindow?.()}catch(e){}
+ // Reveal the Practice Room without destroying the floating window.
+ $('viewer').classList.add('hidden');
+};$('full').onclick=()=>{if(mcbEmbeddedAction('fullscreen'))return;const frame=$('stage').querySelector('iframe');if(frame && $('viewer').classList.contains('mcb-youtube-view')){ $('viewer').classList.remove('hidden','float','mcb-floated');mcbRaise('viewer');return;} $('viewer').classList.remove('float','mcb-floated');mcbRaise('viewer')};render();
+</script></body></html>

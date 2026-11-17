@@ -1,0 +1,303 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>YouTube Practice Player — Course Builder companion</title><style>
+:root{font-family:system-ui,Segoe UI,sans-serif;color-scheme:dark;--bg:#101723;--panel:#1c2939;--line:#34465b;--accent:#64b9e9;--text:#eef4fb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}header{padding:18px max(18px,calc((100% - 1400px)/2));position:sticky;top:0;z-index:100;background:#182536;border-bottom:1px solid var(--line)}h1{margin:0;font-size:26px}header p{margin:5px 0 0;color:#b7c9db}main{max-width:1400px;margin:20px auto;padding:0 16px 40px}.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px;margin:0 0 15px}label{font-weight:650;font-size:13px}input[type=text],input[type=url],select{background:#0d1725;color:var(--text);border:1px solid #54708c;border-radius:8px;padding:10px;font:inherit;min-width:0}button{border:1px solid #4a7899;border-radius:8px;padding:9px 12px;background:#285679;color:white;font:600 13px system-ui;cursor:pointer}button:hover{background:#38749d}button.secondary{background:#273749;border-color:#52657b}button:disabled{opacity:.5;cursor:default}.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.grow{flex:1}.source{display:flex;gap:10px;flex-wrap:wrap;align-items:end}.source>div{flex:1 1 280px}.source input{width:100%;margin-top:6px}.note{font-size:13px;color:#c4d1de}.status{font-size:13px;color:#aee4ba;min-height:20px}.stage{background:#080d15;border-radius:9px;overflow:hidden;aspect-ratio:16/9;display:flex;justify-content:center;align-items:center;position:relative}.stage video,.stage iframe{width:100%;height:100%;object-fit:contain;border:0}.placeholder{color:#91a4b7;text-align:center;padding:30px}.visual-timeline{display:block;width:100%;height:94px;border-radius:9px;background:#101d2c;cursor:crosshair;touch-action:none;margin:12px 0 3px;border:1px solid #466078}.timeline{width:100%;accent-color:var(--accent);cursor:pointer;margin:12px 0 4px}.time{font-variant-numeric:tabular-nums;color:#d2dfeb}.transport{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:10px}.transport button{white-space:nowrap}.marker{font-size:13px;color:#bdd1e4;margin-top:10px}.marker b{color:#fff}.speed{display:flex;gap:7px;align-items:center}.speed select{padding:8px}.help{border-top:1px solid var(--line);padding-top:12px;margin-top:16px;font-size:13px;color:#c7d6e5}.mini .details,.mini .help,.mini .marker{display:none}.mini .card{padding:9px}.mini .transport button{padding:7px}.mini .stage{max-height:260px}.fullscreen-player:fullscreen{width:100vw;height:100dvh;background:#0b111c;display:flex;flex-direction:column;padding:10px;overflow:auto}.fullscreen-player:fullscreen .stage{flex:1;min-height:0;aspect-ratio:auto}.fullscreen-player:fullscreen .stage video,.fullscreen-player:fullscreen .stage iframe{object-fit:contain}.fullscreen-player:fullscreen .help{display:none}.fullscreen-player:fullscreen .transport{justify-content:center}.fullscreen-player:fullscreen .marker{display:none}.fullscreen-player:fullscreen .details{display:none}.fullscreen-player:fullscreen .timeline{margin-top:8px}.fullscreen-player:fullscreen .player-header{margin-bottom:5px}#playerHeader{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}#playerHeader strong{flex:1}#playerHeader button{padding:7px 9px}#closePlayer{font-size:17px;font-weight:800;padding:14px 22px;min-height:52px;background:#b42332;border:2px solid #f9c2c6;border-radius:11px;color:white;box-shadow:0 3px 12px #0005}#closePlayer:hover,#closePlayer:focus-visible{background:#d42d3e;outline:3px solid #fff7;outline-offset:2px}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}#closeNotice{font-size:13px;color:#ffd5a1;margin:4px 0 0}#loopIndicator{color:#aee4ba}.warning{color:#ffcb8e}kbd{background:#2d4155;padding:2px 5px;border-radius:4px}
+<style>.help-anchor{position:relative;margin-top:10px;display:flex;justify-content:flex-end}.help-anchor button{touch-action:none;user-select:none}.help-anchor .help{position:absolute;right:0;bottom:calc(100% + 8px);z-index:110;background:#25394e;border:1px solid #7093b2;border-radius:10px;padding:14px;box-shadow:0 10px 25px #0009;width:min(560px,calc(100vw - 50px));max-height:55vh;overflow:auto;color:#eef4fb}.help-anchor .help[hidden]{display:none!important}.fullscreen-player:fullscreen .help-anchor .help{display:block}.fullscreen-player:fullscreen .help-anchor .help[hidden]{display:none!important}.mini .help-anchor{display:flex}.mini .help-anchor .help{display:block}.mini .help-anchor .help[hidden]{display:none!important}.mcb-play-emphasis{background:#13a85d!important;border:2px solid #08783f!important;color:#fff!important;font-size:16px!important;font-weight:850!important;min-width:96px}.mcb-play-emphasis:hover{background:#07864a!important}.speed{position:relative}.yt-speed-options{position:absolute;bottom:calc(100% + 6px);left:0;z-index:150;background:#25394e;border:1px solid #7093b2;border-radius:9px;padding:8px;display:grid;grid-template-columns:repeat(3,minmax(60px,1fr));gap:5px;box-shadow:0 9px 20px #0009}.yt-speed-options[hidden]{display:none!important}.transport button[title]{cursor:pointer}#helpButton{font-size:20px;font-weight:900}
+@media(max-width:680px){.controls,.transport,.buttons{flex-wrap:wrap!important;max-width:100%}button{max-width:100%}}
+</style></style><style id="mcb-youtube-toolbar-v5655">
+/* Visual-only toolbar alignment with the approved MP3/MP4 controls. */
+#miniBtn,#pipBtn{display:none!important}
+#playerHeader{justify-content:flex-end;gap:7px}
+#playerHeader strong{margin-right:auto}
+#playerHeader button{border-radius:5px!important;padding:7px 11px!important;background:#285c87!important;border:1px solid #5484ad!important;font-weight:700!important}
+#closePlayer{font-size:13px!important;font-weight:700!important;padding:8px 12px!important;min-height:0!important;border:1px solid #5484ad!important;border-radius:5px!important;background:#243a54!important;box-shadow:none!important}
+.transport{gap:8px!important;align-items:flex-start!important;justify-content:center}
+.transport>.mcb-yt-unit,.transport>.speed{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;min-width:57px}
+.transport>.mcb-yt-unit>button{width:48px;height:40px;min-width:48px;display:flex;align-items:center;justify-content:center;border-radius:5px!important;padding:4px!important;background:#28659a!important;border:1px solid #4985b6!important;font-size:19px!important;font-weight:800!important;line-height:1!important}
+.transport>.mcb-yt-unit>button:hover{background:#397db6!important}
+.transport>.mcb-yt-unit>button#play{background:#149451!important;border-color:#0b713d!important;color:white!important;width:57px;min-width:57px}
+.transport>.mcb-yt-unit>button#clear{background:#203650!important;border-color:#536c86!important;width:57px;min-width:57px}
+.transport>.mcb-yt-unit>button#helpButton{background:#203650!important}
+.mcb-yt-caption{font-size:10px;line-height:1.2;color:#d5e3f1;text-align:center;white-space:nowrap;font-weight:650}
+.transport>.speed{position:relative;min-width:96px}
+.transport>.speed #speedToggle{height:40px;border-radius:5px;background:#28659a;border:1px solid #4985b6;padding:6px 8px;font-weight:700;white-space:nowrap}
+.transport>.speed .mcb-yt-caption{order:2}
+@media(max-width:700px){.transport{gap:5px!important}.transport>.mcb-yt-unit{min-width:48px}.mcb-yt-caption{font-size:9px}.transport>.mcb-yt-unit>button{width:42px;min-width:42px}}
+</style><style id="mcb-youtube-toolbar-v566">.transport{gap:6px!important;align-items:center}.transport>button{border-radius:5px!important;background:#2165a2!important;border:1px solid #174c7e!important;padding:8px 10px!important;font-weight:700!important;min-height:35px!important}.transport #play{background:#15964e!important;border-color:#08783f!important}.transport #clear{background:#182d48!important;border-color:#0c1d31!important}.transport .speed button{border-radius:5px;background:#2165a2;border:1px solid #174c7e;padding:8px 10px;color:#fff;font-weight:700}.transport button:hover{filter:brightness(1.15)}#playerHeader #fullscreenBtn{background:#285679;border-radius:5px}</style><style id="mcb-yt-fit-v567">
+/* The embedded YouTube player uses the entire available viewport without vertical clipping. */
+html,body{height:100%;overflow:hidden}body{display:flex;flex-direction:column}
+body>header{display:none!important}
+main#app{width:100%;max-width:none;margin:0;padding:5px 9px 7px;min-height:0;flex:1;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+#app>.card{margin:0;padding:6px 9px;border-radius:8px}
+#app>.details{flex:0 0 auto;padding:4px 9px}
+#app>.details .source{align-items:center;gap:8px}
+#app>.details .source>div:first-child{display:flex;align-items:center;gap:7px;flex:1 1 270px}
+#app>.details .source>div:first-child label{white-space:nowrap}
+#app>.details .source input{margin-top:0;padding:5px 8px}
+#app>.details .source>div:last-child{display:none}
+#player{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:auto}
+#playerHeader{flex:0 0 auto;margin:0 0 4px}
+#fullscreenBtn{display:none!important}
+#stage{flex:1 1 auto;min-height:100px;aspect-ratio:auto;width:100%;overflow:hidden}
+#stage iframe,#stage video{width:100%;height:100%;object-fit:contain}
+#player>.note{flex:0 0 auto;font-size:11px!important;margin:4px 0 0!important;line-height:1.2}
+#player>.row{flex:0 0 auto;margin-top:4px!important}
+#visualTimeline{height:clamp(45px,8vh,75px);flex:0 0 auto;margin:4px 0 1px}
+#player .transport{flex:0 0 auto;margin-top:4px}
+#player .marker,#player .help-anchor{flex:0 0 auto;margin-top:3px}
+#player .transport button{padding:5px 7px!important;min-height:30px!important}
+@media(max-width:700px){#app>.details{display:none}#app{padding:3px}#player{padding:5px}#player .transport{gap:3px}#player .transport button{padding:4px!important}#visualTimeline{height:46px}}
+</style><style id="mcb-v568-layout">
+#app>.details .source>div:first-child{flex:1 1 200px;min-width:0}
+#loadYoutube{order:-1;flex:0 0 auto;white-space:nowrap;padding:6px 10px}
+#app>.details .source>div:first-child{order:0}
+.mcb-timeline-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;margin:1px 0 3px;flex:0 0 auto}
+.mcb-timeline-tools strong{font-weight:700}
+.mcb-zoom-controls{margin:0!important;gap:4px!important}
+.mcb-zoom-controls button{padding:3px 6px!important;min-height:25px!important}
+#clear{display:inline-flex!important;align-items:center;justify-content:center;visibility:visible!important}
+#clear+.mcb-yt-caption{white-space:nowrap}
+#player .transport{overflow:visible}
+</style><style id="mcb-v569-responsive-float">
+/* A floating YouTube document sizes to its iframe viewport, not the desktop width. */
+#player .transport{display:flex!important;flex-wrap:wrap!important;align-items:center;justify-content:center;gap:clamp(2px,0.8vw,8px)!important}
+#player .transport>button,#player .transport .speed button{font-size:clamp(10px,1.5vw,14px)!important;padding:clamp(3px,.6vw,7px)!important;min-height:clamp(26px,4vw,35px)!important;max-width:100%}
+#player .transport .speed{max-width:100%}
+.mcb-timeline-tools{gap:clamp(3px,1vw,10px)}
+.mcb-zoom-controls{display:flex;flex-wrap:wrap;align-items:center;gap:3px!important}
+.mcb-zoom-controls button{font-size:clamp(10px,1.4vw,13px)!important;padding:3px clamp(3px,.6vw,7px)!important}
+@media(max-width:600px){#app{padding:3px 5px!important}#app>.card{padding:4px 6px!important}#player .transport{gap:3px!important}#player .transport>button,#player .transport .speed button{font-size:11px!important;padding:4px 5px!important}#visualTimeline{height:48px!important}.mcb-timeline-tools{font-size:10px!important}}
+@media(max-width:400px){#player .transport>button,#player .transport .speed button{font-size:10px!important;padding:3px!important}.mcb-timeline-tools strong{font-size:10px}}
+</style></head><body><header><div class="header-inner"><button id="closePlayer" type="button" aria-label="Close player tab">✕ CLOSE PLAYER</button></div><p id="closeNotice" role="status" hidden></p></header><main id="app"><section class="card details"><div class="source"><div><label for="youtubeUrl">URL</label><input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..."></div><button id="loadYoutube">Load YouTube URL</button><div><label for="localFile">Or choose a local audio/video file</label><input id="localFile" type="file" accept="audio/*,video/*,.mp3,.wav,.m4a,.mp4,.webm,.ogg,.flac" style="display:block;margin-top:7px;max-width:100%"></div></div></section><section class="card fullscreen-player" id="player"><div id="playerHeader"><strong id="sourceTitle">No media loaded</strong><button class="secondary" id="fullscreenBtn" hidden>Fullscreen</button></div><div class="stage" id="stage"><div class="placeholder">Choose a local audio/video file or load a YouTube link to begin.</div></div><canvas id="visualTimeline" class="visual-timeline" aria-label="Playback timeline: drag to scrub; Shift-drag to select loop or adjust markers" title="Drag to scrub; Shift+drag to select loop or adjust markers."></canvas><div class="mcb-timeline-tools"><div class="row mcb-zoom-controls"><button type="button" class="secondary" id="timelineZoomOut">− Zoom</button><button type="button" class="secondary" id="timelineZoomIn">+ Zoom</button><button type="button" class="secondary" id="timelineZoomFit">Fit All</button><span class="note" id="timelineZoomLabel">100%</span></div><strong>Drag to scrub video · Hold Shift and drag to select or adjust a loop</strong></div><input id="seek" class="timeline" style="display:none" type="range" min="0" max="1000" value="0" aria-label="Seek through video"><div class="row"><span id="clock" class="time">00:00 / 00:00</span><span class="grow"></span><span id="loopIndicator">Loop off</span></div><div class="transport"><button class="secondary" id="jumpToIn" aria-label="Jump to In">↤ IN</button><button class="secondary" id="jumpToOut" aria-label="Jump to Out">OUT ↦</button><button class="secondary" id="loop" aria-label="Enable Loop">⟲ Loop</button><button class="mcb-play-emphasis" id="play" aria-label="Play or Pause">▶ Play</button><button class="secondary" id="markIn" aria-label="Mark In">⟦ IN</button><button class="secondary" id="markOut" aria-label="Mark Out">OUT ⟧</button><div class="speed"><button type="button" class="secondary" id="speedToggle" aria-expanded="false" aria-controls="speedOptions">Speed: 1× ▾</button><div id="speedOptions" class="yt-speed-options" hidden></div><select id="speed" hidden><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="0.65">0.65×</option><option value="0.75">0.75×</option><option value="0.85">0.85×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></div><button class="secondary" id="nudgeLeft" aria-label="Nudge backward">◀ .05</button><button class="secondary" id="nudgeRight" aria-label="Nudge forward">.05 ▶</button><button class="secondary" id="back" aria-label="Back five seconds">◀ 5s</button><button class="secondary" id="forward" aria-label="Forward five seconds">5s ▶</button><button class="secondary" id="clear" aria-label="Clear Markers">✕ Clear Markers</button><button type="button" class="secondary" id="helpButton" aria-label="Click for player help" aria-expanded="false" aria-controls="playerHelp">?</button></div><div class="marker">In: <b id="inTime">—</b> &nbsp; Out: <b id="outTime">—</b></div><div id="status" class="status" role="status"></div><div class="help-anchor"><div class="help" id="playerHelp" role="tooltip" hidden><b>Help:</b> <div class="mcb-shortcut-help"><b>Keyboard shortcuts</b><table style="width:100%;border-collapse:collapse;margin:7px 0 10px"><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>Spacebar</kbd></td><td style="padding:3px 0">Play / Pause</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>I</kbd></td><td style="padding:3px 0">Mark In</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>O</kbd></td><td style="padding:3px 0">Mark Out</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>L</kbd></td><td style="padding:3px 0">Loop On / Off</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>G</kbd></td><td style="padding:3px 0">Clear both markers</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>F</kbd></td><td style="padding:3px 0">Clear Out marker only</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>Q</kbd></td><td style="padding:3px 0">Jump to In</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>W</kbd></td><td style="padding:3px 0">Jump to Out</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>,</kbd></td><td style="padding:3px 0">Nudge backward 0.05 seconds</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>.</kbd></td><td style="padding:3px 0">Nudge forward 0.05 seconds</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>M</kbd></td><td style="padding:3px 0">Back 5 seconds</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>/</kbd></td><td style="padding:3px 0">Forward 5 seconds</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>S</kbd></td><td style="padding:3px 0">Open Speed selector</td></tr><tr><td style="padding:3px 12px 3px 0;white-space:nowrap"><kbd>F1</kbd></td><td style="padding:3px 0">Help</td></tr></table><p>Shortcuts are disabled while typing in text fields or selecting options.</p></div> Play/Pause with <kbd>Space</kbd> when not typing; jump to the In marker; nudge playback backward/forward 0.05 seconds without moving markers; jump backward/forward five seconds; set In and Out markers, then enable looping. Playback rate and looping use YouTube's official player interface for YouTube sources. Drag the timeline to scrub without changing loop markers; hold Shift while dragging to select a loop or adjust IN/OUT markers. Use + Zoom, − Zoom and Fit All for precise navigation. The visual timeline shows playback position and A–B loop markers; it is not an audio waveform because YouTube does not expose audio samples. Browser picture-in-picture is available for local video where supported.</div></div></section></main><script>
+(()=>{'use strict';const $=id=>document.getElementById(id),stage=$('stage');let mode='none',media=null,objectURL=null,yt=null,ytReady=false,ytApiPromise=null,a=null,b=null,looping=false,dragSeek=false,videoTitle='',lastLoopSeek=0,loopBusy=false,loopNavigationOverride=false;const fmt=t=>{if(!Number.isFinite(t)||t<0)return'--:--';t=Math.floor(t);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};const status=(msg,warn=false)=>{$('status').textContent=msg;$('status').classList.toggle('warning',warn)};const shortTitle=t=>t.length>25?t.slice(0,25).trimEnd()+'…':t;function setVideoTitle(title){videoTitle=(title||'YouTube video').trim();$('sourceTitle').textContent=shortTitle(videoTitle);$('sourceTitle').title=videoTitle;}const ytId=raw=>{try{const u=new URL(raw.trim());let id=null;if(['youtu.be','www.youtu.be'].includes(u.hostname))id=u.pathname.split('/')[1];else if(['youtube.com','www.youtube.com','m.youtube.com','www.youtube-nocookie.com'].includes(u.hostname)){id=u.searchParams.get('v')||u.pathname.match(/^\/(?:shorts|embed|live)\/([^/]+)/)?.[1]}return id&&/^[A-Za-z0-9_-]{11}$/.test(id)?id:null}catch{return null}};function reset(){timelineZoom=1;timelineStart=0;if($('timelineZoomLabel'))$('timelineZoomLabel').textContent='100%';if(media){media.pause();media.removeAttribute('src');media.load();media=null}if(yt){try{yt.destroy()}catch{}yt=null}ytReady=false;if(objectURL){URL.revokeObjectURL(objectURL);objectURL=null}stage.replaceChildren();mode='none';a=b=null;looping=false;lastLoopSeek=0;loopBusy=false;loopNavigationOverride=false;$('seek').value=0;update()};const current=()=>mode==='local'?media?.currentTime||0:mode==='youtube'&&ytReady?yt.getCurrentTime()||0:0;const duration=()=>mode==='local'?media?.duration||0:mode==='youtube'&&ytReady?yt.getDuration()||0:0;const paused=()=>mode==='local'?media?.paused!==false:mode==='youtube'&&ytReady?yt.getPlayerState()!==1:true;function seek(t){const d=duration();t=Math.max(0,Math.min(Number.isFinite(d)&&d>0?d:t,t));if(mode==='local'&&media)media.currentTime=t;if(mode==='youtube'&&ytReady)yt.seekTo(t,true);update()};function play(){loopNavigationOverride=false;if(looping&&a!==null&&b!==null&&b>a+.1&&!loopNavigationOverride&&(current()<a||current()>=b))seek(a);if(mode==='local'&&media){media.play().catch(e=>status('Playback failed: '+e.message,true))}else if(mode==='youtube'&&ytReady)yt.playVideo();else status('Load a playable video or audio file first.',true)}function pause(){if(mode==='local'&&media)media.pause();else if(mode==='youtube'&&ytReady)yt.pauseVideo()}function drawTimeline(){const c=$('visualTimeline');if(!c)return;const rect=c.getBoundingClientRect();if(!rect.width)return;const ratio=window.devicePixelRatio||1,w=Math.max(1,Math.round(rect.width*ratio)),h=Math.max(1,Math.round(rect.height*ratio));if(c.width!==w||c.height!==h){c.width=w;c.height=h}const ctx=c.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);const W=rect.width,H=rect.height,d=duration(),t=current(),x=v=>d>0?(v-timelineStart)/timelineSpan()*W:0;ctx.clearRect(0,0,W,H);ctx.fillStyle='#101d2c';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#2c455e';ctx.lineWidth=1;for(let i=0;i<=10;i++){const xx=i*W/10;ctx.beginPath();ctx.moveTo(xx,18);ctx.lineTo(xx,H-16);ctx.stroke()}ctx.fillStyle='#244967';ctx.fillRect(0,H/2-5,Math.max(0,Math.min(W,x(t))),10);if(a!==null&&b!==null&&b>a){ctx.fillStyle=looping?'rgba(100,185,233,.32)':'rgba(100,185,233,.16)';ctx.fillRect(Math.max(0,x(a)),17,Math.max(0,Math.min(W,x(b))-Math.max(0,x(a))),H-34)}const marker=(v,color,label)=>{if(v===null||v<timelineStart||v>timelineStart+timelineSpan())return;const xx=x(v);ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(xx,8);ctx.lineTo(xx,H-8);ctx.stroke();ctx.fillStyle=color;ctx.font='bold 12px system-ui';ctx.fillText(label,Math.max(4,Math.min(W-22,xx+5)),14)};marker(a,'#78dfa5','IN');marker(b,'#ffbd70','OUT');ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x(t),21);ctx.lineTo(x(t),H-20);ctx.stroke();ctx.fillStyle='#c8d8e8';ctx.font='11px system-ui';if(previewPosition!==null&&d>0){const px=x(previewPosition);ctx.strokeStyle='#f7d76c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(px,17);ctx.lineTo(px,H-17);ctx.stroke();ctx.fillStyle='#f7d76c';ctx.font='bold 12px system-ui';const label=fmt(previewPosition);ctx.fillText(label,Math.max(5,Math.min(W-45,px+6)),H-24)}ctx.fillText(fmt(timelineStart),7,H-5);if(d>0){const end=fmt(Math.min(d,timelineStart+timelineSpan()));ctx.fillText(end,Math.max(7,W-ctx.measureText(end).width-7),H-5)}}function update(){const t=current(),d=duration();if(!dragSeek)$('seek').value=d>0?Math.round(t/d*1000):0;$('clock').textContent=fmt(t)+' / '+fmt(d);$('inTime').textContent=a===null?'—':fmt(a);$('outTime').textContent=b===null?'—':fmt(b);$('loopIndicator').textContent=looping&&b!==null&&a!==null?'Loop on':'Loop off';$('loop').classList.toggle('mcb-loop-active',looping&&a!==null&&b!==null&&b>a);$('loop').setAttribute('aria-pressed',String(looping&&a!==null&&b!==null&&b>a));$('loop').textContent=looping?'Disable Loop':'Enable Loop';$('play').textContent=paused()?'▶ Play':'⏸ Pause';drawTimeline()}function applySpeed(){const rate=Number($('speed').value);if(mode==='local'&&media){media.playbackRate=rate;for(const k of ['preservesPitch','mozPreservesPitch','webkitPreservesPitch'])if(k in media)media[k]=true}else if(mode==='youtube'&&ytReady){const rates=yt.getAvailablePlaybackRates?.()||[1];if(rates.includes(rate)){yt.setPlaybackRate(rate);status('YouTube speed: '+rate+'×')}else{status('YouTube does not offer '+rate+'× for this video. Available: '+rates.join(', ')+'×',true);const nearest=rates.reduce((x,y)=>Math.abs(y-rate)<Math.abs(x-rate)?y:x,rates[0]);yt.setPlaybackRate(nearest)}}}function ytApi(){if(window.YT?.Player)return Promise.resolve();if(ytApiPromise)return ytApiPromise;ytApiPromise=new Promise((resolve,reject)=>{const previous=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{if(typeof previous==='function')previous();resolve()};const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.onerror=()=>reject(Error('Could not load the YouTube API. Check your internet connection.'));document.head.append(s);setTimeout(()=>{if(!window.YT?.Player)reject(Error('YouTube API timed out or was blocked.'))},16000)});return ytApiPromise}async function loadYouTube(){const id=ytId($('youtubeUrl').value);if(!id){status('Please paste a valid YouTube video link.',true);return}reset();mode='youtube';setVideoTitle('YouTube video');fetch('https://noembed.com/embed?url='+encodeURIComponent('https://www.youtube.com/watch?v='+id)).then(r=>r.ok?r.json():null).then(data=>{if(mode==='youtube'&&ytId($('youtubeUrl').value)===id&&data?.title)setVideoTitle(data.title)}).catch(()=>{});const holder=document.createElement('div');holder.id='youtubeHost';holder.style.cssText='width:100%;height:100%';stage.append(holder);status('Loading YouTube player…');try{await ytApi();if(mode!=='youtube')return;yt=new YT.Player('youtubeHost',{width:'100%',height:'100%',videoId:id,playerVars:{playsinline:1,rel:0,enablejsapi:1,origin:location.protocol.startsWith('http')?location.origin:undefined},events:{onReady:()=>{ytReady=true;try{const title=yt.getVideoData()?.title;if(title){setVideoTitle(title)}}catch(e){}applySpeed();status('YouTube player ready. Try Play and speed control.');update()},onStateChange:e=>{try{const title=yt.getVideoData()?.title;if(title)setVideoTitle(title)}catch(err){}if(looping&&!loopNavigationOverride&&a!==null&&b!==null&&e.data===YT.PlayerState.ENDED){seek(a);yt.playVideo()}update()},onError:e=>{const message=e.data===153?'YouTube error 153: embedded playback needs a valid client/referrer; opening this HTML file directly may be blocked.':e.data===101||e.data===150?'This video owner does not allow embedding.':'YouTube playback error '+e.data;status(message,true)}}})}catch(e){status(e.message,true)}}function loadLocal(file){if(!file)return;reset();objectURL=URL.createObjectURL(file);mode='local';videoTitle=file.name.replace(/\.[^.]+$/,'');$('sourceTitle').textContent=videoTitle;const isVideo=file.type.startsWith('video/')||/\.(mp4|webm|mov|m4v)$/i.test(file.name);media=document.createElement(isVideo?'video':'audio');media.controls=false;media.preload='metadata';media.src=objectURL;media.style.cssText=isVideo?'width:100%;height:100%;object-fit:contain':'width:95%;height:60px';stage.append(media);for(const ev of ['loadedmetadata','timeupdate','play','pause','ended','seeked'])media.addEventListener(ev,update);media.addEventListener('error',()=>status('This browser cannot decode this file format.',true));applySpeed();status('Local file loaded. Custom controls are ready.');update()};for(const [id,label] of Object.entries({jumpToIn:'Jump to In marker',jumpToOut:'Jump to Out marker',nudgeLeft:'Nudge playback backward 0.05 seconds',nudgeRight:'Nudge playback forward 0.05 seconds'})){const btn=$(id);if(btn){btn.title=label;btn.setAttribute('aria-label',label)}}const helpButton=$('helpButton'),playerHelp=$('playerHelp');
+function showPlayerHelp(){playerHelp.hidden=false;helpButton.setAttribute('aria-expanded','true')}
+function hidePlayerHelp(){playerHelp.hidden=true;helpButton.setAttribute('aria-expanded','false')}
+helpButton.addEventListener('click',()=>playerHelp.hidden?showPlayerHelp():hidePlayerHelp());
+
+
+
+
+const speedToggle=$('speedToggle'),speedOptions=$('speedOptions');
+for(const opt of $('speed').options){const b=document.createElement('button');b.type='button';b.className='secondary';b.textContent=opt.textContent;b.title='Set playback speed to '+opt.textContent;b.onclick=()=>{$('speed').value=opt.value;applySpeed();speedToggle.textContent='Speed: '+opt.textContent+' ▾';speedOptions.hidden=true;speedToggle.setAttribute('aria-expanded','false')};speedOptions.appendChild(b)}
+speedToggle.onclick=()=>{speedOptions.hidden=!speedOptions.hidden;speedToggle.setAttribute('aria-expanded',String(!speedOptions.hidden))};
+document.addEventListener('pointerdown',e=>{if(!speedOptions.contains(e.target)&&e.target!==speedToggle){speedOptions.hidden=true;speedToggle.setAttribute('aria-expanded','false')}});
+for(const [id,tip] of Object.entries({play:'Play or pause (Spacebar)',loop:'Enable or disable A–B loop',markIn:'Set the In marker',markOut:'Set the Out marker',speedToggle:'Choose playback speed',back:'Nudge left 5 seconds',forward:'Nudge right 5 seconds',clear:'Clear loop markers',helpButton:'Click for player help'})){const el=$(id);if(el)el.title=tip}
+const incomingParams=new URLSearchParams(location.search);const incomingVideo=incomingParams.get('video')||incomingParams.get('url')||incomingParams.get('youtube');if(incomingVideo){$('youtubeUrl').value=incomingVideo;if(ytId(incomingVideo)){setTimeout(loadYouTube,0)}else{status('The practice item link is not a recognized YouTube video URL. You can edit it and click Load YouTube.',true)}}if(window.parent!==window){$('closePlayer').hidden=true;$('closePlayer').style.display='none';}
+$('closePlayer').onclick=()=>{if(window.parent!==window){window.parent.postMessage({type:'MCB_V56_YOUTUBE_CLOSE'},'*');return;}try{window.close()}catch(e){}const notice=$('closeNotice');notice.hidden=false;notice.textContent='If this tab does not close automatically, close it with Ctrl+W (Windows) or Command+W (Mac). Your Course Builder tab remains open.';};$('loadYoutube').onclick=loadYouTube;$('youtubeUrl').addEventListener('keydown',e=>{if(e.key==='Enter')loadYouTube()});$('localFile').onchange=e=>loadLocal(e.target.files?.[0]);$('play').onclick=()=>paused()?play():pause();function manualSeek(t){loopNavigationOverride=true;seek(t)}$('jumpToIn').onclick=()=>{if(a!==null)manualSeek(a)};$('jumpToOut').onclick=()=>{if(b!==null)manualSeek(b)};$('nudgeLeft').onclick=()=>manualSeek(current()-0.05);$('nudgeRight').onclick=()=>manualSeek(current()+0.05);$('back').onclick=()=>manualSeek(current()-5);$('forward').onclick=()=>manualSeek(current()+5);$('speed').onchange=applySpeed;$('markIn').onclick=()=>{loopNavigationOverride=false;a=current();if(b!==null&&b<=a){b=null;looping=false}update()};$('markOut').onclick=()=>{loopNavigationOverride=false;b=current();if(a!==null&&b<=a)looping=false;update()};$('loop').onclick=()=>{if(looping){looping=false;loopNavigationOverride=false;update();return}if(a===null||b===null||b<=a+.1){status('Set an In marker and a later Out marker first.',true);return}looping=true;loopNavigationOverride=false;lastLoopSeek=0;loopBusy=false;if(current()<a||current()>=b)seek(a);play();status('A–B loop enabled. Playback will repeat between In and Out.');update()};$('clear').onclick=()=>{a=b=null;looping=false;loopNavigationOverride=false;update()};$('seek').addEventListener('input',()=>{dragSeek=true;const d=duration();$('clock').textContent=fmt(d*Number($('seek').value)/1000)+' / '+fmt(d)});$('seek').addEventListener('change',()=>{dragSeek=false;seek(duration()*Number($('seek').value)/1000)});$('fullscreenBtn').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else $('player').requestFullscreen().catch(e=>status(e.message,true))};document.addEventListener('keydown',e=>{
+ const key=e.key?.toLowerCase();const shortcuts={i:'markIn',o:'markOut',l:'loop',g:'clear',q:'jumpToIn',w:'jumpToOut',',':'nudgeLeft','.':'nudgeRight',m:'back','/':'forward',s:'speedToggle',f1:'helpButton'};
+ const space=e.code==='Space'||key===' ';
+ if(!space&&!Object.prototype.hasOwnProperty.call(shortcuts,key)&&key!=='f')return;
+ if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||e.target?.closest?.('input,select,textarea,[contenteditable],[role="textbox"]'))return;
+ e.preventDefault();e.stopImmediatePropagation();
+ if(space){paused()?play():pause();return}
+ if(key==='f'){b=null;looping=false;loopNavigationOverride=false;update();return}
+ $(shortcuts[key])?.click();
+},true);const canvas=$('visualTimeline');let timelineZoom=1,timelineStart=0;
+let mcbPendingState=null;
+window.MCB_pauseForExternalWindow=()=>pause();
+window.MCB_exportYouTubeState=()=>({url:$('youtubeUrl').value,videoId:ytId($('youtubeUrl').value),position:current(),a,b,looping,zoom:timelineZoom,start:timelineStart,speed:$('speed').value,playing:!paused()});
+window.MCB_importYouTubeState=(state)=>{
+ if(!state||typeof state!=='object')return;
+ const id=ytId($('youtubeUrl').value);if(state.videoId&&id&&state.videoId!==id)return;
+ mcbPendingState=state;
+ const restore=()=>{
+  if(!mcbPendingState||!ytReady||mode!=='youtube')return false;
+  const x=mcbPendingState;mcbPendingState=null;
+  a=Number.isFinite(x.a)?x.a:null;b=Number.isFinite(x.b)?x.b:null;
+  looping=!!x.looping&&a!==null&&b!==null&&b>a+.1;
+  loopNavigationOverride=false;timelineZoom=Math.max(1,Math.min(128,Number(x.zoom)||1));
+  timelineStart=Number.isFinite(x.start)?x.start:0;clampTimeline();
+  $('timelineZoomLabel').textContent=Math.round(timelineZoom*100)+'%';
+  if(x.speed&&[...$('speed').options].some(o=>o.value===String(x.speed))){$('speed').value=String(x.speed);applySpeed();}
+  if(Number.isFinite(x.position))seek(x.position);
+  if(x.playing)yt.playVideo();else yt.pauseVideo();
+  update();return true;
+ };
+ if(!restore()){const timer=setInterval(()=>{if(restore())clearInterval(timer)},150);setTimeout(()=>clearInterval(timer),15000)}
+};
+const timelineSpan=()=>duration()/timelineZoom;function clampTimeline(){timelineStart=Math.max(0,Math.min(timelineStart,Math.max(0,duration()-timelineSpan())))}function changeTimelineZoom(next){const d=duration();if(!(d>0))return;const loopValid=a!==null&&b!==null&&b>a;const focus=loopValid?(a+b)/2:current();timelineZoom=Math.max(1,Math.min(128,next));timelineStart=focus-timelineSpan()/2;clampTimeline();$('timelineZoomLabel').textContent=Math.round(timelineZoom*100)+'%';update()}$('timelineZoomIn').onclick=()=>changeTimelineZoom(timelineZoom*2);$('timelineZoomOut').onclick=()=>changeTimelineZoom(timelineZoom/2);$('timelineZoomFit').onclick=()=>{timelineZoom=1;timelineStart=0;$('timelineZoomLabel').textContent='100%';update()};canvas.addEventListener('wheel',e=>{if(timelineZoom<=1)return;e.preventDefault();timelineStart+=e.deltaY/600*timelineSpan();clampTimeline();update()},{passive:false});
+let timelineGesture=null;
+const timelineTime=e=>{const d=duration(),r=canvas.getBoundingClientRect();return d>0?Math.max(0,Math.min(d,timelineStart+timelineSpan()*Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)))):0};
+const timelineX=t=>{const d=duration(),r=canvas.getBoundingClientRect();return d>0?(t-timelineStart)/timelineSpan()*r.width:0};
+const timelineNear=(x,t)=>t!==null&&Math.abs(x-timelineX(t))<=13;
+// Live preview while choosing a loop. Throttle YouTube seeks to avoid flooding its iframe API.
+let lastPreviewAt=0, pendingPreview=null, previewTimer=null, previewPosition=null;
+function previewAt(t,force=false){
+ const d=duration();if(!(d>0))return;
+ t=Math.max(0,Math.min(d,t));
+ if(mode==='local'&&media){media.currentTime=t;update();return}
+ if(mode!=='youtube'||!ytReady)return;
+ previewPosition=t;loopNavigationOverride=true;
+ const now=performance.now(),interval=280;
+ if(force||now-lastPreviewAt>=interval){
+   if(previewTimer!==null){clearTimeout(previewTimer);previewTimer=null}
+   pendingPreview=null;lastPreviewAt=now;yt.seekTo(t,true);update();
+ }else{
+   pendingPreview=t;
+   if(previewTimer===null)previewTimer=setTimeout(()=>{
+     previewTimer=null;
+     if(pendingPreview!==null&&timelineGesture){const target=pendingPreview;pendingPreview=null;previewAt(target,true)}
+   },interval-(now-lastPreviewAt));
+ }
+}
+function stopPreview(){if(previewTimer!==null)clearTimeout(previewTimer);previewTimer=null;pendingPreview=null;previewPosition=null}
+canvas.addEventListener('pointerdown',e=>{
+ if(e.button!==0||duration()<=0)return;
+ e.preventDefault();const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,t=timelineTime(e);
+ let kind=e.shiftKey?'region':'scrub';
+ if(e.shiftKey&&timelineNear(x,a)&&timelineNear(x,b))kind=Math.abs(x-timelineX(a))<=Math.abs(x-timelineX(b))?'in':'out';
+ else if(e.shiftKey&&timelineNear(x,a))kind='in';
+ else if(e.shiftKey&&timelineNear(x,b))kind='out';
+ timelineGesture={kind,startX:e.clientX,startTime:t,moved:false,oldA:a,oldB:b};lastPreviewAt=0;stopPreview();status(kind==='scrub'?'Drag: scrubbing video without changing loop markers.':kind==='region'?'Shift-drag to choose the loop range.':'Drag to reposition the '+kind.toUpperCase()+' marker.');
+ canvas.setPointerCapture(e.pointerId);
+ // Start seeking immediately so even a short drag has a visible response.
+ previewAt(t,true);
+});
+canvas.addEventListener('pointermove',e=>{
+ if(!timelineGesture)return;
+ const g=timelineGesture,t=timelineTime(e);
+ previewPosition=t;loopNavigationOverride=true;
+ if(Math.abs(e.clientX-g.startX)>5)g.moved=true;
+ if(!g.moved){update();return}
+ if(g.kind==='scrub'){
+   // Ordinary dragging only seeks; preserve In/Out markers and loop enabled state.
+ }else if(g.kind==='in'){
+   a=Math.min(t,b===null?duration():Math.max(0,b-.1));
+   if(b!==null&&b-a<.1)looping=false;
+ }else if(g.kind==='out'){
+   b=Math.max(t,a===null?0:Math.min(duration(),a+.1));
+   if(a!==null&&b-a<.1)looping=false;
+ }else{
+   a=Math.min(g.startTime,t);b=Math.max(g.startTime,t);
+   if(!(a!==null&&b!==null&&b>a+.1))looping=false;
+   loopNavigationOverride=false;
+ }
+ // Preview the video at the dragged pointer position, even when editing a marker.
+ previewAt(t);
+ update();
+});
+function finishTimeline(e,cancel=false){
+ const g=timelineGesture;if(!g)return;
+ const finalPosition=timelineTime(e);
+ timelineGesture=null;stopPreview();if(g.kind!=='scrub'&&a!==null&&b!==null&&b>a+.1)loopNavigationOverride=false;
+ if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);
+ if(cancel){a=g.oldA;b=g.oldB;update();return}
+ // Always issue the final seek; the last throttled preview may be behind the pointer.
+ seek(finalPosition);
+ if(!g.moved){
+   if(g.kind==='scrub')status('Seeked to '+fmt(finalPosition)+'. Loop markers unchanged.');
+   else if(g.kind==='region')seek(g.startTime);
+   else status((g.kind==='in'?'In':'Out')+' marker: drag to reposition.');
+ }else if(g.kind==='scrub'){
+   status('Scrubbed to '+fmt(finalPosition)+'. Loop markers unchanged.');
+ }else if(g.kind==='region'){
+   if(b-a<.1){a=g.oldA;b=g.oldB;seek(g.startTime)}
+   else {seek(timelineTime(e));status('Loop region selected: '+fmt(a)+' to '+fmt(b)+'. Click Enable Loop to repeat.')} 
+ }else {seek(timelineTime(e));status((g.kind==='in'?'In':'Out')+' marker moved to '+fmt(g.kind==='in'?a:b)+'.')} 
+ update();
+}
+canvas.addEventListener('pointerup',e=>finishTimeline(e));
+canvas.addEventListener('pointercancel',e=>finishTimeline(e,true));
+window.addEventListener('resize',drawTimeline);setInterval(()=>{if(!timelineGesture&&looping&&a!==null&&b!==null&&b>a&&mode!=='none'){const now=performance.now(),t=current();if(!loopNavigationOverride&&!paused()&&t>=b-.16&&now-lastLoopSeek>450){lastLoopSeek=now;seek(a);if(mode==='youtube'&&ytReady){const state=yt.getPlayerState();if(state!==YT.PlayerState.PLAYING)yt.playVideo()}else if(mode==='local'&&media&&media.paused)media.play().catch(()=>{})}}update()},80);window.addEventListener('beforeunload',()=>{if(objectURL)URL.revokeObjectURL(objectURL)});update()})();
+</script><script id="mcb-youtube-toolbar-v5655-script">
+/* Keep all existing click handlers and IDs; only change presentation. */
+(()=>{const labels={jumpToIn:['⏮','Jump In'],jumpToOut:['⏭','Jump Out'],loop:['↻','Loop'],play:['▶','Play'],markIn:['[','Mark In'],markOut:[']','Mark Out'],nudgeLeft:['‹','Nudge −'],nudgeRight:['›','Nudge +'],back:['−5','−5 sec'],forward:['+5','+5 sec'],clear:['×','Clear Markers'],helpButton:['?','Help']};
+const transport=document.querySelector('.transport');if(!transport)return;
+for(const [id,[symbol,label]] of Object.entries(labels)){const btn=document.getElementById(id);if(!btn||!transport.contains(btn))continue;const wrapper=document.createElement('div');wrapper.className='mcb-yt-unit';btn.parentNode.insertBefore(wrapper,btn);wrapper.appendChild(btn);const caption=document.createElement('span');caption.className='mcb-yt-caption';caption.textContent=label;wrapper.appendChild(caption);btn.setAttribute('aria-label',label);btn.title=label;btn.dataset.mcbSymbol=symbol;if(id!=='play'&&id!=='loop')btn.textContent=symbol;}
+const speed=document.querySelector('.transport>.speed');if(speed){const caption=document.createElement('span');caption.className='mcb-yt-caption';caption.textContent='Speed';speed.appendChild(caption)}
+const play=document.getElementById('play');if(play){const observer=new MutationObserver(()=>{const playing=!/^▶/.test(play.textContent.trim());const desired=playing?'❚❚':'▶';if(play.textContent!==desired)play.textContent=desired});observer.observe(play,{childList:true,characterData:true,subtree:true});}
+const loop=document.getElementById('loop');if(loop){const observer=new MutationObserver(()=>{if(loop.textContent!=='↻')loop.textContent='↻'});observer.observe(loop,{childList:true,characterData:true,subtree:true});}
+})();
+</script>
+<style id="mcb-v5611-layout">
+.mcb-timeline-tools{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-start!important;gap:5px!important}
+.mcb-timeline-tools .mcb-zoom-controls{justify-content:flex-start!important;margin:0!important}
+.mcb-timeline-tools strong{text-align:left!important}
+</style>
+<style id="mcb-v5610-styles">
+/* The player itself, not the outer browser viewport, determines control sizes. */
+#player{container-type:inline-size}
+#player .transport{gap:clamp(2px,0.65cqw,8px)!important}
+#player .transport>.mcb-yt-unit{min-width:0!important;gap:clamp(1px,.35cqw,4px)!important}
+#player .transport>.mcb-yt-unit>button{width:clamp(25px,4.1cqw,48px)!important;min-width:0!important;height:clamp(25px,3.6cqw,40px)!important;min-height:0!important;font-size:clamp(11px,1.8cqw,19px)!important;padding:2px!important}
+#player .transport>.mcb-yt-unit>button#play,#player .transport>.mcb-yt-unit>button#clear{width:clamp(29px,4.8cqw,57px)!important;min-width:0!important}
+#player .transport>.mcb-yt-unit>.mcb-yt-caption{font-size:clamp(7px,.95cqw,10px)!important}
+#player .transport>.speed{min-width:0!important}
+#player .transport>.speed #speedToggle{height:clamp(25px,3.6cqw,40px)!important;font-size:clamp(9px,1.2cqw,13px)!important;padding:2px 4px!important}
+#player .transport>.mcb-yt-unit>button#loop.mcb-loop-active{background:#168346!important;border-color:#68e5a0!important;box-shadow:0 0 0 2px #68e5a04d!important;color:#fff!important}
+#player .transport>.mcb-yt-unit>button#clear{background:#20436e!important;border-color:#527ca8!important}
+#clear svg{width:75%;height:75%;display:block;pointer-events:none}
+@container (max-width:450px){#player .transport{gap:2px!important}#player .transport>.mcb-yt-unit>.mcb-yt-caption{font-size:7px!important}#player .transport>.speed #speedToggle{font-size:9px!important}}
+</style>
+<script id="mcb-v5610-icons">
+(()=>{const clear=document.getElementById('clear');if(!clear)return;
+clear.replaceChildren();
+clear.innerHTML='<svg viewBox="0 0 36 28" aria-hidden="true" focusable="false"><path d="M12 4H4v20h8M24 4h8v20h-8" fill="none" stroke="#e5efff" stroke-width="4.5" stroke-linecap="square" stroke-linejoin="round"/></svg>';
+clear.setAttribute('aria-label','Clear Markers');clear.title='Clear both IN and OUT markers';
+})();
+</script>
+
+<style id="mcb-monitor-window-style">
+#mcbMonitorToolbar{position:sticky;top:0;z-index:9999;background:#10243b;color:white;display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:7px 12px;font:600 13px system-ui}
+#mcbMonitorToolbar button{background:#246399;color:#fff;border:1px solid #679ac0;border-radius:5px;padding:7px 12px;cursor:pointer}
+body.mcb-monitor-window main{max-width:none;margin:0;padding:6px 12px 14px}
+body.mcb-monitor-window header{display:none}
+body.mcb-monitor-window #mcbMonitorToolbar:fullscreen{height:100vh}
+html:fullscreen,html:fullscreen body.mcb-monitor-window{height:100%;overflow:hidden;background:#101723}html:fullscreen body.mcb-monitor-window{display:flex;flex-direction:column}html:fullscreen body.mcb-monitor-window main{flex:1;min-height:0;overflow:auto;width:100%;display:flex;flex-direction:column}html:fullscreen body.mcb-monitor-window #player{flex:1;min-height:0;display:flex;flex-direction:column}html:fullscreen body.mcb-monitor-window .stage{flex:1;min-height:180px;aspect-ratio:auto}html:fullscreen body.mcb-monitor-window #mcbMonitorToolbar{flex:none}
+</style>
+<script id="mcb-monitor-window-script">
+(()=>{
+ const hash=new URLSearchParams(location.hash.slice(1));
+ const encoded=hash.get('mcbState');if(!encoded)return;
+ document.body.classList.add('mcb-monitor-window');
+ const bar=document.createElement('div');bar.id='mcbMonitorToolbar';
+ const info=document.createElement('span');info.textContent='MCB Floating Player';info.style.marginRight='auto';
+ const room=document.createElement('button');room.textContent='Switch Media ↔';room.title='Bring the Practice Room player to the foreground';
+ const second=document.createElement('button');second.textContent='Open Second Media';second.onclick=()=>{try{window.opener?.postMessage({type:'MCB_OPEN_SECOND_MEDIA'},location.origin);window.opener?.focus()}catch(e){}};
+ const pin=document.createElement('button');pin.textContent='Pin Player';
+ const full=document.createElement('button');full.textContent='Return to Original';
+ const exit=document.createElement('button');exit.textContent='Exit Full Screen';
+ const back=document.createElement('button');back.textContent='Close Player';
+ bar.append(info,full);document.body.prepend(bar);
+ // A browser may ignore opener.focus(). Give the user visible feedback and
+ // target the named original tab directly, without reloading its Topic state.
+ const roomHint=document.createElement('span');
+ roomHint.id='mcbRoomHint';roomHint.style.cssText='font:12px system-ui;color:#f9d58b;max-width:280px';
+ room.after(roomHint);
+ room.onclick=()=>{
+  roomHint.textContent='Switching to other player…';
+  try{window.opener?.postMessage({type:'MCB_SHOW_PRACTICE_ROOM'},location.origin)}catch(e){}
+  try{
+   const target=window.opener&&!window.opener.closed?window.opener:window.open('','MCB_Practice_Room');
+   if(target&&!target.closed){target.focus();roomHint.textContent='Practice Room selected. If Chrome keeps this window in front, select the Course Builder tab.';return;}
+  }catch(e){}
+  try{if(window.opener&&!window.opener.closed){window.opener.focus();roomHint.textContent='Select the Course Builder tab if it did not come forward.';return;}}catch(e){}
+  roomHint.textContent='Practice Room tab unavailable. Click Open Practice Room.';
+  const fallback=document.getElementById('mcbOpenRoomFallback')||document.createElement('button');
+  fallback.id='mcbOpenRoomFallback';fallback.textContent='Open Practice Room';
+  fallback.onclick=()=>window.open(new URL('index.html',location.href).href,'MCB_Practice_Room');
+  if(!fallback.isConnected)roomHint.after(fallback);
+ };
+ pin.onclick=async()=>{
+  if(!window.documentPictureInPicture){alert('Always-on-top Pin Player is unavailable in this browser. Use the Chrome window instead.');return;}
+  try{
+   const pip=await window.documentPictureInPicture.requestWindow({width:900,height:650});
+   const root=document.getElementById('player');const anchor=document.createComment('restore pinned player');root.before(anchor);
+   for(const sheet of document.querySelectorAll('style,link[rel=stylesheet]'))pip.document.head.append(sheet.cloneNode(true));
+   pip.document.body.style.cssText='margin:0;background:#101723;color:#fff;height:100vh;overflow:auto';
+   const dock=pip.document.createElement('button');dock.textContent='Return to Chrome Window';dock.style.cssText='position:sticky;top:0;z-index:1000;padding:8px;background:#285c87;color:white;border:1px solid #5484ad;cursor:pointer';
+   pip.document.body.append(dock,root);root.style.width='100%';root.style.margin='0';
+   const restore=()=>{if(anchor.parentNode)anchor.replaceWith(root);root.style.width='';root.style.margin='';};
+   dock.onclick=()=>pip.close();pip.addEventListener('pagehide',restore,{once:true});
+  }catch(e){alert('Pin Player could not open: '+e.message)}
+ }; 
+ full.onclick=()=>{
+  const state=typeof window.MCB_exportYouTubeState==='function'?window.MCB_exportYouTubeState():null;
+  try{window.opener?.postMessage({type:'MCB_MONITOR_RETURN',state},location.origin);window.opener?.focus()}catch(e){alert('Original Course Builder window is unavailable.');return;}
+  window.close();
+ };
+ exit.onclick=()=>{if(document.fullscreenElement)document.exitFullscreen()};
+ back.onclick=()=>{try{window.opener?.postMessage({type:'MCB_FLOAT_CLOSED'},location.origin)}catch(e){}window.close()};
+ try{const state=JSON.parse(encoded);const apply=()=>{if(typeof window.MCB_importYouTubeState==='function')window.MCB_importYouTubeState(state);else setTimeout(apply,150)};apply()}catch(e){console.warn('Could not restore monitor-window playback',e)}
+ window.MCB_pauseForExternalWindow=()=>{};
+})();
+</script>
+</body></html>
