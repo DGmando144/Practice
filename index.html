@@ -72,7 +72,13 @@
 #pdfPrev:disabled,#pdfNext:disabled{opacity:.45;cursor:not-allowed}
 .pdf-workspace #pdfDocument[hidden],.pdf-workspace #pdfPages[hidden]{display:none!important}
 @media(max-width:650px){.pdf-workspace nav{gap:6px;padding:7px}.pdf-workspace nav button{padding:6px 8px}#pdfPages{padding:8px 4px}}
-</style><style id="mcb-v56595-thumbnails">.media img[alt="MP4 thumbnail"]{width:80px;height:45px;object-fit:contain;background:#101827;border-radius:5px;flex-shrink:0}</style><style id="mcb-v56581-project">.mcb-project-banner{font-size:17px;font-weight:700;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff}.mcb-welcome-actions{display:flex;flex-direction:column;gap:10px;margin-top:18px}.mcb-welcome-actions button{min-height:42px}#mcbExportState{color:#ffe4a5}#mcbWelcome{max-width:440px;width:calc(100% - 48px)}@media(max-width:750px){.mcb-project-banner{max-width:100%;font-size:15px}}</style><style id="mcb-v56585-welcome">#mcbWelcome .mcb-welcome-intro{display:block!important;color:#35465b!important;font-size:16px!important;line-height:1.5!important;margin:12px 0 18px!important;opacity:1!important}#mcbWelcomeRecent.primary{background:#1769cf!important;color:white!important;border-color:#1769cf!important;font-weight:700!important}#mcbWelcomeRecent.primary:hover{background:#1254a7!important}</style><style id="mcb-v56582-title">
+</style><style id="mcb-v565112-two-pages">/* V56.5.112 synchronized book spread */
+#pdfPages.mcb-pdf-two-page{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-content:start;align-items:start;gap:10px;overflow:auto}
+#pdfPages.mcb-pdf-two-page .mcb-pdf-page{display:none;max-width:none;min-width:0;margin:0!important;justify-self:center}
+#pdfPages.mcb-pdf-two-page .mcb-pdf-page.mcb-spread-visible{display:block}
+#pdfPages.mcb-pdf-two-page canvas{max-width:none!important}
+#pdfViewMode[aria-pressed="true"]{background:#dbeafe!important;color:#172b4d!important}
+<style id="mcb-v56595-thumbnails">.media img[alt="MP4 thumbnail"]{width:80px;height:45px;object-fit:contain;background:#101827;border-radius:5px;flex-shrink:0}</style><style id="mcb-v56581-project">.mcb-project-banner{font-size:17px;font-weight:700;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff}.mcb-welcome-actions{display:flex;flex-direction:column;gap:10px;margin-top:18px}.mcb-welcome-actions button{min-height:42px}#mcbExportState{color:#ffe4a5}#mcbWelcome{max-width:440px;width:calc(100% - 48px)}@media(max-width:750px){.mcb-project-banner{max-width:100%;font-size:15px}}</style><style id="mcb-v56585-welcome">#mcbWelcome .mcb-welcome-intro{display:block!important;color:#35465b!important;font-size:16px!important;line-height:1.5!important;margin:12px 0 18px!important;opacity:1!important}#mcbWelcomeRecent.primary{background:#1769cf!important;color:white!important;border-color:#1769cf!important;font-weight:700!important}#mcbWelcomeRecent.primary:hover{background:#1254a7!important}</style><style id="mcb-v56582-title">
 header .mcb-title-bar{flex:1 1 220px;min-width:190px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
 header .mcb-title-caption{font-size:10px;letter-spacing:.13em;color:#c5d9f3;font-weight:700}
 header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);font-size:22px;line-height:1.25;color:#fff;font-weight:800;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
@@ -113,7 +119,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 <dialog id="editor"><form method="dialog"><h3 id="editTitle"></h3><label id="nameLabel">Name</label><input id="editName" required><menu><button type="button" value="cancel" formnovalidate data-mcb-cancel>Cancel</button><button class="primary" id="editOk" value="ok">Save</button></menu></form></dialog>
 <dialog id="destination"><form method="dialog"><h3>Where should these files go?</h3><label>Subject</label><select id="destSubject"></select><label>Topic</label><select id="destTopic"></select><menu><button type="button" value="cancel" formnovalidate data-mcb-cancel>Cancel</button><button class="primary" value="ok">Add Files</button></menu></form></dialog>
 <dialog id="youtube"><form method="dialog"><h3>Add YouTube video</h3><label>YouTube URL</label><input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." required><p class="note">MCB attempts to retrieve the video title; you can rename it later.</p><menu><button id="youtubeCancel" type="button" formnovalidate>Cancel</button><button id="youtubeAdd" class="primary" value="ok">Add to Topic</button></menu></form></dialog>
-<section id="pdfWorkspace" class="pdf-workspace hidden"><nav><strong id="pdfTitle">Sheet music</strong><button id="pdfSecond">Open Second Media</button><button id="pdfSwap" title="Bring the other player to the foreground">Switch Media ↔</button><button id="pdfPrev" type="button" title="Previous PDF page (Left Arrow)">◀ Previous</button><span id="pdfPageStatus" aria-live="polite">Page — / —</span><button id="pdfNext" type="button" title="Next PDF page (Right Arrow)">Next ▶</button><button id="pdfZoomOut" type="button" title="Zoom out of PDF">−</button><input id="pdfZoomSlider" type="range" min="40" max="300" step="5" value="100" aria-label="PDF zoom" title="Slide to zoom PDF (40%–300%)"><span id="pdfZoomLevel" aria-live="polite">100%</span><button id="pdfZoomIn" type="button" title="Zoom in on PDF">+</button><button id="pdfZoomReset" type="button" title="Fit PDF to page width">Fit</button><span class="pdf-align-controls" role="group" aria-label="PDF page alignment"><button id="pdfAlignLeft" type="button" title="Align PDF pages left" aria-label="Align left" aria-pressed="false">◧</button><button id="pdfAlignCenter" type="button" title="Center PDF pages" aria-label="Align center" aria-pressed="true">▣</button><button id="pdfAlignRight" type="button" title="Align PDF pages right" aria-label="Align right" aria-pressed="false">◨</button></span><button id="pdfFull">Full Screen</button><button id="pdfClose">Close PDF</button></nav><div id="pdfPages" role="region" aria-label="PDF pages" tabindex="0"></div><embed id="pdfDocument" type="application/pdf" hidden></section>
+<section id="pdfWorkspace" class="pdf-workspace hidden"><nav><strong id="pdfTitle">Sheet music</strong><button id="pdfSecond">Open Second Media</button><button id="pdfSwap" title="Bring the other player to the foreground">Switch Media ↔</button><button id="pdfPrev" type="button" title="Previous PDF page (Left Arrow)">◀ Previous</button><span id="pdfPageStatus" aria-live="polite">Page — / —</span><button id="pdfNext" type="button" title="Next PDF page (Right Arrow)">Next ▶</button><button id="pdfZoomOut" type="button" title="Zoom out of PDF">−</button><input id="pdfZoomSlider" type="range" min="40" max="300" step="5" value="100" aria-label="PDF zoom" title="Slide to zoom PDF (40%–300%)"><span id="pdfZoomLevel" aria-live="polite">100%</span><button id="pdfZoomIn" type="button" title="Zoom in on PDF">+</button><button id="pdfZoomReset" type="button" title="Toggle Fit Width / Fit Height">Fit: Width</button><button id="pdfViewMode" type="button" title="Switch single-page and synchronized two-page display" aria-pressed="false">Two Pages</button><span class="pdf-align-controls" role="group" aria-label="PDF page alignment"><button id="pdfAlignLeft" type="button" title="Align PDF pages left" aria-label="Align left" aria-pressed="false">◧</button><button id="pdfAlignCenter" type="button" title="Center PDF pages" aria-label="Align center" aria-pressed="true">▣</button><button id="pdfAlignRight" type="button" title="Align PDF pages right" aria-label="Align right" aria-pressed="false">◨</button></span><button id="pdfFull">Full Screen</button><button id="pdfClose">Close PDF</button></nav><div id="pdfPages" role="region" aria-label="PDF pages" tabindex="0"></div><embed id="pdfDocument" type="application/pdf" hidden></section>
 <section id="viewer" class="viewer hidden"><nav><strong id="viewerTitle">Media</strong><span style="flex:1"></span><button id="viewerSecond">Open Second Media</button><button id="swapViewer" title="Bring the other player to the foreground">Switch Media ↔</button><button id="float">Float</button><button id="full">Fullscreen</button><button id="closeViewer">Close</button></nav><div id="stage" class="stage"></div></section>
 <div id="mcbSecondPicker" class="mcb-media-picker hidden" role="dialog" aria-modal="true" aria-label="Open second media"><div class="mcb-picker-panel"><header><strong>Open Second Media</strong><button id="mcbSecondCancel" type="button">Cancel ✕</button></header><div id="mcbSecondTopic" class="mcb-picker-topic"></div><div id="mcbSecondItems" class="mcb-picker-list"></div></div></div>
 <script>
@@ -402,7 +408,7 @@ $('mcbWelcome').addEventListener('cancel',e=>e.preventDefault());
 function mcbClosePDF(){
  if(document.fullscreenElement===$('pdfWorkspace'))document.exitFullscreen().catch(()=>{});
  $('pdfWorkspace').classList.add('hidden');
- mcbPdfSession++; if(mcbPdfRenderObserver){mcbPdfRenderObserver.disconnect();mcbPdfRenderObserver=null} $('pdfPages').onscroll=null; mcbPdfDocument=null; mcbPdfCurrent=1; $('pdfPages').replaceChildren(); $('pdfPages').hidden=false; $('pdfDocument').hidden=true; $('pdfDocument').removeAttribute('src'); mcbPdfUpdateControls();
+ mcbPdfSession++;mcbPdfQueuePage=null; if(mcbPdfRenderObserver){mcbPdfRenderObserver.disconnect();mcbPdfRenderObserver=null} $('pdfPages').onscroll=null; mcbPdfDocument=null; mcbPdfCurrent=1; $('pdfPages').replaceChildren(); $('pdfPages').hidden=false; $('pdfDocument').hidden=true; $('pdfDocument').removeAttribute('src'); mcbPdfUpdateControls();
  $('pdfWorkspace').classList.remove('mcb-floated','mcb-front');mcbPdfZoom=1;mcbPdfUpdateZoomLabel();
  $('pdfWorkspace').style.removeProperty('left');$('pdfWorkspace').style.removeProperty('top');$('pdfWorkspace').style.removeProperty('right');$('pdfWorkspace').style.removeProperty('bottom');
 }
@@ -529,7 +535,7 @@ function openMedia(m){
   $('pdfTitle').textContent=m.name;
   mcbOpenPdfPages(src);
   $('pdfWorkspace').classList.remove('hidden');
-  $('pdfWorkspace').classList.remove('mcb-floated');mcbPdfZoom=1;mcbPdfUpdateZoomLabel();mcbRaise('pdf');
+  $('pdfWorkspace').classList.remove('mcb-floated');mcbPdfZoom=1;mcbPdfFitMode='width';mcbPdfTwoPage=false;mcbPdfUpdateZoomLabel();mcbRaise('pdf');
   return;
  }
  const stage=$('stage');stage.replaceChildren();$('viewerTitle').textContent=m.name;
@@ -627,33 +633,60 @@ window.MCB_returnToTopic=()=>{closeViewer(true);render();};
  ['pointerup','pointercancel'].forEach(type=>bar.addEventListener(type,()=>drag=null));
 })();
 // V56.5.75: continuous PDF.js pages; buttons/keyboard use the same page navigation.
-let mcbPdfSession=0, mcbPdfDocument=null, mcbPdfCurrent=1, mcbPdfRenderObserver=null;
+let mcbPdfSession=0, mcbPdfDocument=null, mcbPdfCurrent=1, mcbPdfRenderObserver=null, mcbPdfTwoPage=false, mcbPdfQueuePage=null, mcbPdfFitMode="width";
 function mcbPdfUpdateControls(){
  const total=mcbPdfDocument?.numPages||0;
- $('pdfPageStatus').textContent=total?'Page '+mcbPdfCurrent+' / '+total:'Page — / —';
- $('pdfPrev').disabled=!total||mcbPdfCurrent<=1;
- $('pdfNext').disabled=!total||mcbPdfCurrent>=total;
+ const first=mcbPdfTwoPage?2*Math.floor((mcbPdfCurrent-1)/2)+1:mcbPdfCurrent;
+ const last=Math.min(total,first+(mcbPdfTwoPage?1:0));
+ $('pdfPageStatus').textContent=total?(mcbPdfTwoPage?'Pages '+first+(last>first?'–'+last:'')+' / '+total:'Page '+first+' / '+total):'Page — / —';
+ $('pdfPrev').disabled=!total||first<=1;
+ $('pdfNext').disabled=!total||last>=total;
+ $('pdfViewMode').setAttribute('aria-pressed',String(mcbPdfTwoPage));
+ $('pdfViewMode').textContent=mcbPdfTwoPage?'Single Page':'Two Pages';
+}
+function mcbPdfShowSpread(){
+ const host=$('pdfPages');
+ host.classList.toggle('mcb-pdf-two-page',mcbPdfTwoPage);
+ const first=mcbPdfTwoPage?2*Math.floor((mcbPdfCurrent-1)/2)+1:mcbPdfCurrent;
+ if(mcbPdfTwoPage){
+  host.querySelectorAll('.mcb-pdf-page').forEach(el=>{
+   const n=Number(el.dataset.pdfPage);
+   el.classList.toggle('mcb-spread-visible',n===first||n===first+1);
+  });
+  if(mcbPdfQueuePage){mcbPdfQueuePage(first);mcbPdfQueuePage(first+1)}
+  host.scrollTop=0;host.scrollLeft=0;
+ }else{
+  host.querySelectorAll('.mcb-pdf-page').forEach(el=>el.classList.remove('mcb-spread-visible'));
+  const target=host.querySelector('[data-pdf-page="'+mcbPdfCurrent+'"]');
+  if(target)target.scrollIntoView({block:'start',behavior:'auto'});
+ }
+ mcbPdfUpdateControls();
 }
 function mcbPdfGoTo(page){
  if(!mcbPdfDocument)return;
- mcbPdfCurrent=Math.max(1,Math.min(mcbPdfDocument.numPages,page));
- mcbPdfUpdateControls();
- const target=$('pdfPages').querySelector('[data-pdf-page="'+mcbPdfCurrent+'"]');
- if(target)target.scrollIntoView({block:'start',behavior:'auto'});
+ const total=mcbPdfDocument.numPages;
+ mcbPdfCurrent=Math.max(1,Math.min(total,page));
+ if(mcbPdfTwoPage)mcbPdfCurrent=2*Math.floor((mcbPdfCurrent-1)/2)+1;
+ mcbPdfShowSpread();
 }
-$('pdfPrev').onclick=()=>mcbPdfGoTo(mcbPdfCurrent-1);
-$('pdfNext').onclick=()=>mcbPdfGoTo(mcbPdfCurrent+1);
+$('pdfPrev').onclick=()=>mcbPdfGoTo(mcbPdfCurrent-(mcbPdfTwoPage?2:1));
+$('pdfNext').onclick=()=>mcbPdfGoTo(mcbPdfCurrent+(mcbPdfTwoPage?2:1));
+$('pdfViewMode').onclick=()=>{
+ mcbPdfTwoPage=!mcbPdfTwoPage;
+ mcbPdfShowSpread();
+ mcbPdfFit();
+};
 document.addEventListener('keydown',e=>{
  if($('pdfWorkspace').classList.contains('hidden')||!mcbPdfDocument||e.altKey||e.ctrlKey||e.metaKey)return;
  if(e.target.closest('input,textarea,select,[contenteditable="true"],dialog[open]'))return;
  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
-  e.preventDefault();e.stopImmediatePropagation();mcbPdfGoTo(mcbPdfCurrent+(e.key==='ArrowRight'?1:-1));
+  e.preventDefault();e.stopImmediatePropagation();mcbPdfGoTo(mcbPdfCurrent+(e.key==='ArrowRight'?1:-1)*(mcbPdfTwoPage?2:1));
  }
 },true);
 async function mcbOpenPdfPages(src){
  const session=++mcbPdfSession, host=$('pdfPages');
- mcbPdfDocument=null;mcbPdfCurrent=1;mcbPdfUpdateControls();
- host.hidden=false;$('pdfDocument').hidden=true;host.replaceChildren();host.scrollTop=0;
+ mcbPdfDocument=null;mcbPdfCurrent=1;mcbPdfQueuePage=null;mcbPdfUpdateControls();
+ host.hidden=false;$('pdfDocument').hidden=true;host.replaceChildren();host.classList.remove('mcb-pdf-two-page');host.scrollTop=0;
  const loading=document.createElement('p');loading.className='mcb-pdf-placeholder';loading.textContent='Loading PDF pages…';host.append(loading);
  try{
   if(!window.pdfjsLib)throw new Error('PDF.js could not load (check internet connection).');
@@ -684,7 +717,7 @@ async function mcbOpenPdfPages(src){
    const ctx=canvas.getContext('2d');
    await page.render({canvasContext:ctx,viewport,transform:dpr===1?null:[dpr,0,0,dpr,0,0]}).promise;
    if(session!==mcbPdfSession)return;
-   item.replaceChildren(canvas);rendered.add(n);
+   item.replaceChildren(canvas);rendered.add(n);if(mcbPdfFitMode)mcbPdfFit();
   }
   async function drain(){if(running)return;running=true;while(pending.size&&session===mcbPdfSession){const n=pending.values().next().value;pending.delete(n);try{await renderPage(n)}catch(err){pages[n-1].textContent='Unable to render page '+n;console.warn(err)}}running=false}
   function queue(n){if(n<1||n>pdf.numPages||rendered.has(n))return;pending.add(n);drain()}
@@ -693,9 +726,9 @@ async function mcbOpenPdfPages(src){
    for(const entry of entries)if(entry.isIntersecting){const n=Number(entry.target.dataset.pdfPage);queue(n);queue(n+1)}
   },{root:host,rootMargin:'900px 0px'});
   if(mcbPdfRenderObserver)mcbPdfRenderObserver.disconnect();mcbPdfRenderObserver=observer;
-  pages.forEach(item=>observer.observe(item));queue(1);
+  pages.forEach(item=>observer.observe(item));mcbPdfQueuePage=queue;queue(1);mcbPdfShowSpread();
   let scrollQueued=false;
-  host.onscroll=()=>{if(scrollQueued||session!==mcbPdfSession)return;scrollQueued=true;requestAnimationFrame(()=>{
+  host.onscroll=()=>{if(mcbPdfTwoPage||scrollQueued||session!==mcbPdfSession)return;scrollQueued=true;requestAnimationFrame(()=>{
    scrollQueued=false;if(session!==mcbPdfSession)return;
    const top=host.getBoundingClientRect().top+16;
    let closest=1,best=Infinity;
@@ -722,6 +755,20 @@ function mcbPdfApplyZoom(){
  });
  mcbPdfUpdateZoomLabel();
 }
+function mcbPdfFit(){
+ const host=$('pdfPages');
+ const first=host.querySelector('canvas[data-base-width]');
+ if(!first)return;
+ const baseW=Number(first.dataset.baseWidth),baseH=Number(first.dataset.baseHeight);
+ if(!baseW||!baseH)return;
+ const availableWidth=Math.max(1,host.clientWidth-(mcbPdfTwoPage?42:28));
+ const availableHeight=Math.max(1,host.clientHeight-34);
+ const widthPerPage=availableWidth/(mcbPdfTwoPage?2:1);
+ const target=mcbPdfFitMode==='height'?availableHeight/baseH:widthPerPage/baseW;
+ mcbPdfZoom=Math.max(.4,Math.min(3,Math.round(target*100)/100));
+ mcbPdfApplyZoom();
+ $('pdfZoomReset').textContent=mcbPdfFitMode==='height'?'Fit: Height':'Fit: Width';
+}
 function mcbPdfChangeZoom(multiplier){
  mcbPdfZoom=Math.max(.4,Math.min(3,Math.round(mcbPdfZoom*multiplier*100)/100));
  mcbPdfApplyZoom();
@@ -729,7 +776,7 @@ function mcbPdfChangeZoom(multiplier){
 $('pdfZoomSlider').addEventListener('input',()=>{mcbPdfZoom=Number($('pdfZoomSlider').value)/100;mcbPdfApplyZoom()});
 $('pdfZoomOut').onclick=()=>mcbPdfChangeZoom(1/1.25);
 $('pdfZoomIn').onclick=()=>mcbPdfChangeZoom(1.25);
-$('pdfZoomReset').onclick=()=>{mcbPdfZoom=1;mcbPdfApplyZoom()};
+$('pdfZoomReset').onclick=()=>{mcbPdfFitMode=mcbPdfFitMode==='width'?'height':'width';mcbPdfFit()};
 // Page alignment affects the PDF sheets, not the media-player position.
 function mcbPdfSetAlignment(alignment){
  if(!['left','center','right'].includes(alignment))return;
