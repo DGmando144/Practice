@@ -176,7 +176,7 @@ function renderSongFolders(){
     const newFolder=isBucket?(folderId||null):entry.id;
     const newBucket=isBucket?entry.id:null;
     if(moving.folderId===newFolder && (moving.bucketId||null)===newBucket)return;
-    window.practiceRecordUndo?.({kind:'move',label:'drag move',entries:[{item:moving,original:t,current:t,folderId:moving.folderId||null,bucketId:moving.bucketId||null}]});
+    window.practiceRecordUndo?.({kind:'move',label:'drag move',entries:[{item:moving,original:t,current:t,folderId:moving.folderId||null,bucketId:moving.bucketId||null,newFolderId:newFolder,newBucketId:newBucket}]});
     moving.folderId=newFolder;moving.bucketId=newBucket;
     persist();render();return;
    }
@@ -1100,29 +1100,59 @@ $('pdfFirstAlign').onclick=()=>{const active=['pdfAlignLeft','pdfAlignCenter','p
 </style><style id="practice-clipboard-style">
 #practiceClipboardBar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 0}#practiceClipboardBar button{padding:6px 11px;border:1px solid #a8b9cd;border-radius:6px;background:#f5f8fc;color:#173c68;cursor:pointer}#practiceClipboardBar button:disabled{opacity:.45;cursor:default}.media.practice-cut-pending{opacity:.48;filter:saturate(.55)}.media.practice-selected{outline:3px solid #2675c4;outline-offset:-3px;background:#e8f2ff}#practiceContextMenu{position:fixed;z-index:999999;background:#fff;color:#152b46;box-shadow:0 5px 24px #0004;border:1px solid #b7c5d6;border-radius:7px;padding:5px;min-width:170px}#practiceContextMenu button{display:block;width:100%;padding:9px;text-align:left;background:transparent;border:0;color:inherit;cursor:pointer}#practiceContextMenu button:hover{background:#e6f1ff}
 </style>
-<style id="practice-undo-style">#practiceUndoButton{padding:6px 11px;border:1px solid #a8b9cd;border-radius:6px;background:#f5f8fc;color:#173c68;cursor:pointer}#practiceUndoButton:disabled{opacity:.45;cursor:default}</style>
+<style id="practice-undo-style">#practiceUndoButton,#practiceRedoButton{padding:6px 11px;border:1px solid #a8b9cd;border-radius:6px;background:#f5f8fc;color:#173c68;cursor:pointer}#practiceUndoButton:disabled,#practiceRedoButton:disabled{opacity:.45;cursor:default}</style>
 <script id="practice-undo-script">
 (()=>{
- let last=null;
- const undoButton=document.createElement('button');undoButton.id='practiceUndoButton';undoButton.textContent='↶ Undo';undoButton.title='Undo last move or paste (Ctrl+Z)';
- window.practiceRecordUndo=record=>{last={...record,project:data};update()};
- function update(){undoButton.disabled=!last||last.project!==data;undoButton.title=last?'Undo '+last.label+' (Ctrl+Z)':'Nothing to undo'}
- window.practiceUndoLast=()=>{
-  if(!last||last.project!==data){last=null;update();return}
-  const record=last;
-  if(record.kind==='move'){
-   // Preflight before changing anything, so undo cannot partially move a batch.
-   if(record.entries.some(e=>!e.current.media.includes(e.item))){alert('Undo unavailable: a moved file has changed or is missing.');return}
-   for(const e of record.entries){e.current.media.splice(e.current.media.indexOf(e.item),1);e.item.folderId=e.folderId;e.item.bucketId=e.bucketId;e.original.media.push(e.item)}
-  }else if(record.kind==='copy'){
-   if(record.entries.some(e=>!e.topic.media.includes(e.item))){alert('Undo unavailable: a copied file has changed or is missing.');return}
-   for(const e of record.entries)e.topic.media.splice(e.topic.media.indexOf(e.item),1);
-   // Deliberately retain browser media blobs: undo must not break other references.
+ let undo=null,redo=null;
+ const undoButton=document.createElement('button'),redoButton=document.createElement('button');
+ undoButton.id='practiceUndoButton';undoButton.textContent='↶ Undo';
+ redoButton.id='practiceRedoButton';redoButton.textContent='↷ Redo';
+ window.practiceRecordUndo=record=>{undo={...record,project:data};redo=null;update()};
+ function update(){
+  undoButton.disabled=!undo||undo.project!==data;
+  redoButton.disabled=!redo||redo.project!==data;
+  undoButton.title=undo?'Undo '+undo.label+' (Ctrl+Z)':'Nothing to undo';
+  redoButton.title=redo?'Redo '+redo.label+' (Ctrl+Shift+Z)':'Nothing to redo';
+ }
+ function valid(record,direction){
+  if(record.kind==='move')return record.entries.every(e=>(direction==='undo'?e.current:e.original).media.includes(e.item));
+  if(record.kind==='copy')return record.entries.every(e=>direction==='undo'?e.topic.media.includes(e.item):!e.topic.media.includes(e.item));
+  return false;
+ }
+ function apply(record,direction){
+  if(!valid(record,direction)){alert('Cannot '+direction+': files have changed or are missing.');return false}
+  if(record.kind==='move')for(const e of record.entries){
+   const from=direction==='undo'?e.current:e.original,to=direction==='undo'?e.original:e.current;
+   from.media.splice(from.media.indexOf(e.item),1);
+   e.item.folderId=direction==='undo'?e.folderId:e.newFolderId;
+   e.item.bucketId=direction==='undo'?e.bucketId:e.newBucketId;
+   to.media.push(e.item);
   }
-  last=null;persist();render();update();mcbNotify('Undo completed: '+record.label+'.');
- };
- document.addEventListener('keydown',e=>{if(e.key.toLowerCase()!=='z'||!(e.ctrlKey||e.metaKey)||e.altKey||e.shiftKey)return;if(e.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;if(!last||last.project!==data)return;e.preventDefault();e.stopImmediatePropagation();window.practiceUndoLast()},true);
- const attachUndo=()=>{const bar=document.getElementById('practiceClipboardBar');if(bar&&!undoButton.isConnected){bar.insertBefore(undoButton,bar.querySelector('#practiceClipboardInfo'));update()}};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',attachUndo);else attachUndo();
+  if(record.kind==='copy')for(const e of record.entries){
+   if(direction==='undo')e.topic.media.splice(e.topic.media.indexOf(e.item),1);
+   else e.topic.media.push(e.item);
+  }
+  persist();render();update();mcbNotify((direction==='undo'?'Undo':'Redo')+' completed: '+record.label+'.');return true;
+ }
+ window.practiceUndoLast=()=>{if(!undo||undo.project!==data){update();return}const record=undo;if(apply(record,'undo')){undo=null;redo=record;update()}};
+ window.practiceRedoLast=()=>{if(!redo||redo.project!==data){update();return}const record=redo;if(apply(record,'redo')){redo=null;undo=record;update()}};
+ undoButton.addEventListener('click',e=>{e.preventDefault();window.practiceUndoLast()});
+ redoButton.addEventListener('click',e=>{e.preventDefault();window.practiceRedoLast()});
+ document.addEventListener('keydown',e=>{
+  if(e.key.toLowerCase()!=='z'||!(e.ctrlKey||e.metaKey)||e.altKey)return;
+  if(e.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;
+  if(e.shiftKey){if(!redo||redo.project!==data)return;e.preventDefault();e.stopImmediatePropagation();window.practiceRedoLast()}
+  else{if(!undo||undo.project!==data)return;e.preventDefault();e.stopImmediatePropagation();window.practiceUndoLast()}
+ },true);
+ function attach(){const bar=document.getElementById('practiceClipboardBar');if(!bar)return false;
+  if(!undoButton.isConnected)bar.insertBefore(undoButton,bar.querySelector('#practiceClipboardInfo'));
+  if(!redoButton.isConnected)bar.insertBefore(redoButton,bar.querySelector('#practiceClipboardInfo'));
+  update();return true;
+ }
+ if(!attach()){
+  const observer=new MutationObserver(()=>{if(attach())observer.disconnect()});
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+ }
 })();
 </script>
 <script id="practice-clipboard-script">
@@ -1151,7 +1181,7 @@ async function execute(action){hide();if(busy)return;
  if(clipboard.mode==='cut'){
   // Check all sources before modifying any item.
   for(const {t,m} of entries){const idx=t.media.indexOf(m);if(idx<0){alert('Move cancelled: a source item is missing.');return}}
-  const moved=[],moveUndo=[];for(const {t,m} of entries){if(t===dest&&(m.folderId||null)===destFolder&&(m.bucketId||null)===destBucket)continue;moveUndo.push({item:m,original:t,current:dest,folderId:m.folderId||null,bucketId:m.bucketId||null});t.media.splice(t.media.indexOf(m),1);m.folderId=destFolder;m.bucketId=destBucket;dest.media.push(m);moved.push(m.id)}
+  const moved=[],moveUndo=[];for(const {t,m} of entries){if(t===dest&&(m.folderId||null)===destFolder&&(m.bucketId||null)===destBucket)continue;moveUndo.push({item:m,original:t,current:dest,folderId:m.folderId||null,bucketId:m.bucketId||null,newFolderId:destFolder,newBucketId:destBucket});t.media.splice(t.media.indexOf(m),1);m.folderId=destFolder;m.bucketId=destBucket;dest.media.push(m);moved.push(m.id)}
   if(moved.length)window.practiceRecordUndo?.({kind:'move',label:'move',entries:moveUndo});
   clipboard=null;selected=new Set(entries.map(e=>e.m.id));anchor=entries[0]?.m.id||null;persist();render();refresh();return;
  }
