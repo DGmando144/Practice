@@ -1115,7 +1115,7 @@ const loc=()=>[subjectId||'',topicId||'',folderId||'',bucketId||''].join('|');
 const cards=()=>[...area.querySelectorAll('.media[data-practice-media-id]')];
 const visibleIds=()=>cards().filter(c=>c.offsetParent!==null).map(c=>c.dataset.practiceMediaId);
 const items=()=>{const t=topic();return t?.media?.filter(m=>selected.has(m.id))||[]};
-function refresh(){const active=!!topicId;bar.style.display=active?'flex':'none';const count=items().length;for(const b of bar.querySelectorAll('button'))b.disabled=busy||(b.dataset.act==='paste'?!clipboard:count===0);for(const c of cards())c.classList.toggle('practice-selected',selected.has(c.dataset.practiceMediaId));document.getElementById('practiceClipboardInfo').textContent=(count?count+' selected':'')+(clipboard?' · '+(clipboard.mode==='cut'?'Cut ':'Copied ')+clipboard.entries.length+' item(s)':'');}
+function refresh(){const active=!!topicId;bar.style.display=active?'flex':'none';const count=items().length;for(const b of bar.querySelectorAll('button[data-act]'))b.disabled=busy||(b.dataset.act==='paste'?!clipboard:count===0);for(const c of cards())c.classList.toggle('practice-selected',selected.has(c.dataset.practiceMediaId));document.getElementById('practiceClipboardInfo').textContent=(count?count+' selected':'')+(clipboard?' · '+(clipboard.mode==='cut'?'Cut ':'Copied ')+clipboard.entries.length+' item(s)':'');}
 function hide(){menu.hidden=true}
 function selectCard(card,ctrl,shift){const id=card?.dataset.practiceMediaId;if(!id)return;const ids=visibleIds();if(shift&&anchor&&ids.includes(anchor)){const a=ids.indexOf(anchor),b=ids.indexOf(id);if(!ctrl)selected.clear();for(const k of ids.slice(Math.min(a,b),Math.max(a,b)+1))selected.add(k)}else if(ctrl){if(selected.has(id))selected.delete(id);else selected.add(id);anchor=id}else{selected=new Set([id]);anchor=id}refresh()}
 function lookup(entry){const s=data.subjects.find(s=>s.id===entry.subjectId),t=s?.topics.find(t=>t.id===entry.topicId);return {t,m:t?.media.find(m=>m.id===entry.mediaId)}}
@@ -1158,4 +1158,49 @@ document.addEventListener('keydown',e=>{
 },true);
 const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLocation){selected.clear();anchor=null;selectionLocation=next}const valid=new Set(topic()?.media.map(m=>m.id)||[]);for(const id of selected)if(!valid.has(id))selected.delete(id);refresh()});selectionLocation=loc();observer.observe(area,{childList:true});refresh();
 })();
-</script></body></html>
+</script>
+<style id="practice-navigation-129">
+#practiceHome{background:#e0eee9!important;border-color:#94b9aa!important;color:#205d4c!important;font-weight:700}
+#practiceHome:hover{background:#cde5dc!important}
+#practiceForward:disabled{opacity:.45;cursor:default}
+</style>
+<script id="practice-navigation-history-129">
+(()=>{
+ const home=document.getElementById('practiceHome'),back=document.getElementById('back');
+ if(!home||!back)return;
+ // Position Home before Back, followed by Forward.
+ back.parentNode.insertBefore(home,back);
+ const forward=document.createElement('button');forward.id='practiceForward';forward.type='button';forward.textContent='Forward →';forward.title='Go forward to the next visited location';back.insertAdjacentElement('afterend',forward);
+ const state=()=>({subjectId,topicId,folderId,bucketId});
+ const key=x=>JSON.stringify(x);
+ let current=state(),past=[],future=[],restoring=false;
+ const originalRender=render;
+ render=function(...args){
+   const next=state();
+   if(!restoring&&key(next)!==key(current)){
+     past.push(current);if(past.length>100)past.shift();future=[];
+   }
+   current=next;
+   const result=originalRender.apply(this,args);
+   // Back is also available for hierarchical navigation when there is no visit history.
+   back.classList.toggle('hidden',!past.length&&!subjectId);
+   forward.disabled=!future.length;
+   forward.setAttribute('aria-label','Forward');
+   return result;
+ };
+ const restore=target=>{
+   restoring=true;
+   subjectId=target.subjectId;topicId=target.topicId;folderId=target.folderId;bucketId=target.bucketId;
+   try{render()}finally{restoring=false}
+ };
+ back.onclick=()=>{
+   if(past.length){future.push(current);restore(past.pop());return}
+   if(bucketId)bucketId=null;else if(folderId)folderId=null;else if(topicId)topicId=null;else subjectId=null;
+   render();
+ };
+ forward.onclick=()=>{if(!future.length)return;past.push(current);restore(future.pop())};
+ home.onclick=()=>{subjectId=null;topicId=null;folderId=null;bucketId=null;render()};
+ render();
+})();
+</script>
+</body></html>
