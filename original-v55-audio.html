@@ -1434,6 +1434,18 @@ html body .pip-video-player>.media-topbar button.mcb-return-original{
  font-size:11px!important;font-weight:700!important;
 }
 </style>
+<style id="mcb-embedded-loading-mask">
+/* Prevent the retired course-builder UI from flashing while media is prepared. */
+html.mcb-embedded-loading body > * { visibility:hidden !important; }
+/* Opaque overlay hides the old interface even if nested widgets override visibility. */
+html.mcb-embedded-loading::after {
+ content:""; position:fixed; inset:0; z-index:2147483647;
+ background:#0b111b; pointer-events:auto;
+}
+</style>
+<script>
+if(window.parent!==window)document.documentElement.classList.add('mcb-embedded-loading');
+</script>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2786,6 +2798,7 @@ window.addEventListener('message' ,async function(event){
   document.body.appendChild(previewCard);
   previewCard.hidden=false;
   document.body.classList.add('v563-audio-mode');
+  document.documentElement.classList.remove('mcb-embedded-loading');
   window.parent.postMessage({type:'MCB_V563_READY'},'*');
  }catch(err){console.error('MCB V56.3 original player bridge',err);window.parent.postMessage({type:'MCB_V563_ERROR',message:err.message},'*');alert('Unable to open original audio player: '+err.message)}
 });
