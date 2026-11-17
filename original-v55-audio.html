@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Practice! Media Engine</title>
+<title>Music Course Builder — v41</title>
 <style>
 :root{--ink:#203047;--muted:#66758a;--paper:#f4f6f9;--card:#fff;--line:#dce3eb;--blue:#285b91;--blue2:#e8f1fb;--green:#23734b;--amber:#946200;--red:#a43c3c}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
@@ -1437,8 +1437,6 @@ html body .pip-video-player>.media-topbar button.mcb-return-original{
 <style id="mcb-embedded-loading-mask">
 /* Prevent the retired course-builder UI from flashing while media is prepared. */
 html.mcb-embedded-loading body > * { visibility:hidden !important; }
-html.practice-embedded-player body > :not(#resourcePreviewCard):not(script):not(style) {display:none!important}
-html.practice-embedded-player body > #resourcePreviewCard:not([hidden]) {display:block!important}
 /* Opaque overlay hides the old interface even if nested widgets override visibility. */
 html.mcb-embedded-loading::after {
  content:""; position:fixed; inset:0; z-index:2147483647;
@@ -1446,7 +1444,7 @@ html.mcb-embedded-loading::after {
 }
 </style>
 <script>
-if(window.parent!==window){document.documentElement.classList.add('mcb-embedded-loading');document.documentElement.classList.add('practice-embedded-player');}
+if(window.parent!==window)document.documentElement.classList.add('mcb-embedded-loading');
 </script>
 </head>
 <body>
