@@ -160,7 +160,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 #practiceSearchDialog .search-hit-actions{display:flex;gap:7px;flex-wrap:wrap}
 #practiceSearchDialog .search-hit-actions button{padding:5px 9px;font-size:12px}
 #practiceSearchDialog .search-count{font-size:13px;color:#60718a}
-</style><style id="mcb-menu-v153">.practice-main-header{display:flex!important;min-height:unset!important;padding:10px 18px!important;gap:12px!important;align-items:center!important}.practice-main-header .practice-file-actions{display:flex!important;flex:1;gap:5px!important;flex-wrap:wrap!important;align-items:center!important}.practice-main-header .practice-centered-title,.practice-main-header .practice-header-spacer{display:none!important}.practice-main-header .mcb-title-bar{max-width:min(350px,35vw)!important;margin-left:12px}.mcb-top-menu>summary,.practice-file-menu>summary{padding:8px 11px!important}.mcb-top-menu .practice-file-menu-panel{min-width:190px;width:max-content;max-width:270px}.mcb-menu-note{display:block;color:#61738a;font-size:13px;padding:10px 12px;white-space:normal}.mcb-help-dialog{width:min(690px,94vw);max-height:85vh;overflow:auto;padding:24px;color:#182b45}.mcb-help-dialog h3{margin:18px 0 5px}.mcb-help-dialog p{line-height:1.5}.mcb-help-dialog menu{position:sticky;bottom:0;background:white;padding:12px 0 0;margin:0}#mcbMetronomeDock.mcb-utility-hidden{display:none!important}#mcbMetronomeDock{position:relative}#mcbUtilityClose{position:absolute;right:8px;top:6px;z-index:20;width:30px;height:30px;border-radius:6px;background:#e8edf4;color:#20324a;font-size:23px;line-height:1;cursor:pointer}#mcbUtilityClose:hover{background:#d4deeb}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderDock{padding-top:28px}#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeToggle,#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeFrame{display:none!important}#mcbMetronomeDock.mcb-utility-metronome #practiceRecorderDock{display:none!important}#mcbMetronomeDock.mcb-utility-metronome{overflow:visible}#mcbMetronomeDock.mcb-utility-metronome iframe{display:block!important}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderBody{display:grid!important}@media(max-width:780px){.practice-main-header .practice-file-actions{grid-row:auto!important}.practice-main-header .mcb-title-bar{max-width:100%!important;margin-left:0}}</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbEditMenu"><summary>Edit <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note">More editing commands coming soon</span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbViewsMenu"><summary>View <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note"><button type="button" data-view-size="small">Small folders</button><button type="button" data-view-size="medium">Medium folders</button><button type="button" data-view-size="large">Large folders</button><div class="mcb-view-divider"></div><button type="button" data-view-mode="grid">Folder view</button><button type="button" data-view-mode="list">List view</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Sort by</div><button type="button" data-sort="name">Name</button><button type="button" data-sort="type">Type</button><button type="button" data-sort="original">Original order</button><div class="mcb-view-divider"></div><button type="button" data-sort-direction="asc">Ascending</button><button type="button" data-sort-direction="desc">Descending</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Group by</div><button type="button" data-group="none">None</button><button type="button" data-group="type">Type</button></span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbUtilitiesMenu"><summary>Utilities <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbShowMetronome">Metronome</button><button type="button" id="mcbShowRecorder">Recorder</button><button type="button" id="mcbShowPdfBuilder">PDF Builder</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbHelpMenu"><summary>Help <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbGeneralHelpOpen">General Help</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 hidden id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.167</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbUtilityClose" aria-label="Close utility" title="Close utility">×</button><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
+</style><style id="mcb-menu-v153">.practice-main-header{display:flex!important;min-height:unset!important;padding:10px 18px!important;gap:12px!important;align-items:center!important}.practice-main-header .practice-file-actions{display:flex!important;flex:1;gap:5px!important;flex-wrap:wrap!important;align-items:center!important}.practice-main-header .practice-centered-title,.practice-main-header .practice-header-spacer{display:none!important}.practice-main-header .mcb-title-bar{max-width:min(350px,35vw)!important;margin-left:12px}.mcb-top-menu>summary,.practice-file-menu>summary{padding:8px 11px!important}.mcb-top-menu .practice-file-menu-panel{min-width:190px;width:max-content;max-width:270px}.mcb-menu-note{display:block;color:#61738a;font-size:13px;padding:10px 12px;white-space:normal}.mcb-help-dialog{width:min(690px,94vw);max-height:85vh;overflow:auto;padding:24px;color:#182b45}.mcb-help-dialog h3{margin:18px 0 5px}.mcb-help-dialog p{line-height:1.5}.mcb-help-dialog menu{position:sticky;bottom:0;background:white;padding:12px 0 0;margin:0}#mcbMetronomeDock.mcb-utility-hidden{display:none!important}#mcbMetronomeDock{position:relative}#mcbUtilityClose{position:absolute;right:8px;top:6px;z-index:20;width:30px;height:30px;border-radius:6px;background:#e8edf4;color:#20324a;font-size:23px;line-height:1;cursor:pointer}#mcbUtilityClose:hover{background:#d4deeb}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderDock{padding-top:28px}#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeToggle,#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeFrame{display:none!important}#mcbMetronomeDock.mcb-utility-metronome #practiceRecorderDock{display:none!important}#mcbMetronomeDock.mcb-utility-metronome{overflow:visible}#mcbMetronomeDock.mcb-utility-metronome iframe{display:block!important}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderBody{display:grid!important}@media(max-width:780px){.practice-main-header .practice-file-actions{grid-row:auto!important}.practice-main-header .mcb-title-bar{max-width:100%!important;margin-left:0}}</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbEditMenu"><summary>Edit <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note">More editing commands coming soon</span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbViewsMenu"><summary>View <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note"><button type="button" data-view-size="small">Small folders</button><button type="button" data-view-size="medium">Medium folders</button><button type="button" data-view-size="large">Large folders</button><div class="mcb-view-divider"></div><button type="button" data-view-mode="grid">Folder view</button><button type="button" data-view-mode="list">List view</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Sort by</div><button type="button" data-sort="name">Name</button><button type="button" data-sort="type">Type</button><button type="button" data-sort="original">Original order</button><div class="mcb-view-divider"></div><button type="button" data-sort-direction="asc">Ascending</button><button type="button" data-sort-direction="desc">Descending</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Group by</div><button type="button" data-group="none">None</button><button type="button" data-group="type">Type</button></span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbUtilitiesMenu"><summary>Utilities <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbShowMetronome">Metronome</button><button type="button" id="mcbShowRecorder">Recorder</button><button type="button" id="mcbShowPdfBuilder">PDF Builder</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbHelpMenu"><summary>Help <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbGeneralHelpOpen">General Help</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 hidden id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.168</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbUtilityClose" aria-label="Close utility" title="Close utility">×</button><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
 <button type="button" id="practiceRecorderToggle" aria-expanded="true">● Recorder ▾</button>
 <div id="practiceRecorderBody">
 <div class="rec-source-row"><button type="button" id="practiceSourceWindow" class="selected" aria-pressed="true">Window Capture</button><button type="button" id="practiceAudioChoose">Choose Source</button></div>
@@ -1969,7 +1969,7 @@ body.mcb-size-medium .practice-list-view>.folder,body.mcb-size-medium .practice-
    }
   }
  }
- render=function(...args){const result=previousRender.apply(this,args);sortVisible();document.querySelectorAll("#media .media").forEach(c=>{const m=topic()?.media.find(x=>x.id===c.dataset.practiceMediaId);if(m?.kind==="pdf-setlist"){c.classList.add("mcb-pdf-setlist");const icon=c.querySelector(".icon");if(icon)icon.textContent="🗂️";const relink=c.querySelector('[data-action="relink"]');if(relink)relink.hidden=true;}});window.mcbApplyMaterialTabs?.();return result};
+ render=function(...args){const result=previousRender.apply(this,args);sortVisible();document.querySelectorAll("#media .media").forEach(c=>{const m=topic()?.media.find(x=>x.id===c.dataset.practiceMediaId);if(m?.kind==="pdf-setlist"){c.classList.add("mcb-pdf-setlist");const icon=c.querySelector(".icon");if(icon)icon.textContent="🗂️";const relink=c.querySelector('[data-action="relink"]');if(relink)relink.hidden=true;}});window.mcbApplyMaterialTabs?.();document.querySelectorAll('#media .mcb-pdf-setlist').forEach(card=>{if(card.dataset.mcbDoubleClick)return;card.dataset.mcbDoubleClick='1';card.addEventListener('dblclick',e=>{if(e.target.closest('button'))return;const name=card.querySelector('.media-title')?.textContent?.trim();const m=topic()?.media.find(x=>x.kind==='pdf-setlist'&&x.name===name);if(m)window.mcbOpenSavedPdfSetlist(m)})});return result};
  sortVisible();apply();
 })();
 </script>
@@ -2136,15 +2136,15 @@ body.mcb-size-large .media img{max-height:125px!important}
 <dialog id="mcbPdfBuilder" aria-labelledby="mcbPdfBuilderTitle">
 <header><h2 id="mcbPdfBuilderTitle">PDF Builder — Setlist</h2><button type="button" id="mcbPdfBuilderClose" aria-label="Close PDF Builder">✕ Close</button></header>
 <p>Add several PDF files, drag the rows to arrange your setlist, then open it in the existing PDF player.</p>
-<div class="mcb-pdf-builder-controls"><button type="button" id="mcbPdfBuilderAdd">＋ Add PDFs</button><button type="button" id="mcbPdfBuilderClear">Clear List</button><button type="button" id="mcbPdfBuilderPlay">▶ Open in PDF Player</button><button type="button" id="mcbPdfBuilderSave">💾 Save Setlist to Bin</button><input id="mcbPdfBuilderFiles" type="file" accept="application/pdf,.pdf" multiple hidden></div>
-<ol id="mcbPdfBuilderList" aria-label="PDF setlist order"></ol>
+<div class="mcb-pdf-builder-controls"><button type="button" id="mcbPdfBuilderAdd">＋ Add PDFs</button><button type="button" id="mcbPdfBuilderClear">Clear List</button><button type="button" id="mcbPdfBuilderPlay">▶ Open in PDF Player</button><button type="button" id="mcbPdfBuilderSave">💾 Save</button><button type="button" id="mcbPdfBuilderSaveAs">Save As…</button><button type="button" id="mcbPdfBuilderOpen">Open Setlist…</button><input id="mcbPdfBuilderFiles" type="file" accept="application/pdf,.pdf" multiple hidden></div>
+<div class="mcb-pdf-destination"><label>Subject <select id="mcbPdfDestSubject"></select></label><label>Topic <select id="mcbPdfDestTopic"></select></label><label>Bin <select id="mcbPdfDestBin"></select></label></div><ol id="mcbPdfBuilderList" aria-label="PDF setlist order"></ol>
 <p id="mcbPdfBuilderStatus" class="mcb-pdf-note" aria-live="polite">No PDFs added.</p>
 <p class="mcb-pdf-note">The list is kept while this application tab remains open. Original PDF files are not modified or merged.</p>
 </dialog>
 <script id="mcb-pdf-builder-script">
 (()=>{
  const $=id=>document.getElementById(id),dialog=$('mcbPdfBuilder'),list=$('mcbPdfBuilderList');
- const entries=[];let current=-1,dragIndex=null,playerBar=null,editingId=null;
+ const entries=[];let current=-1,dragIndex=null,playerBar=null,editingId=null,editingLocation=null,editingName="";
  const status=()=>{$('mcbPdfBuilderStatus').textContent=entries.length?entries.length+' PDF(s) in setlist. Drag to reorder, or use the arrow buttons.':'No PDFs added.';$('mcbPdfBuilderPlay').disabled=!entries.length;$('mcbPdfBuilderClear').disabled=!entries.length};
  function move(from,to){if(from<0||to<0||from>=entries.length||to>=entries.length||from===to)return;const [item]=entries.splice(from,1);entries.splice(to,0,item);if(current===from)current=to;else if(from<current&&to>=current)current--;else if(from>current&&to<=current)current++;render();updatePlayer()}
  function render(){list.replaceChildren();entries.forEach((entry,i)=>{const li=document.createElement('li');li.draggable=true;li.dataset.index=i;
@@ -2153,7 +2153,7 @@ body.mcb-size-large .media img{max-height:125px!important}
  const name=document.createElement('span');name.className='filename';name.textContent=entry.name;
  const up=document.createElement('button');up.textContent='↑';up.title='Move up';up.disabled=i===0;up.onclick=()=>move(i,i-1);
  const down=document.createElement('button');down.textContent='↓';down.title='Move down';down.disabled=i===entries.length-1;down.onclick=()=>move(i,i+1);
- const del=document.createElement('button');del.textContent='✕';del.title='Remove from setlist';del.onclick=()=>{const [removed]=entries.splice(i,1);if(current===i)current=-1;else if(current>i)current--;URL.revokeObjectURL(removed.url);render();updatePlayer()};
+ const del=document.createElement('button');del.textContent='✕';del.title='Remove from setlist';del.onclick=()=>{const [removed]=entries.splice(i,1);if(current===i)current=-1;else if(current>i)current--;if(removed.temporary)URL.revokeObjectURL(removed.url);render();updatePlayer()};
  li.append(grip,position,name,up,down,del);
  li.addEventListener('dragstart',e=>{dragIndex=i;li.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(i))});
  li.addEventListener('dragover',e=>{e.preventDefault();li.classList.add('drop-target')});
@@ -2164,51 +2164,76 @@ body.mcb-size-large .media img{max-height:125px!important}
  function updatePlayer(){if(!playerBar)return;const prev=$('mcbSetlistPrev'),next=$('mcbSetlistNext'),title=$('mcbSetlistTitle'),count=$('mcbSetlistCount');prev.disabled=current<=0;next.disabled=current<0||current>=entries.length-1;title.textContent=current>=0&&entries[current]?entries[current].name:'No active setlist PDF';count.textContent=current>=0?(current+1)+' / '+entries.length:'—'}
  window.mcbOpenSavedPdfSetlist=(item)=>{
   entries.splice(0).forEach(e=>{if(e.temporary)URL.revokeObjectURL(e.url)});
-  (item.setlistEntries||[]).forEach(e=>entries.push({name:e.name,url:e.dataUrl||'',dataUrl:e.dataUrl||''}));
-  editingId=item.id;current=-1;render();
+  (item.setlistEntries||[]).forEach(e=>{const dataUrl=e.dataUrl||'';let url=dataUrl;try{if(dataUrl.startsWith('data:')){const raw=atob(dataUrl.split(',')[1]);const bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}))}}catch(err){console.warn('PDF setlist decoding failed',err)}entries.push({name:e.name,url,dataUrl,temporary:url!==dataUrl})});
+  editingId=item.id;editingName=item.name||'';editingLocation=findSetlistLocation(item.id);current=-1;render();populateDestinations(editingLocation);
   if(entries.length&&entries[0].url)openAt(0);
   else {dialog.showModal();alert('This setlist has no embedded PDF data. Add or relink PDFs in the builder.')}
  };
  function openAt(index){if(index<0||index>=entries.length)return;current=index;const entry=entries[index];
  // Reuse the original PDF.js page renderer and all of its zoom/page controls.
  document.getElementById('pdfTitle').textContent=entry.name;
- mcbOpenPdfPages(entry.url);
+ mcbOpenPdfPages(entry.url).catch(err=>{console.error(err);alert('Could not open PDF: '+entry.name)});
  const ws=$('pdfWorkspace');ws.classList.remove('hidden','mcb-floated');mcbPdfZoom=1;mcbPdfFitMode='width';mcbPdfTwoPage=false;mcbPdfUpdateZoomLabel();mcbRaise('pdf');
  if(!playerBar){playerBar=document.createElement('div');playerBar.className='mcb-setlist-player';playerBar.id='mcbSetlistPlayer';playerBar.innerHTML='<strong>Setlist</strong><button id="mcbSetlistPrev" type="button">◀ Previous PDF</button><span id="mcbSetlistCount"></span><button id="mcbSetlistNext" type="button">Next PDF ▶</button><span id="mcbSetlistTitle" class="title"></span><button id="mcbSetlistEdit" type="button">Edit Setlist</button>';
  ws.insertBefore(playerBar,ws.querySelector('#pdfSplit'));
- $('mcbSetlistPrev').onclick=()=>openAt(current-1);$('mcbSetlistNext').onclick=()=>openAt(current+1);$('mcbSetlistEdit').onclick=()=>dialog.showModal()}
+ $('mcbSetlistPrev').onclick=()=>openAt(current-1);$('mcbSetlistNext').onclick=()=>openAt(current+1);$('mcbSetlistEdit').onclick=()=>openBuilder()}
  playerBar.hidden=false;updatePlayer();dialog.close();}
- $('mcbShowPdfBuilder').onclick=()=>{editingId=null;dialog.showModal();render()};
+ $('mcbShowPdfBuilder').onclick=()=>openBuilder();
  $('mcbPdfBuilderClose').onclick=()=>dialog.close();
  $('mcbPdfBuilderAdd').onclick=()=>$('mcbPdfBuilderFiles').click();
  $('mcbPdfBuilderFiles').addEventListener('change',e=>{for(const file of e.target.files){if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf'))continue;entries.push({name:file.name,url:URL.createObjectURL(file),file,temporary:true})}e.target.value='';render()});
- $('mcbPdfBuilderSave').onclick=async()=>{
+ function findSetlistLocation(id){for(const sub of data.subjects||[])for(const top of sub.topics||[])if((top.media||[]).some(m=>m.id===id))return {subjectId:sub.id,topicId:top.id};return null}
+ function allSetlists(){const found=[];for(const sub of data.subjects||[])for(const top of sub.topics||[])for(const m of top.media||[])if(m.kind==='pdf-setlist')found.push({m,sub,top});return found}
+ function populateDestinations(loc){
+  const subSelect=$('mcbPdfDestSubject'),topSelect=$('mcbPdfDestTopic'),binSelect=$('mcbPdfDestBin');
+  subSelect.replaceChildren();topSelect.replaceChildren();binSelect.replaceChildren();
+  for(const sub of data.subjects||[])subSelect.add(new Option(sub.name,sub.id));
+  const initialSub=loc?.subjectId||subjectId;
+  if(initialSub&&[...subSelect.options].some(o=>o.value===initialSub))subSelect.value=initialSub;
+  function topics(preferred){topSelect.replaceChildren();const sub=data.subjects.find(x=>x.id===subSelect.value);for(const top of sub?.topics||[])topSelect.add(new Option(top.name,top.id));if(preferred&&[...topSelect.options].some(o=>o.value===preferred))topSelect.value=preferred;bins()}
+  function bins(){binSelect.replaceChildren();binSelect.add(new Option('Top of Material Bin',''));const top=(data.subjects.find(x=>x.id===subSelect.value)?.topics||[]).find(x=>x.id===topSelect.value);for(const f of top?.folders||[])binSelect.add(new Option(f.name,f.id));const target=loc?.folderId||'';if([...binSelect.options].some(o=>o.value===target))binSelect.value=target}
+  subSelect.onchange=()=>topics(null);topSelect.onchange=bins;topics(loc?.topicId||topicId);
+ }
+ function openBuilder(){if(!dialog.open)dialog.show();populateDestinations(editingLocation);render();document.getElementById('mcbUtilitiesMenu')?.removeAttribute('open')}
+ function openExisting(){const found=allSetlists();if(!found.length){alert('No saved PDF Setlists in this project.');return}const options=found.map((x,i)=>`${i+1}. ${x.m.name} — ${x.sub.name} / ${x.top.name}`).join('\n');const n=Number(prompt('Open which setlist? Enter its number:\n'+options));if(!Number.isInteger(n)||n<1||n>found.length)return;window.mcbOpenSavedPdfSetlist(found[n-1].m);openBuilder()}
+ $('mcbPdfBuilderOpen').onclick=openExisting;
+ async function saveSetlist(asNew){
   if(!entries.length){alert('Add PDFs before saving a setlist.');return}
-  if(!topicId||!topic()){alert('Open a Topic or Material Bin before saving a setlist.');return}
-  const existing=topic().media.find(m=>m.id===editingId&&m.kind==='pdf-setlist');
-  const name=prompt('PDF Setlist name',existing?.name||'New PDF Setlist');
+  const sub=data.subjects.find(x=>x.id===$('mcbPdfDestSubject').value),top=sub?.topics.find(x=>x.id===$('mcbPdfDestTopic').value);
+  if(!top){alert('Choose a Subject and Topic as the destination.');return}
+  const oldLoc=editingId?findSetlistLocation(editingId):null;
+  const oldTop=oldLoc?data.subjects.find(x=>x.id===oldLoc.subjectId)?.topics.find(x=>x.id===oldLoc.topicId):null;
+  const existing=!asNew?oldTop?.media.find(m=>m.id===editingId&&m.kind==='pdf-setlist'):null;
+  const name=prompt(asNew?'Save PDF Setlist As':'PDF Setlist name',asNew?(editingName?editingName+' Copy':'New PDF Setlist'):(existing?.name||editingName||'New PDF Setlist'));
   if(!name?.trim())return;
   const saved=[];
   try{
-   for(const e of entries){
-    let dataUrl=e.dataUrl||'';
-    if(!dataUrl&&e.file){
-     dataUrl=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(e.file)});
-    }
-    if(!dataUrl)throw new Error('Missing PDF content: '+e.name);
-    saved.push({name:e.name,dataUrl});
-   }
-   const item=existing||{id:uid(),kind:'pdf-setlist',folderId:folderId||null,bucketId:bucketId||null};
-   item.name=name.trim();item.setlistEntries=saved;
-   if(!existing)topic().media.push(item);
-   editingId=item.id;persist();render();
-   mcbNotify('PDF Setlist saved to this Bin. Save your project to keep it.');
+   for(const e of entries){let dataUrl=e.dataUrl||'';if(!dataUrl&&e.file)dataUrl=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(e.file)});if(!dataUrl)throw new Error('Missing PDF: '+e.name);saved.push({name:e.name,dataUrl})}
+   const item=existing||{id:uid(),kind:'pdf-setlist'};
+   item.name=name.trim();item.setlistEntries=saved;item.folderId=$('mcbPdfDestBin').value||null;item.bucketId=null;
+   if(existing&&oldTop!==top){oldTop.media.splice(oldTop.media.indexOf(existing),1);top.media.push(existing)}else if(!existing)top.media.push(item);
+   editingId=item.id;editingName=item.name;editingLocation={subjectId:sub.id,topicId:top.id,folderId:item.folderId};
+   persist();render();populateDestinations(editingLocation);mcbNotify('PDF Setlist saved. Save the project to retain it.');
   }catch(err){alert('Could not save PDF Setlist: '+err.message)}
- };
- $('mcbPdfBuilderClear').onclick=()=>{if(!entries.length||!confirm('Clear the PDF setlist?'))return;entries.splice(0).forEach(e=>URL.revokeObjectURL(e.url));current=-1;render();updatePlayer();if(playerBar)playerBar.hidden=true};
+ }
+ $('mcbPdfBuilderSave').onclick=()=>saveSetlist(false);
+ $('mcbPdfBuilderSaveAs').onclick=()=>saveSetlist(true);
+ $('mcbPdfBuilderClear').onclick=()=>{if(!entries.length||!confirm('Clear the PDF setlist?'))return;entries.splice(0).forEach(e=>{if(e.temporary)URL.revokeObjectURL(e.url)});current=-1;render();updatePlayer();if(playerBar)playerBar.hidden=true};
  $('mcbPdfBuilderPlay').onclick=()=>openAt(current>=0&&current<entries.length?current:0);
  $('pdfClose').addEventListener('click',()=>{if(playerBar)playerBar.hidden=true});
  render();
 })();
 </script>
-</body></html>
+<style id="mcb-v168-pdf-fixes">
+#mcbPdfBuilder{position:fixed;inset:175px 24px auto auto;margin:0;width:min(740px,calc(100vw - 48px));max-height:calc(100vh - 190px);overflow:auto;z-index:2500;box-shadow:0 15px 45px #142b4850}
+#mcbPdfBuilder header{background:#eaf1fa!important;color:#173c68!important;padding:8px!important;border-radius:7px}
+#mcbPdfBuilder .mcb-pdf-destination{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+#mcbPdfBuilder .mcb-pdf-destination label{display:flex;flex:1 1 140px;flex-direction:column;font-size:12px;font-weight:700;gap:4px}
+#mcbPdfBuilder .mcb-pdf-destination select{width:100%;min-width:0;padding:7px;border:1px solid #abc0d6;border-radius:5px}
+body.mcb-pdf-player-active>header,body.mcb-pdf-player-active .practice-file-actions{visibility:hidden!important;pointer-events:none!important}
+body.mcb-pdf-player-active #pdfWorkspace{z-index:3000!important;top:0!important}
+body.mcb-pdf-player-active #mcbPdfBuilder[open]{z-index:3100!important}
+</style>
+<script id="mcb-v168-player-visibility">
+(()=>{const ws=document.getElementById('pdfWorkspace');if(!ws)return;const sync=()=>document.body.classList.toggle('mcb-pdf-player-active',!ws.classList.contains('hidden'));new MutationObserver(sync).observe(ws,{attributes:true,attributeFilter:['class']});sync()})();
+</script></body></html>
