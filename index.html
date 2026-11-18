@@ -160,7 +160,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 #practiceSearchDialog .search-hit-actions{display:flex;gap:7px;flex-wrap:wrap}
 #practiceSearchDialog .search-hit-actions button{padding:5px 9px;font-size:12px}
 #practiceSearchDialog .search-count{font-size:13px;color:#60718a}
-</style><style id="mcb-menu-v153">.practice-main-header{display:flex!important;min-height:unset!important;padding:10px 18px!important;gap:12px!important;align-items:center!important}.practice-main-header .practice-file-actions{display:flex!important;flex:1;gap:5px!important;flex-wrap:wrap!important;align-items:center!important}.practice-main-header .practice-centered-title,.practice-main-header .practice-header-spacer{display:none!important}.practice-main-header .mcb-title-bar{max-width:min(350px,35vw)!important;margin-left:12px}.mcb-top-menu>summary,.practice-file-menu>summary{padding:8px 11px!important}.mcb-top-menu .practice-file-menu-panel{min-width:190px;width:max-content;max-width:270px}.mcb-menu-note{display:block;color:#61738a;font-size:13px;padding:10px 12px;white-space:normal}.mcb-help-dialog{width:min(690px,94vw);max-height:85vh;overflow:auto;padding:24px;color:#182b45}.mcb-help-dialog h3{margin:18px 0 5px}.mcb-help-dialog p{line-height:1.5}.mcb-help-dialog menu{position:sticky;bottom:0;background:white;padding:12px 0 0;margin:0}#mcbMetronomeDock.mcb-utility-hidden{display:none!important}#mcbMetronomeDock{position:relative}#mcbUtilityClose{position:absolute;right:8px;top:6px;z-index:20;width:30px;height:30px;border-radius:6px;background:#e8edf4;color:#20324a;font-size:23px;line-height:1;cursor:pointer}#mcbUtilityClose:hover{background:#d4deeb}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderDock{padding-top:28px}#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeToggle,#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeFrame{display:none!important}#mcbMetronomeDock.mcb-utility-metronome #practiceRecorderDock{display:none!important}#mcbMetronomeDock.mcb-utility-metronome{overflow:visible}#mcbMetronomeDock.mcb-utility-metronome iframe{display:block!important}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderBody{display:grid!important}@media(max-width:780px){.practice-main-header .practice-file-actions{grid-row:auto!important}.practice-main-header .mcb-title-bar{max-width:100%!important;margin-left:0}}</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbEditMenu"><summary>Edit <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note">More editing commands coming soon</span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbViewsMenu"><summary>View <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note"><button type="button" data-view-size="small">Small folders</button><button type="button" data-view-size="medium">Medium folders</button><button type="button" data-view-size="large">Large folders</button><div class="mcb-view-divider"></div><button type="button" data-view-mode="grid">Folder view</button><button type="button" data-view-mode="list">List view</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Sort by</div><button type="button" data-sort="name">Name</button><button type="button" data-sort="type">Type</button><button type="button" data-sort="original">Original order</button><div class="mcb-view-divider"></div><button type="button" data-sort-direction="asc">Ascending</button><button type="button" data-sort-direction="desc">Descending</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Group by</div><button type="button" data-group="none">None</button><button type="button" data-group="type">Type</button></span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbUtilitiesMenu"><summary>Utilities <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbShowMetronome">Metronome</button><button type="button" id="mcbShowRecorder">Recorder</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbHelpMenu"><summary>Help <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbGeneralHelpOpen">General Help</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 hidden id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.158</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbUtilityClose" aria-label="Close utility" title="Close utility">×</button><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
+</style><style id="mcb-menu-v153">.practice-main-header{display:flex!important;min-height:unset!important;padding:10px 18px!important;gap:12px!important;align-items:center!important}.practice-main-header .practice-file-actions{display:flex!important;flex:1;gap:5px!important;flex-wrap:wrap!important;align-items:center!important}.practice-main-header .practice-centered-title,.practice-main-header .practice-header-spacer{display:none!important}.practice-main-header .mcb-title-bar{max-width:min(350px,35vw)!important;margin-left:12px}.mcb-top-menu>summary,.practice-file-menu>summary{padding:8px 11px!important}.mcb-top-menu .practice-file-menu-panel{min-width:190px;width:max-content;max-width:270px}.mcb-menu-note{display:block;color:#61738a;font-size:13px;padding:10px 12px;white-space:normal}.mcb-help-dialog{width:min(690px,94vw);max-height:85vh;overflow:auto;padding:24px;color:#182b45}.mcb-help-dialog h3{margin:18px 0 5px}.mcb-help-dialog p{line-height:1.5}.mcb-help-dialog menu{position:sticky;bottom:0;background:white;padding:12px 0 0;margin:0}#mcbMetronomeDock.mcb-utility-hidden{display:none!important}#mcbMetronomeDock{position:relative}#mcbUtilityClose{position:absolute;right:8px;top:6px;z-index:20;width:30px;height:30px;border-radius:6px;background:#e8edf4;color:#20324a;font-size:23px;line-height:1;cursor:pointer}#mcbUtilityClose:hover{background:#d4deeb}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderDock{padding-top:28px}#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeToggle,#mcbMetronomeDock.mcb-utility-recorder #mcbMetronomeFrame{display:none!important}#mcbMetronomeDock.mcb-utility-metronome #practiceRecorderDock{display:none!important}#mcbMetronomeDock.mcb-utility-metronome{overflow:visible}#mcbMetronomeDock.mcb-utility-metronome iframe{display:block!important}#mcbMetronomeDock.mcb-utility-recorder #practiceRecorderBody{display:grid!important}@media(max-width:780px){.practice-main-header .practice-file-actions{grid-row:auto!important}.practice-main-header .mcb-title-bar{max-width:100%!important;margin-left:0}}</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbEditMenu"><summary>Edit <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note">More editing commands coming soon</span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbViewsMenu"><summary>View <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><span class="mcb-menu-note"><button type="button" data-view-size="small">Small folders</button><button type="button" data-view-size="medium">Medium folders</button><button type="button" data-view-size="large">Large folders</button><div class="mcb-view-divider"></div><button type="button" data-view-mode="grid">Folder view</button><button type="button" data-view-mode="list">List view</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Sort by</div><button type="button" data-sort="name">Name</button><button type="button" data-sort="type">Type</button><button type="button" data-sort="original">Original order</button><div class="mcb-view-divider"></div><button type="button" data-sort-direction="asc">Ascending</button><button type="button" data-sort-direction="desc">Descending</button><div class="mcb-view-divider"></div><div class="mcb-view-label">Group by</div><button type="button" data-group="none">None</button><button type="button" data-group="type">Type</button></span></div></details><details class="practice-file-menu mcb-top-menu" id="mcbUtilitiesMenu"><summary>Utilities <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbShowMetronome">Metronome</button><button type="button" id="mcbShowRecorder">Recorder</button></div></details><details class="practice-file-menu mcb-top-menu" id="mcbHelpMenu"><summary>Help <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel"><button type="button" id="mcbGeneralHelpOpen">General Help</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 hidden id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.159</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbUtilityClose" aria-label="Close utility" title="Close utility">×</button><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
 <button type="button" id="practiceRecorderToggle" aria-expanded="true">● Recorder ▾</button>
 <div id="practiceRecorderBody">
 <div class="rec-source-row"><button type="button" id="practiceSourceWindow" class="selected" aria-pressed="true">Window Capture</button><button type="button" id="practiceAudioChoose">Choose Source</button></div>
@@ -383,7 +383,7 @@ async function mcbCheckDirty(){
   dlg.showModal();
  });
 }
-async function mcbApplyProject(json,handle=null,name='Opened Project'){if(!Array.isArray(json.subjects))throw Error('Not a valid MCB project');mcbLoading=true;data={subjects:json.subjects};subjectId=topicId=folderId=bucketId=null;mcbProjectHandle=handle;mcbProjectName=mcbFileBase(handle?.name||name||json.projectName||'Opened Project');persist();mcbLoading=false;mcbSetClean();mcbSetExportNeeded(false);render();await mcbRestoreMedia();if(handle)await mcbDbSet('settings','lastProject',handle)}
+async function mcbApplyProject(json,handle=null,name='Opened Project'){if(!Array.isArray(json.subjects))throw Error('Not a valid MCB project');mcbLoading=true;data={subjects:json.subjects};subjectId=topicId=folderId=bucketId=null;mcbProjectHandle=handle;mcbProjectName=mcbFileBase(handle?.name||name||json.projectName||'Opened Project');persist();mcbLoading=false;window.mcbClearUndoHistory?.();mcbSetClean();mcbSetExportNeeded(false);render();await mcbRestoreMedia();if(handle)await mcbDbSet('settings','lastProject',handle)}
 async function mcbOpenHandle(handle){const file=await handle.getFile();const parsed=JSON.parse(await file.text());await mcbApplyProject(parsed,handle,handle.name)}
 async function mcbNewProject(){
  if(!await mcbCheckDirty())return;
@@ -421,7 +421,7 @@ async function mcbCloseProject(){
  try{localStorage.removeItem('MCB_V56_0')}catch(e){console.warn(e)}
  try{await mcbDbSet('settings','lastProject',null)}catch(e){console.warn(e)}
  document.querySelectorAll('header .actions button[data-mcb-reopen]').forEach(b=>b.remove());
- mcbLoading=false;mcbSetClean();render();
+ mcbLoading=false;window.mcbClearUndoHistory?.();mcbSetClean();render();
 }
 $('closeProject').onclick=()=>mcbCloseProject();
 $('newProject').onclick=()=>mcbNewProject();
@@ -1166,28 +1166,33 @@ $('pdfFirstAlign').onclick=()=>{const active=['pdfAlignLeft','pdfAlignCenter','p
 <style id="practice-undo-style">#practiceUndoButton,#practiceRedoButton{padding:6px 11px;border:1px solid #a8b9cd;border-radius:6px;background:#f5f8fc;color:#173c68;cursor:pointer}#practiceUndoButton:disabled,#practiceRedoButton:disabled{opacity:.45;cursor:default}</style>
 <script id="practice-undo-script">
 (()=>{
- let project=data,baseline=JSON.stringify(data),undo=null,redo=null,restoring=false;
+ const MAX=50,undos=[],redos=[];let project=data,baseline=JSON.stringify(data),restoring=false;
  const ub=document.createElement('button'),rb=document.createElement('button');
  ub.id='practiceUndoButton';ub.textContent='↶ Undo';rb.id='practiceRedoButton';rb.textContent='↷ Redo';
- function sync(){if(project!==data){project=data;baseline=JSON.stringify(data);undo=redo=null}
-  ub.disabled=!undo;rb.disabled=!redo;
-  const u=document.getElementById('mcbGlobalUndo'),r=document.getElementById('mcbGlobalRedo');if(u)u.disabled=!undo;if(r)r.disabled=!redo;
+ function reset(){project=data;baseline=JSON.stringify(data);undos.length=0;redos.length=0}
+ function sync(){ub.disabled=!undos.length;rb.disabled=!redos.length;
+  const u=document.getElementById('mcbGlobalUndo'),r=document.getElementById('mcbGlobalRedo');
+  if(u){u.disabled=!undos.length;u.textContent='Undo last action'+(undos.length?' ('+undos.length+')':'')}
+  if(r){r.disabled=!redos.length;r.textContent='Redo last action'+(redos.length?' ('+redos.length+')':'')}
  }
+ function push(stack,value){stack.push(value);if(stack.length>MAX)stack.shift()}
  const oldPersist=persist;
- persist=function(){if(project!==data){project=data;baseline=JSON.stringify(data);undo=redo=null}
-  const next=JSON.stringify(data);if(!restoring&&next!==baseline){undo=baseline;redo=null}
+ persist=function(){if(project!==data&&!restoring)reset();
+  const next=JSON.stringify(data);
+  if(!restoring&&next!==baseline){push(undos,baseline);redos.length=0}
   baseline=next;oldPersist();sync()};
- function restore(snapshot){if(!snapshot)return;restoring=true;try{
-  data=JSON.parse(snapshot);
+ function restore(snapshot){restoring=true;try{
+  data=JSON.parse(snapshot);project=data;baseline=JSON.stringify(data);
   if(!data.subjects.some(s=>s.id===subjectId)){subjectId=null;topicId=null;folderId=null;bucketId=null}
   else if(topicId&&!subject()?.topics.some(t=>t.id===topicId)){topicId=null;folderId=null;bucketId=null}
   else if(topicId&&folderId&&!topic()?.folders?.some(f=>f.id===folderId)){folderId=null;bucketId=null}
-  project=data;baseline=JSON.stringify(data);oldPersist();render();sync();
+  oldPersist();render();sync();
  }finally{restoring=false}}
- window.practiceUndoLast=()=>{sync();if(!undo)return;const target=undo;redo=JSON.stringify(data);undo=null;restore(target);mcbNotify('Last action undone.')};
- window.practiceRedoLast=()=>{sync();if(!redo)return;const target=redo;undo=JSON.stringify(data);redo=null;restore(target);mcbNotify('Last action redone.')};
+ window.practiceUndoLast=()=>{if(!undos.length)return;push(redos,JSON.stringify(data));restore(undos.pop());mcbNotify('Action undone ('+undos.length+' remaining).')};
+ window.practiceRedoLast=()=>{if(!redos.length)return;push(undos,JSON.stringify(data));restore(redos.pop());mcbNotify('Action redone.')};
  window.practiceRecordUndo=()=>{};
- ub.onclick=()=>window.practiceUndoLast();rb.onclick=()=>window.practiceRedoLast();
+ window.mcbClearUndoHistory=()=>{reset();sync()};
+ ub.onclick=window.practiceUndoLast;rb.onclick=window.practiceRedoLast;
  const edit=document.querySelector('#mcbEditMenu .practice-file-menu-panel');
  if(edit)edit.innerHTML='<button type="button" id="mcbGlobalUndo">Undo last action</button><button type="button" id="mcbGlobalRedo">Redo last action</button>';
  document.getElementById('mcbGlobalUndo')?.addEventListener('click',()=>{window.practiceUndoLast();document.getElementById('mcbEditMenu').open=false});
@@ -1196,9 +1201,12 @@ $('pdfFirstAlign').onclick=()=>{const active=['pdfAlignLeft','pdfAlignCenter','p
   if(!ub.isConnected)bar.insertBefore(ub,bar.querySelector('#practiceClipboardInfo'));
   if(!rb.isConnected)bar.insertBefore(rb,bar.querySelector('#practiceClipboardInfo'));sync();return true}
  if(!attach()){const o=new MutationObserver(()=>{if(attach())o.disconnect()});o.observe(document.documentElement,{childList:true,subtree:true})}
- document.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||e.altKey||e.key.toLowerCase()!=='z')return;
+ document.addEventListener('keydown',e=>{
+  if(!(e.ctrlKey||e.metaKey)||e.altKey)return;
   if(e.target?.closest?.('input,textarea,select,[contenteditable="true"]'))return;
-  e.preventDefault();e.stopImmediatePropagation();if(e.shiftKey)window.practiceRedoLast();else window.practiceUndoLast();},true);
+  const key=e.key.toLowerCase();if(key!=='z'&&key!=='y')return;
+  e.preventDefault();e.stopImmediatePropagation();if(key==='y'||e.shiftKey)window.practiceRedoLast();else window.practiceUndoLast();
+ },true);
  sync();
 })();
 </script>
@@ -1880,13 +1888,21 @@ body.mcb-size-medium .practice-list-view>.folder,body.mcb-size-medium .practice-
 (()=>{
  const menu=document.getElementById('mcbViewsMenu');
  const valid=['small','medium','large'];
- window.mcbSortBy=localStorage.getItem('mcb-sort-by')||'original';
- window.mcbSortDirection=localStorage.getItem('mcb-sort-direction')||'asc';
- window.mcbGroupBy=localStorage.getItem('mcb-group-by')||'none';
+ const SORT_KEY='mcb-bin-sorts-v159';
+ let binSorts={};try{binSorts=JSON.parse(localStorage.getItem(SORT_KEY)||'{}')||{}}catch(e){}
+ const defaults=()=>({by:localStorage.getItem('mcb-sort-by')||'original',direction:localStorage.getItem('mcb-sort-direction')||'asc',group:localStorage.getItem('mcb-group-by')||'none'});
+ function binKey(){return !subjectId?'subjects':!topicId?'topics:'+subjectId:'materials:'+topicId+':'+(folderId||'root')+':'+(bucketId||'root')}
+ function getBin(){return binSorts[binKey()]||defaults()}
+ function syncBin(){const settings=getBin();window.mcbSortBy=settings.by;window.mcbSortDirection=settings.direction;window.mcbGroupBy=settings.group}
+ function updateBin(changes){const next={...getBin(),...changes};binSorts[binKey()]=next;
+  localStorage.setItem(SORT_KEY,JSON.stringify(binSorts));
+  localStorage.setItem('mcb-sort-by',next.by);localStorage.setItem('mcb-sort-direction',next.direction);localStorage.setItem('mcb-group-by',next.group);
+  syncBin()}
+ syncBin();
  let size=localStorage.getItem('mcb-view-size');
  if(!valid.includes(size))size='small';
  function apply(){
-  document.body.classList.remove(...valid.map(v=>'mcb-size-'+v));
+  syncBin();document.body.classList.remove(...valid.map(v=>'mcb-size-'+v));
   document.body.classList.add('mcb-size-'+size);
   menu.querySelectorAll('[data-sort]').forEach(b=>b.setAttribute('aria-checked',String(b.dataset.sort===window.mcbSortBy)));
   menu.querySelectorAll('[data-sort-direction]').forEach(b=>b.setAttribute('aria-checked',String(b.dataset.sortDirection===window.mcbSortDirection)));
@@ -1900,14 +1916,14 @@ body.mcb-size-medium .practice-list-view>.folder,body.mcb-size-medium .practice-
   if(!b)return;
   if(b.dataset.viewSize){size=b.dataset.viewSize;localStorage.setItem('mcb-view-size',size);window.practiceListView=false;localStorage.setItem('mcb-view-mode','grid');render()}
   if(b.dataset.viewMode){window.practiceListView=b.dataset.viewMode==='list';localStorage.setItem('mcb-view-mode',b.dataset.viewMode);render()}
-  if(b.dataset.sort){window.mcbSortBy=b.dataset.sort;localStorage.setItem('mcb-sort-by',b.dataset.sort);render()}
-  if(b.dataset.sortDirection){window.mcbSortDirection=b.dataset.sortDirection;localStorage.setItem('mcb-sort-direction',b.dataset.sortDirection);render()}
-  if(b.dataset.group){window.mcbGroupBy=b.dataset.group;localStorage.setItem('mcb-group-by',b.dataset.group);render()}
+  if(b.dataset.sort){updateBin({by:b.dataset.sort});render()}
+  if(b.dataset.sortDirection){updateBin({direction:b.dataset.sortDirection});render()}
+  if(b.dataset.group){updateBin({group:b.dataset.group});render()}
   apply();menu.open=false;
  });
  const previousRender=render;
  function sortVisible(){
-  for(const id of ['folders','media']){
+  syncBin();for(const id of ['folders','media']){
    const parent=document.getElementById(id);if(!parent)continue;
    parent.querySelectorAll(':scope > .mcb-group-heading').forEach(el=>el.remove());
    const children=Array.from(parent.children).filter(el=>el.classList.contains('folder')||el.classList.contains('media'));
