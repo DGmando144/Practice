@@ -1490,6 +1490,28 @@ html body .video-practice-view .media-splitter{display:none!important}
 html body .video-practice-view:not(.floating-player):not(.player-expanded) > .media-tools{max-height:none!important;overflow-y:visible!important}
 html body .video-practice-view:not(.floating-player):not(.player-expanded) .media-control-scroll{max-height:none!important;overflow-y:visible!important}
 </style>
+<style id="mcb-v190-approved-layout">
+/* The outer Practice player owns the title. Remove the duplicate embedded title and its space. */
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player):not(.pip-video-player) > .media-topbar,
+html body.v563-audio-mode #resourcePreview:not(.floating-player):not(.pip-video-player) > .media-topbar {display:none!important;margin:0!important;padding:0!important;height:0!important;min-height:0!important;flex:0 0 0!important}
+/* Keep the large video and use the V189 shorter waveform. */
+html body.v563-audio-mode #resourcePreview.video-practice-view > .media-splitter{display:none!important;height:0!important;flex:0 0 0!important}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) > .media-tools{
+ overflow:visible!important;overflow-y:visible!important;max-height:none!important;min-height:0!important;flex:0 0 auto!important;
+}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-scroll{
+ overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important;max-height:none!important;padding:2px 0!important;
+}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip{
+ display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;gap:3px!important;width:100%!important;min-width:0!important;
+}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip > *{min-width:0!important;flex-shrink:1!important}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip button{max-width:72px!important;padding:3px 4px!important;font-size:10px!important}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip .media-timecode{white-space:nowrap!important;font-size:11px!important;padding:3px 4px!important}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .wave-canvas{height:73.5px!important;max-height:none!important}
+/* No inner vertical scrollbar in the embedded player card. */
+html body.v563-audio-mode #resourcePreviewCard{overflow:hidden!important}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
