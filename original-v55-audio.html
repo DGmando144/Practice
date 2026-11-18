@@ -1444,7 +1444,7 @@ html.mcb-embedded-loading::after {
 }
 </style>
 <script>
-if(window.parent!==window)document.documentElement.classList.add('mcb-embedded-loading');
+if(window.parent!==window){document.documentElement.classList.add('mcb-embedded-loading');document.body?.classList.add('mcb-embedded-media');}
 </script>
 <style id="mcb-v185-player-layout">
 /* Preserve the established button appearance. Keep MP4 picture spacing tight. */
@@ -1459,6 +1459,27 @@ html body .floating-player .media-topbar .mcb-close-floating-player{display:inli
 /* Override earlier rules that hide every button in the PiP toolbar. */
 html body .pip-audio-player>.media-topbar button.mcb-close-floating-player,
 html body .pip-video-player>.media-topbar button.mcb-close-floating-player{display:inline-flex!important;}
+</style>
+<style id="mcb-v188-layout-from-v186">
+/* The outer viewer owns the title and actions. The embedded copy wastes a row. */
+html.mcb-embedded-loading body .resource-preview:not(.floating-player) > .media-topbar,
+html.mcb-embedded-loading .resource-preview:not(.floating-player) > .media-topbar {display:none!important}
+/* No splitter, no height reduction to video or waveform. */
+.media-splitter{display:none!important}
+/* Compact transport, retain original blue button artwork and styling. */
+.resource-preview:not(.floating-player) .media-tools{padding:6px 8px!important;margin-top:3px!important}
+.resource-preview:not(.floating-player) .media-control-scroll{padding:3px 0 4px!important;overflow-x:visible!important}
+.resource-preview:not(.floating-player) .media-control-strip{gap:3px!important;flex-wrap:nowrap!important;width:100%!important;min-width:0!important;justify-content:space-between!important}
+.resource-preview:not(.floating-player) .media-control-strip > *{flex-shrink:1!important;min-width:0!important}
+.resource-preview:not(.floating-player) .media-control-strip > button{font-size:10px!important;padding:4px 5px!important;min-width:0!important;max-width:76px!important;height:45px!important;min-height:0!important;line-height:1.05!important}
+.resource-preview:not(.floating-player) .media-control-strip .speed-picker{flex:0 0 54px!important;width:54px!important}
+.resource-preview:not(.floating-player) .media-control-strip #speedButton{width:54px!important;min-width:0!important;max-width:54px!important;height:45px!important;min-height:0!important;padding:2px!important;font-size:11px!important}
+.resource-preview:not(.floating-player) .media-control-strip .mcb-pitch-picker{flex:0 0 78px!important;min-width:0!important;width:78px!important}
+.resource-preview:not(.floating-player) .media-control-strip #mcbPitchButton{width:78px!important;min-width:0!important;height:45px!important;min-height:0!important;padding:2px!important}
+.resource-preview:not(.floating-player) .media-control-strip #mcbPitchButton::before{font-size:13px!important}
+.resource-preview:not(.floating-player) .media-control-strip #mcbPitchButton::after{font-size:16px!important}
+.resource-preview:not(.floating-player) .media-control-strip .timecode{font-size:11px!important;white-space:nowrap!important;flex:0 0 auto!important}
+/* Keep wave canvas at its original size. */
 </style>
 </head>
 <body>
@@ -2640,27 +2661,7 @@ function makeMediaViewer(file,r,host){
  media.style.cssText='display:block;width:100%;height:100%;object-fit:contain';
  const videoRegion=document.createElement('div');videoRegion.className='media-video-region';
  videoRegion.append(media);host.append(videoRegion);
- const divider=document.createElement('div');divider.className='media-splitter';divider.setAttribute('role','separator');divider.setAttribute('aria-label','Drag to resize video and waveform');divider.title='Drag up or down to resize video relative to waveform';
- divider.innerHTML='<span aria-hidden="true">⋮⋮&nbsp; DRAG TO RESIZE VIDEO &nbsp;⋮⋮</span>';
- host.append(divider);
- if(r.kind==='video'){
-  videoRegion.style.height='240px';
-  let dragging=null;
-  divider.addEventListener('pointerdown',e=>{
-   if(e.button!==0&&e.pointerType==='mouse')return;
-   dragging={y:e.clientY,h:videoRegion.getBoundingClientRect().height};
-   divider.setPointerCapture(e.pointerId);e.preventDefault();
-  });
-  divider.addEventListener('pointermove',e=>{
-   if(!dragging)return;
-   const available=Math.max(300,host.getBoundingClientRect().height||window.innerHeight);
-   const newHeight=Math.max(85,Math.min(Math.max(available-150,120),dragging.h+e.clientY-dragging.y));
-   videoRegion.style.height=newHeight+'px';
-  });
-  for(const eventName of ['pointerup','pointercancel','lostpointercapture'])divider.addEventListener(eventName,()=>{dragging=null});
-  divider.tabIndex=0;
-  divider.addEventListener('keydown',e=>{if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();videoRegion.style.height=Math.max(85,videoRegion.getBoundingClientRect().height+(e.key==='ArrowDown'?30:-30))+'px'}});
- }else{videoRegion.classList.add('audio-region');divider.hidden=true}
+ if(r.kind==='video'){videoRegion.style.height='240px';}else{videoRegion.classList.add('audio-region');}
  addMediaControls(media,r,host,file);
  if(r.kind==='video'){
   // Open a local video in Normal Size (expanded practice workspace, not browser fullscreen).
