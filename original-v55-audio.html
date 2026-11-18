@@ -1280,11 +1280,15 @@ body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-co
 body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > .help-popover-anchor > button {
   display:flex!important;align-items:center!important;justify-content:center!important;
   text-align:center!important;text-indent:0!important;
+  position:relative!important;
 }
 body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > button::before,
 body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > .help-popover-anchor > button::before {
-  margin:0!important;
-  align-self:center!important;flex-shrink:0!important;
+  position:absolute!important;
+  left:50%!important;top:50%!important;right:auto!important;bottom:auto!important;
+  transform:translate(-50%,-50%)!important;
+  margin:0!important;padding:0!important;
+  align-self:auto!important;flex-shrink:0!important;
   background-position:center center!important;
 }
 </style>
