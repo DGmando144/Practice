@@ -1593,18 +1593,18 @@ dialog.querySelectorAll('input[name="practiceSearchScope"]').forEach(x=>x.addEve
 <p class="setting-hint">Choose the Windows audio devices to use. Input can be a microphone, Stereo Mix, or an audio-interface loopback device. Output controls recording preview playback; it does not change Windows system audio routing. Device names may require microphone permission.</p>
 <div class="setting-row"><label for="practiceAudioInput">Input</label><select id="practiceAudioInput"><option value="">System default input</option></select></div>
 <div class="setting-row"><label for="practiceAudioOutput">Output</label><select id="practiceAudioOutput"><option value="">System default output</option></select></div>
-<div class="setting-actions"><button type="button" id="practiceAudioRefresh">Refresh devices / grant microphone access</button><button type="button" id="practiceAudioStart" class="primary">● Record</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button></div>
+<div class="setting-actions"><button type="button" id="practiceAudioRefresh">Refresh devices / grant microphone access</button><button type="button" id="practiceAudioStart" class="primary">● Record</button><button type="button" id="practiceAudioTabStart">▣ Record Chrome Tab Audio</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button></div>
 <div id="practiceAudioStatus" class="setting-status" role="status" aria-live="polite">Ready.</div>
 <audio id="practiceAudioPreview" controls></audio>
 <div class="setting-row"><label for="practiceRecordingName">Recording filename</label><input id="practiceRecordingName" type="text" value="Practice Recording.webm"></div>
 <div class="setting-actions"><button type="button" id="practiceAudioSave" disabled>Save recording to current Topic / folder</button><button type="button" id="practiceAudioDownload" disabled>Download recording</button></div>
-<p class="setting-hint">Recording is saved only when you choose Save or Download. Keep this window open until you have saved your recording. To capture Windows playback, choose an available Stereo Mix or Loopback input and route playback through its corresponding output.</p>
+<p class="setting-hint">Recording is saved only when you choose Save or Download. Keep this window open until you have saved your recording. To capture Windows playback, choose Stereo Mix or Loopback. Alternatively, click Record Chrome Tab Audio, select a tab in Chrome’s sharing dialog, and enable Share tab audio. Chrome may require HTTPS or localhost.</p>
 <div class="settings-footer"><button type="button" id="practiceAudioClose">Close</button></div>
 </dialog>
-<script id="practice-audio-settings-v565141">
+<script id="practice-audio-settings-v565142">
 (()=>{
 const $s=id=>document.getElementById(id), dlg=$s('practiceAudioSettings'),input=$s('practiceAudioInput'),output=$s('practiceAudioOutput'),preview=$s('practiceAudioPreview'),status=$s('practiceAudioStatus');
-let recorder=null,streams=[],context=null,recorded=null,previewUrl=null,parts=[],recordingType='';
+let recorder=null,streams=[],context=null,recorded=null,previewUrl=null,parts=[],recordingType='',captureMode='input';
 const note=t=>status.textContent=t;
 const supported=!!navigator.mediaDevices?.getUserMedia&&!!window.MediaRecorder;
 function storePrefs(){try{localStorage.setItem('practiceAudioPreferences',JSON.stringify({input:input.value,output:output.value}))}catch(e){}}
@@ -1641,15 +1641,26 @@ function mime(){
  for(const t of ['audio/webm;codecs=opus','audio/webm','audio/mp4'])if(MediaRecorder.isTypeSupported(t))return t;
  return '';
 }
-async function start(){
+async function start(mode='input'){
  if(!supported){note('Recording requires a supported browser on HTTPS or localhost.');return}
- recorded=null;parts=[];if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;preview.removeAttribute('src')}
+ captureMode=mode;recorded=null;parts=[];if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;preview.removeAttribute('src')}
  $s('practiceAudioSave').disabled=true;$s('practiceAudioDownload').disabled=true;
  try{
-  const chosen=input.value;
-  const mic=await navigator.mediaDevices.getUserMedia({audio:chosen?{deviceId:{exact:chosen}}:true});
-  streams.push(mic);
-  const stream=new MediaStream(mic.getAudioTracks());
+  let stream;
+  if(mode==='tab'){
+   if(!navigator.mediaDevices.getDisplayMedia)throw new Error('Chrome screen/tab sharing is unavailable. Open Practice! on HTTPS or localhost.');
+   const shared=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
+   streams.push(shared);
+   const audioTracks=shared.getAudioTracks();
+   if(!audioTracks.length){release();throw new Error('No audio was shared. Select a Chrome tab and enable Share tab audio, then try again.');}
+   stream=new MediaStream(audioTracks);
+   shared.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(recorder?.state==='recording')stop()},{once:true}));
+  }else{
+   const chosen=input.value;
+   const mic=await navigator.mediaDevices.getUserMedia({audio:chosen?{deviceId:{exact:chosen}}:true});
+   streams.push(mic);
+   stream=new MediaStream(mic.getAudioTracks());
+  }
   const mt=mime();recorder=new MediaRecorder(stream,mt?{mimeType:mt}:undefined);
   recordingType=recorder.mimeType||mt||'audio/webm';
   recorder.ondataavailable=e=>{if(e.data.size)parts.push(e.data)};
@@ -1666,13 +1677,13 @@ async function start(){
    release();
   };
   recorder.start(500);
-  $s('practiceAudioStart').disabled=true;$s('practiceAudioStop').disabled=false;
-  note('Recording from selected input…');
- }catch(e){release();note('Could not start recording: '+e.message)}
+  $s('practiceAudioStart').disabled=true;$s('practiceAudioTabStart').disabled=true;$s('practiceAudioStop').disabled=false;
+  note(mode==='tab'?'Recording shared tab audio… Click Stop when finished.':'Recording from selected input…');
+ }catch(e){release();$s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;note('Could not start recording: '+e.message)}
 }
 function stop(){
  if(recorder?.state==='recording')recorder.stop();
- $s('practiceAudioStart').disabled=false;$s('practiceAudioStop').disabled=true;
+ $s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;
 }
 function filename(){
  let name=$s('practiceRecordingName').value.trim().replace(/[\\/:*?"<>|]/g,'_');
@@ -1699,7 +1710,7 @@ $s('practiceAudioClose').onclick=closePreferences;
 $s('practiceAudioX').onclick=closePreferences;
 dlg.addEventListener('cancel',e=>{if(recorder?.state==='recording'){e.preventDefault();note('Stop recording before closing Preferences.')}});
 $s('practiceAudioRefresh').onclick=()=>devices(true);
-$s('practiceAudioStart').onclick=start;$s('practiceAudioStop').onclick=stop;
+$s('practiceAudioStart').onclick=()=>start('input');$s('practiceAudioTabStart').onclick=()=>start('tab');$s('practiceAudioStop').onclick=stop;
 $s('practiceAudioSave').onclick=save;$s('practiceAudioDownload').onclick=download;
 input.onchange=storePrefs;output.onchange=setOutput;
 navigator.mediaDevices?.addEventListener?.('devicechange',()=>{if(dlg.open)devices(false)});
