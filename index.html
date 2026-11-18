@@ -160,7 +160,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 #practiceSearchDialog .search-hit-actions{display:flex;gap:7px;flex-wrap:wrap}
 #practiceSearchDialog .search-hit-actions button{padding:5px 9px;font-size:12px}
 #practiceSearchDialog .search-count{font-size:13px;color:#60718a}
-</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.146</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
+</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.147</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
 <button type="button" id="practiceRecorderToggle" aria-expanded="true">● Recorder ▾</button>
 <div id="practiceRecorderBody">
 <div class="rec-controls"><button type="button" id="practiceAudioTabStart" class="rec-record">● Record</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button><button type="button" id="practiceRecorderPlay" disabled>▶ Play</button></div>
@@ -1734,22 +1734,25 @@ async function start(mode='input'){
   let stream;
   if(mode==='tab'){
    if(!navigator.mediaDevices.getDisplayMedia)throw new Error('Chrome screen/tab sharing is unavailable. Open Practice! on HTTPS or localhost.');
-   const shared=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
+   const shared=await navigator.mediaDevices.getDisplayMedia({video:true,audio:{echoCancellation:{ideal:false},noiseSuppression:{ideal:false},autoGainControl:{ideal:false},channelCount:{ideal:2}}});
    streams.push(shared);
    const audioTracks=shared.getAudioTracks();
    if(!audioTracks.length){release();throw new Error('No audio was shared. Select a Chrome tab and enable Share tab audio, then try again.');}
-   // Ask the browser to disable voice-processing effects on shared tab audio.
-   // Some Chrome capture sources do not expose or honor these constraints.
+   // Request processing OFF individually, without blocking recording if Chrome rejects it.
+   // Tab capture may expose fixed, read-only audio processing settings.
    const track=audioTracks[0];
-   const supported=navigator.mediaDevices.getSupportedConstraints?.()||{};
-   const off={};
-   for(const key of ['autoGainControl','echoCancellation','noiseSuppression'])if(supported[key])off[key]=false;
-   let processingResult='No processing constraints supported by this browser';
-   if(Object.keys(off).length){
-    try{await track.applyConstraints(off);processingResult='Requested OFF: '+Object.keys(off).join(', ')}
-    catch(err){processingResult='Browser did not accept processing constraints: '+(err.message||err.name)}
+   const keys=['echoCancellation','noiseSuppression','autoGainControl'];
+   const attempts=[];
+   for(const key of keys){
+    const before=track.getSettings?.()[key];
+    if(before===false){attempts.push(key+': OFF');continue;}
+    try{
+     await track.applyConstraints({[key]:{ideal:false}});
+     const after=track.getSettings?.()[key];
+     attempts.push(key+': '+(after===false?'OFF':after===true?'ON (Chrome did not honor request)':'not reported'));
+    }catch(err){attempts.push(key+': '+(before===true?'ON':'unknown')+' (Chrome rejected: '+(err.name||err.message)+')');}
    }
-   window.practiceTabProcessingResult=processingResult;
+   window.practiceTabProcessingResult='Audio processing (actual browser settings):\n'+attempts.join('\n');
    stream=new MediaStream(audioTracks);
    shared.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(recorder?.state==='recording')stop()},{once:true}));
   }else{
