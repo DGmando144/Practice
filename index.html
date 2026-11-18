@@ -160,7 +160,19 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 #practiceSearchDialog .search-hit-actions{display:flex;gap:7px;flex-wrap:wrap}
 #practiceSearchDialog .search-hit-actions button{padding:5px 9px;font-size:12px}
 #practiceSearchDialog .search-count{font-size:13px;color:#60718a}
-</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.141</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
+</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.146</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
+<button type="button" id="practiceRecorderToggle" aria-expanded="true">● Recorder ▾</button>
+<div id="practiceRecorderBody">
+<div class="rec-controls"><button type="button" id="practiceAudioTabStart" class="rec-record">● Record</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button><button type="button" id="practiceRecorderPlay" disabled>▶ Play</button></div>
+<div class="rec-secondary"><button type="button" id="practiceAudioStart">Record selected input instead</button></div>
+<div id="practiceRecorderClock">00:00</div><div id="practiceRecorderMeter" aria-label="Recording level meter"><div id="practiceRecorderMeterFill"></div><div id="practiceRecorderPeak"></div></div><div class="rec-scale"><span>−60</span><span>−24</span><span>−12</span><span>0 dBFS</span></div>
+<canvas id="practiceRecorderWave" width="480" height="72" aria-label="Live recording waveform"></canvas>
+<div id="practiceAudioStatus" class="setting-status" role="status" aria-live="polite">Ready.</div>
+<audio id="practiceAudioPreview" controls preload="metadata"></audio>
+<div class="rec-name"><label for="practiceRecordingName">Recording filename</label><input id="practiceRecordingName" type="text" value="Practice Recording.webm"></div>
+<div class="rec-save"><button type="button" id="practiceAudioSave" disabled>Save to current Topic</button><button type="button" id="practiceAudioDownload" disabled>Download recording</button></div>
+<details class="rec-diagnostics"><summary>Recording diagnostics</summary><div id="practiceAudioDiagnostics" style="white-space:pre-wrap">Awaiting recording.</div></details>
+</div></section><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
 <button type="button" id="practiceTreeToggle" aria-expanded="false" aria-controls="practiceTreePanel">▤ Folder Tree ▸</button>
 <div id="practiceTreePanel" role="navigation" aria-label="Project folders">
 <div class="practice-tree-title">Project folders</div><div id="practiceTreeNodes"></div>
@@ -1587,6 +1599,30 @@ dialog.querySelectorAll('input[name="practiceSearchScope"]').forEach(x=>x.addEve
 #practiceAudioSettings button{padding:8px 12px}
 #practiceAudioSettings audio{width:100%;margin-top:10px}
 #practiceAudioSettings .setting-status{padding:8px 0;min-height:24px;font-weight:600}
+#practiceRecorderDock{border-top:1px solid #c9d6e7;background:#fff;color:#193653}
+#practiceRecorderToggle{width:100%;border:0;background:#173c68;color:#fff;padding:12px 14px;text-align:left;font-weight:700;cursor:pointer}
+#practiceRecorderBody{padding:10px;display:grid;gap:9px}
+#practiceRecorderDock.collapsed #practiceRecorderBody{display:none}
+#practiceRecorderDock button{cursor:pointer;font-size:12px;padding:8px 5px}
+#practiceRecorderDock button:disabled{opacity:.42;cursor:not-allowed}
+.rec-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+#practiceRecorderDock .rec-record{background:#6e242b;color:#fff;border:1px solid #6e242b;border-radius:7px;font-weight:700}
+#practiceRecorderDock .rec-record.active{background:#ec292e;box-shadow:0 0 0 3px #ff424233}
+.rec-controls button:not(.rec-record){border:1px solid #b7c6d7;border-radius:7px;background:#edf2f8;color:#173c68}
+.rec-secondary button{border:0;background:transparent;color:#24578b;text-decoration:underline;padding:3px!important}
+#practiceRecorderClock{text-align:center;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+#practiceRecorderMeter{height:17px;border-radius:4px;position:relative;overflow:hidden;background:linear-gradient(to right,#dcefe6 0 70%,#f9e7b3 70% 89%,#f9c3c3 89%)}
+#practiceRecorderMeterFill{height:100%;width:0%;background:linear-gradient(to right,#139d5a 0 70%,#e5a525 70% 89%,#d72727 89%);transition:width .07s}
+#practiceRecorderPeak{position:absolute;top:0;bottom:0;left:0;border-left:2px solid #25364d}
+.rec-scale{display:flex;justify-content:space-between;font-size:10px;color:#60738a}
+#practiceRecorderWave{width:100%;height:56px;background:#f0f5fa;border-radius:5px}
+#practiceRecorderDock audio{width:100%;height:38px}
+#practiceRecorderDock .setting-status{font-size:11px;color:#3d526a;overflow-wrap:anywhere}
+.rec-name{display:grid;gap:4px;font-size:11px}
+.rec-name input{width:100%;min-width:0;padding:7px;border:1px solid #b7c6d7;border-radius:5px}
+.rec-save{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.rec-save button{border:1px solid #aebfd3;background:#edf3fa;border-radius:6px;color:#163b68}
+.rec-diagnostics{font-size:11px;overflow-wrap:anywhere;color:#5b6c80}
 </style>
 <dialog id="practiceAudioSettings" aria-label="Settings">
 <div class="settings-heading"><h2>Preferences</h2><button type="button" id="practiceAudioX" aria-label="Close Preferences" title="Close Preferences">×</button></div><h3>Audio &amp; Recording</h3>
@@ -1594,24 +1630,30 @@ dialog.querySelectorAll('input[name="practiceSearchScope"]').forEach(x=>x.addEve
 <div class="setting-row"><label for="practiceAudioInput">Input</label><select id="practiceAudioInput"><option value="">System default input</option></select></div>
 <div class="setting-row"><label for="practiceAudioOutput">Output</label><select id="practiceAudioOutput"><option value="">System default output</option></select></div>
 <div class="setting-row"><label for="practiceAudioFormat">Recording format</label><select id="practiceAudioFormat"><option value="mp3">MP3 — 256 kbps (conversion)</option><option value="webm">WebM / Opus — high quality test (256 kbps requested)</option></select></div>
-<div class="setting-actions"><button type="button" id="practiceAudioRefresh">Refresh devices / grant microphone access</button><button type="button" id="practiceAudioStart" class="primary">● Record</button><button type="button" id="practiceAudioTabStart">▣ Record Chrome Tab Audio</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button></div>
-<div id="practiceAudioStatus" class="setting-status" role="status" aria-live="polite">Ready.</div><div id="practiceAudioDiagnostics" class="setting-hint" style="white-space:pre-wrap">Opus diagnostic: awaiting recording.</div>
-<audio id="practiceAudioPreview" controls></audio>
-<div class="setting-row"><label for="practiceRecordingName">Recording filename</label><input id="practiceRecordingName" type="text" value="Practice Recording.webm"></div>
-<div class="setting-actions"><button type="button" id="practiceAudioSave" disabled>Save recording to current Topic / folder</button><button type="button" id="practiceAudioDownload" disabled>Download recording</button></div>
-<p class="setting-hint">For this test, choose WebM / Opus and listen to the original before converting to MP3. 256 kbps is requested, not guaranteed by Chrome. MP3 encoding uses an online encoder library and requires internet access. A failed conversion retains the original WebM file. Recording is saved only when you choose Save or Download. Keep this window open until you have saved your recording. To capture Windows playback, choose Stereo Mix or Loopback. Alternatively, click Record Chrome Tab Audio, select a tab in Chrome’s sharing dialog, and enable Share tab audio. Chrome may require HTTPS or localhost.</p>
+<div class="setting-actions"><button type="button" id="practiceAudioRefresh">Refresh devices / grant microphone access</button></div>
+<p class="setting-hint">Recording controls, playback and saving are now in the Recorder module beneath the Metronome. Chrome tab capture is the default; selected input recording is also available there.</p>
 <div class="settings-footer"><button type="button" id="practiceAudioClose">Close</button></div>
 </dialog>
-<script id="practice-audio-settings-v565144">
+<script id="practice-audio-settings-v565145">
 (()=>{
 const $s=id=>document.getElementById(id), dlg=$s('practiceAudioSettings'),input=$s('practiceAudioInput'),output=$s('practiceAudioOutput'),preview=$s('practiceAudioPreview'),status=$s('practiceAudioStatus');
 let recorder=null,streams=[],context=null,recorded=null,previewUrl=null,parts=[],recordingType='',captureMode='input';
 const format=$s('practiceAudioFormat'); let outputType='';
 const note=t=>status.textContent=t;
+const recToggle=$s('practiceRecorderToggle'),recDock=$s('practiceRecorderDock'),recRecord=$s('practiceAudioTabStart'),recClock=$s('practiceRecorderClock'),recPlay=$s('practiceRecorderPlay');
+recToggle.onclick=()=>{const open=recDock.classList.toggle('collapsed')===false;recToggle.textContent=open?'● Recorder ▾':'● Recorder ▸';recToggle.setAttribute('aria-expanded',String(open))};
+let meterContext=null,meterSource=null,meterAnalyser=null,meterFrame=0,recStartAt=0,clockInterval=0,peakHold=0;
+function stopVisuals(){clearInterval(clockInterval);clockInterval=0;cancelAnimationFrame(meterFrame);meterFrame=0;if(meterSource)try{meterSource.disconnect()}catch(e){};meterSource=null;meterAnalyser=null;if(meterContext){meterContext.close().catch(()=>{});meterContext=null}recRecord.classList.remove('active')}
+function startVisuals(stream){stopVisuals();recStartAt=performance.now();recRecord.classList.add('active');recClock.textContent='00:00';clockInterval=setInterval(()=>{const n=Math.floor((performance.now()-recStartAt)/1000);recClock.textContent=String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')},250);
+ try{meterContext=new (window.AudioContext||window.webkitAudioContext)();meterSource=meterContext.createMediaStreamSource(stream);meterAnalyser=meterContext.createAnalyser();meterAnalyser.fftSize=2048;meterSource.connect(meterAnalyser);const samples=new Float32Array(meterAnalyser.fftSize),canvas=$s('practiceRecorderWave'),ctx=canvas.getContext('2d');
+ const draw=()=>{if(!meterAnalyser)return;meterAnalyser.getFloatTimeDomainData(samples);let sum=0,peak=0;for(let i=0;i<samples.length;i++){const a=Math.abs(samples[i]);sum+=a*a;peak=Math.max(peak,a)}const rms=Math.sqrt(sum/samples.length);const db=20*Math.log10(Math.max(rms,0.00001));const pct=Math.max(0,Math.min(100,(db+60)/60*100));$s('practiceRecorderMeterFill').style.width=pct+'%';peakHold=Math.max(peakHold*.96,peak);$s('practiceRecorderPeak').style.left=Math.max(0,Math.min(99,(20*Math.log10(Math.max(peakHold,.00001))+60)/60*100))+'%';ctx.clearRect(0,0,canvas.width,canvas.height);ctx.strokeStyle='#2677ae';ctx.lineWidth=1.5;ctx.beginPath();for(let x=0;x<canvas.width;x++){const i=Math.floor(x/canvas.width*samples.length),y=(1-samples[i])*canvas.height/2;if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();meterFrame=requestAnimationFrame(draw)};draw();}catch(e){note('Recording started; level meter unavailable: '+e.message)}
+}
+recPlay.onclick=async()=>{if(preview.paused){try{await preview.play()}catch(e){note('Cannot play preview: '+e.message)}}else preview.pause()};
+preview.addEventListener('play',()=>recPlay.textContent='❚❚ Pause');preview.addEventListener('pause',()=>recPlay.textContent='▶ Play');
 const supported=!!navigator.mediaDevices?.getUserMedia&&!!window.MediaRecorder;
 function storePrefs(){try{localStorage.setItem('practiceAudioPreferences',JSON.stringify({input:input.value,output:output.value,format:format.value}))}catch(e){}}
 function prefs(){try{return JSON.parse(localStorage.getItem('practiceAudioPreferences')||'{}')}catch(e){return {}}}
-format.value='webm'; // Opus quality diagnostic: explicitly default to original recording
+format.value=prefs().format||'webm'; // Opus diagnostic default, preserve chosen format
 function fill(select,devices,fallback,chosen){
  select.replaceChildren(new Option(fallback,''));
  devices.forEach((d,i)=>select.add(new Option(d.label||((d.kind==='audioinput'?'Microphone ':'Speaker ')+(i+1)),d.deviceId)));
@@ -1687,7 +1729,7 @@ async function toMp3(blob){
 async function start(mode='input'){
  if(!supported){note('Recording requires a supported browser on HTTPS or localhost.');return}
  captureMode=mode;recorded=null;parts=[];if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;preview.removeAttribute('src')}
- $s('practiceAudioSave').disabled=true;$s('practiceAudioDownload').disabled=true;
+ $s('practiceAudioSave').disabled=true;$s('practiceAudioDownload').disabled=true;recPlay.disabled=true;
  try{
   let stream;
   if(mode==='tab'){
@@ -1696,6 +1738,18 @@ async function start(mode='input'){
    streams.push(shared);
    const audioTracks=shared.getAudioTracks();
    if(!audioTracks.length){release();throw new Error('No audio was shared. Select a Chrome tab and enable Share tab audio, then try again.');}
+   // Ask the browser to disable voice-processing effects on shared tab audio.
+   // Some Chrome capture sources do not expose or honor these constraints.
+   const track=audioTracks[0];
+   const supported=navigator.mediaDevices.getSupportedConstraints?.()||{};
+   const off={};
+   for(const key of ['autoGainControl','echoCancellation','noiseSuppression'])if(supported[key])off[key]=false;
+   let processingResult='No processing constraints supported by this browser';
+   if(Object.keys(off).length){
+    try{await track.applyConstraints(off);processingResult='Requested OFF: '+Object.keys(off).join(', ')}
+    catch(err){processingResult='Browser did not accept processing constraints: '+(err.message||err.name)}
+   }
+   window.practiceTabProcessingResult=processingResult;
    stream=new MediaStream(audioTracks);
    shared.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(recorder?.state==='recording')stop()},{once:true}));
   }else{
@@ -1711,13 +1765,13 @@ async function start(mode='input'){
   if(mt)recordingOptions.mimeType=mt;
   recorder=new MediaRecorder(stream,recordingOptions);
   const settings=stream.getAudioTracks()[0]?.getSettings?.()||{};
-  $s('practiceAudioDiagnostics').textContent='Capture track: '+JSON.stringify({label:stream.getAudioTracks()[0]?.label,channelCount:settings.channelCount,sampleRate:settings.sampleRate,echoCancellation:settings.echoCancellation,noiseSuppression:settings.noiseSuppression,autoGainControl:settings.autoGainControl})+'\nRecorder: '+(recorder.mimeType||mt)+' | requested 256 kbps | browser reports '+(recorder.audioBitsPerSecond||'unknown')+' bps';
+  $s('practiceAudioDiagnostics').textContent=(mode==='tab'?(window.practiceTabProcessingResult+'\n'):'')+'Capture track: '+JSON.stringify({label:stream.getAudioTracks()[0]?.label,channelCount:settings.channelCount,sampleRate:settings.sampleRate,echoCancellation:settings.echoCancellation,noiseSuppression:settings.noiseSuppression,autoGainControl:settings.autoGainControl})+'\nRecorder: '+(recorder.mimeType||mt)+' | requested 256 kbps | browser reports '+(recorder.audioBitsPerSecond||'unknown')+' bps';
   recordingType=recorder.mimeType||mt||'audio/webm';
   recorder.ondataavailable=e=>{if(e.data.size)parts.push(e.data)};
   recorder.onerror=e=>note('Recording error: '+(e.error?.message||'unknown'));
   recorder.onstop=async()=>{
    const original=new Blob(parts,{type:recordingType});
-   release();
+   stopVisuals();release();
    if(!original.size){note('No audio was recorded.');return}
    recorded=original;outputType=recordingType;
    $s('practiceAudioDiagnostics').textContent+='\nOriginal WebM/Opus size: '+(original.size/1024).toFixed(1)+' KB. (A reliable measured bitrate requires duration/stream analysis.)';
@@ -1729,16 +1783,17 @@ async function start(mode='input'){
    previewUrl=URL.createObjectURL(recorded);preview.src=previewUrl;
    const ext=outputType==='audio/mpeg'?'.mp3':outputType.includes('mp4')?'.m4a':'.webm';
    $s('practiceRecordingName').value='Practice Recording '+new Date().toISOString().replace(/[:.]/g,'-')+ext;
-   $s('practiceAudioSave').disabled=false;$s('practiceAudioDownload').disabled=false;
+   $s('practiceAudioSave').disabled=false;$s('practiceAudioDownload').disabled=false;recPlay.disabled=false;
    if(format.value!=='mp3'||outputType==='audio/mpeg')note('Recording ready: '+ext+' ('+(recorded.size/1024).toFixed(0)+' KB). Listen, then save or download.');
   };
-  recorder.start(500);
+  recorder.start(500);startVisuals(stream);
   $s('practiceAudioStart').disabled=true;$s('practiceAudioTabStart').disabled=true;$s('practiceAudioStop').disabled=false;
   note(mode==='tab'?'Recording shared tab audio… Click Stop when finished.':'Recording from selected input…');
- }catch(e){release();$s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;note('Could not start recording: '+e.message)}
+ }catch(e){stopVisuals();release();$s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;note('Could not start recording: '+e.message)}
 }
 function stop(){
  if(recorder?.state==='recording')recorder.stop();
+ stopVisuals();
  $s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;
 }
 function filename(){
