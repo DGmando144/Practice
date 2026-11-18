@@ -140,7 +140,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 .practice-tree-icon{flex:0 0 auto;font-size:14px}
 @media(max-width:750px){#mcbMetronomeDock{width:100%}#practiceTreePanel{max-height:45vh}}
 </style>
-</head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.134</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
+</head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.135</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
 <button type="button" id="practiceTreeToggle" aria-expanded="false" aria-controls="practiceTreePanel">▤ Folder Tree ▸</button>
 <div id="practiceTreePanel" role="navigation" aria-label="Project folders">
 <div class="practice-tree-title">Project folders</div><div id="practiceTreeNodes"></div>
@@ -262,7 +262,13 @@ window.practiceListView=false;
 $('practiceViewToggle').onclick=()=>{window.practiceListView=!window.practiceListView;$('practiceViewToggle').textContent=window.practiceListView?'▦ Icon View':'☷ List View';render()};
 function practiceApplyFilter(){const q=$('practiceFilter').value.trim().toLocaleLowerCase();for(const el of $('media').children)el.style.display=!q||el.querySelector('.media-title')?.textContent.toLocaleLowerCase().includes(q)?'':'none';for(const el of $('folders').children)el.style.display=!q||el.querySelector('strong')?.textContent.toLocaleLowerCase().includes(q)?'':'none'}
 $('practiceFilter').oninput=practiceApplyFilter;
-$('back').onclick=()=>{if(bucketId)bucketId=null;else if(folderId)folderId=null;else if(topicId)topicId=null;else subjectId=null;render()};function kind(n){return /\.pdf$/i.test(n)?'pdf':/\.(mp4|webm|mov|m4v)$/i.test(n)?'video':'audio'}function addFiles(files,sid,tid){if(!files.length)return;let s=data.subjects.find(s=>s.id===sid),t=s?.topics.find(t=>t.id===tid);if(!t){pendingFiles=files;$('destSubject').replaceChildren();data.subjects.forEach(x=>$('destSubject').add(new Option(x.name,x.id)));$('destSubject').value=subjectId||data.subjects[0]?.id||'';updateDestTopics();$('destination').showModal();return}files.forEach(f=>{let id=uid();urls.set(id,URL.createObjectURL(f));audioFiles.set(id,f);mcbRememberMedia(id,f);let item={id,name:f.name,kind:kind(f.name),local:true};if(sid===subjectId&&tid===topicId){if(folderId)item.folderId=folderId;if(bucketId)item.bucketId=bucketId}t.media.push(item);mcbQueueThumb(item,f)});persist();render()}function updateDestTopics(){$('destTopic').replaceChildren();let s=data.subjects.find(x=>x.id===$('destSubject').value);s?.topics.forEach(t=>$('destTopic').add(new Option(t.name,t.id)))}$('destSubject').onchange=updateDestTopics;$('destination').onclose=()=>{if($('destination').returnValue==='ok')addFiles(pendingFiles,$('destSubject').value,$('destTopic').value);pendingFiles=[]};const onPicked=()=>addFiles([...$('filePicker').files],subjectId,topicId);$('filePicker').onchange=onPicked;$('addFile').onclick=()=>$('filePicker').click();const drop=$('drop');drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag')};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');addFiles([...e.dataTransfer.files],subjectId,topicId)};
+$('back').onclick=()=>{if(bucketId)bucketId=null;else if(folderId)folderId=null;else if(topicId)topicId=null;else subjectId=null;render()};function kind(n){return /\.pdf$/i.test(n)?'pdf':/\.(mp4|webm|mov|m4v)$/i.test(n)?'video':'audio'}async function addFiles(files,sid,tid){if(!files.length)return;let s=data.subjects.find(s=>s.id===sid),t=s?.topics.find(t=>t.id===tid);if(!t){pendingFiles=files;$('destSubject').replaceChildren();data.subjects.forEach(x=>$('destSubject').add(new Option(x.name,x.id)));$('destSubject').value=subjectId||data.subjects[0]?.id||'';updateDestTopics();$('destination').showModal();return}let duplicateCount=0;for(const f of files){
+ let candidate={id:uid(),name:f.name,kind:kind(f.name)};
+ if(crypto?.subtle){const bytes=await f.arrayBuffer();candidate.contentHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),x=>x.toString(16).padStart(2,'0')).join('')}
+ const siblings=t.media.filter(m=>window.practiceInLocation(m,sid===subjectId&&tid===topicId?folderId:null,sid===subjectId&&tid===topicId?bucketId:null));
+ let identical=false;for(const other of siblings)if(await window.practiceSameMedia(candidate,other)){identical=true;break}
+ if(identical){duplicateCount++;continue}
+ let id=uid();urls.set(id,URL.createObjectURL(f));audioFiles.set(id,f);mcbRememberMedia(id,f);let item={id,name:window.practiceUniqueMediaName(f.name,siblings),kind:kind(f.name),local:true,contentHash:candidate.contentHash};if(sid===subjectId&&tid===topicId){if(folderId)item.folderId=folderId;if(bucketId)item.bucketId=bucketId}t.media.push(item);mcbQueueThumb(item,f)}window.practiceDuplicateNotice(duplicateCount);persist();render()}function updateDestTopics(){$('destTopic').replaceChildren();let s=data.subjects.find(x=>x.id===$('destSubject').value);s?.topics.forEach(t=>$('destTopic').add(new Option(t.name,t.id)))}$('destSubject').onchange=updateDestTopics;$('destination').onclose=()=>{if($('destination').returnValue==='ok')addFiles(pendingFiles,$('destSubject').value,$('destTopic').value);pendingFiles=[]};const onPicked=()=>addFiles([...$('filePicker').files],subjectId,topicId);$('filePicker').onchange=onPicked;$('addFile').onclick=()=>$('filePicker').click();const drop=$('drop');drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag')};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');addFiles([...e.dataTransfer.files],subjectId,topicId)};
 function ytId(s){try{let u=new URL(s);if(u.hostname.includes('youtu.be'))return u.pathname.split('/')[1];if(u.hostname.includes('youtube.com'))return u.searchParams.get('v')||u.pathname.split('/').filter(Boolean).pop()}catch(e){}return null}async function ytTitle(url){try{let r=await fetch('https://www.youtube.com/oembed?url='+encodeURIComponent(url)+'&format=json');if(r.ok)return (await r.json()).title}catch(e){}return 'YouTube video'}$('addYoutube').onclick=()=>{$('youtubeUrl').value='';$('youtube').returnValue='cancel';$('youtube').showModal();$('youtubeUrl').focus()};$('youtubeCancel').onclick=()=>{$('youtube').close('cancel')};$('youtube').onclose=async()=>{if($('youtube').returnValue!=='ok')return;let url=$('youtubeUrl').value.trim(),videoId=ytId(url);if(!videoId){alert('Please enter a valid YouTube video URL');return}let t=topic();let m={id:uid(),kind:'youtube',name:'Loading YouTube title…',url,videoId};if(folderId)m.folderId=folderId;if(bucketId)m.bucketId=bucketId;t.media.push(m);persist();render();m.name=await ytTitle(url);persist();render()};
 // V56.5.76 project files and local-media cache. JSON stays portable; browser handles stay local.
 let mcbProjectHandle=null,mcbProjectName='No Project Open',mcbDirty=false,mcbLoading=false,mcbStartupSuppressed=false,mcbLastSaveDirectory=null,mcbExportNeeded=false;
@@ -1177,6 +1183,37 @@ $('pdfFirstAlign').onclick=()=>{const active=['pdfAlignLeft','pdfAlignCenter','p
  }
 })();
 </script>
+
+<script id="practice-duplicate-identity-135">
+/* SHA-256 compares bytes when available; provenance IDs protect linked copies. */
+window.practiceMediaFingerprint=async function(m){
+ if(m.kind==='youtube')return 'youtube:'+m.videoId;
+ if(m.contentHash)return 'sha256:'+m.contentHash;
+ const file=audioFiles.get(m.id)||await mcbDbGet('media',m.id).catch(()=>null);
+ if(file&&file.arrayBuffer&&crypto?.subtle){
+  const hash=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
+  m.contentHash=Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');
+  return 'sha256:'+m.contentHash;
+ }
+ return m.originMediaId?'origin:'+m.originMediaId:'id:'+m.id;
+};
+window.practiceSameMedia=async function(a,b){
+ if(a.id===b.id)return true;
+ const ah=await window.practiceMediaFingerprint(a),bh=await window.practiceMediaFingerprint(b);
+ if(ah.startsWith('sha256:')&&bh.startsWith('sha256:'))return ah===bh;
+ if(a.kind==='youtube'&&b.kind==='youtube')return a.videoId===b.videoId;
+ return (a.originMediaId||a.id)===(b.originMediaId||b.id);
+};
+window.practiceInLocation=(m,fid,bid)=> (m.folderId||null)===(fid||null)&&(m.bucketId||null)===(bid||null);
+window.practiceUniqueMediaName=function(name,items){
+ const taken=new Set(items.map(m=>m.name.toLocaleLowerCase()));
+ if(!taken.has(name.toLocaleLowerCase()))return name;
+ const at=name.lastIndexOf('.'),stem=at>0?name.slice(0,at):name,ext=at>0?name.slice(at):'';
+ let i=2;while(taken.has((stem+' ('+i+')'+ext).toLocaleLowerCase()))i++;
+ return stem+' ('+i+')'+ext;
+};
+window.practiceDuplicateNotice=(count)=>{if(count)mcbNotify(count+' identical media item(s) skipped; existing files preserved.')};
+</script>
 <script id="practice-clipboard-script">
 (()=>{
 // Practice! project clipboard, not the operating system clipboard.
@@ -1200,17 +1237,34 @@ async function execute(action){hide();if(busy)return;
  if(action!=='paste'||!clipboard||!topic())return;
  const dest=topic(),entries=clipboard.entries.map(lookup);if(entries.some(e=>!e.t||!e.m)){alert('One or more source files are unavailable. Select and copy/cut again.');clipboard=null;refresh();return}
  const destFolder=folderId||null,destBucket=bucketId||null;
+ const candidates=dest.media.filter(m=>window.practiceInLocation(m,destFolder,destBucket));
+ const accepted=[],skipped=[];
+ busy=true;refresh();
+ try{
+  for(const e of entries){
+   if(e.t===dest&&window.practiceInLocation(e.m,destFolder,destBucket)&&clipboard.mode==='cut')continue;
+   let duplicate=false;
+   for(const present of [...candidates,...accepted.map(x=>x.m)]){
+    if(present.id===e.m.id&&clipboard.mode==='cut')continue;
+    if(await window.practiceSameMedia(e.m,present)){duplicate=true;break}
+   }
+   if(duplicate)skipped.push(e);else accepted.push(e);
+  }
+ }catch(err){alert('Duplicate check failed; no files changed: '+err.message);busy=false;refresh();return}
+ busy=false;refresh();
+ window.practiceDuplicateNotice(skipped.length);
+ if(!accepted.length){if(clipboard.mode==='cut'){clipboard=null;refresh()}return}
  if(clipboard.mode==='cut'){
   // Check all sources before modifying any item.
-  for(const {t,m} of entries){const idx=t.media.indexOf(m);if(idx<0){alert('Move cancelled: a source item is missing.');return}}
-  const moved=[],moveUndo=[];for(const {t,m} of entries){if(t===dest&&(m.folderId||null)===destFolder&&(m.bucketId||null)===destBucket)continue;moveUndo.push({item:m,original:t,current:dest,folderId:m.folderId||null,bucketId:m.bucketId||null,newFolderId:destFolder,newBucketId:destBucket});t.media.splice(t.media.indexOf(m),1);m.folderId=destFolder;m.bucketId=destBucket;dest.media.push(m);moved.push(m.id)}
+  for(const {t,m} of accepted){const idx=t.media.indexOf(m);if(idx<0){alert('Move cancelled: a source item is missing.');return}}
+  const moved=[],moveUndo=[];for(const {t,m} of accepted){if(t===dest&&(m.folderId||null)===destFolder&&(m.bucketId||null)===destBucket)continue;moveUndo.push({item:m,original:t,current:dest,folderId:m.folderId||null,bucketId:m.bucketId||null,newFolderId:destFolder,newBucketId:destBucket});m.name=window.practiceUniqueMediaName(m.name,candidates.filter(x=>x.id!==m.id));t.media.splice(t.media.indexOf(m),1);m.folderId=destFolder;m.bucketId=destBucket;dest.media.push(m);moved.push(m.id)}
   if(moved.length)window.practiceRecordUndo?.({kind:'move',label:'move',entries:moveUndo});
   clipboard=null;selected=new Set(entries.map(e=>e.m.id));anchor=entries[0]?.m.id||null;persist();render();refresh();return;
  }
  busy=true;refresh();const created=[];
  try{
   // Prepare all copied media before inserting any new project records.
-  for(const {m} of entries){const n={...m,id:uid(),folderId:destFolder,bucketId:destBucket};const file=audioFiles.get(m.id)||await mcbDbGet('media',m.id).catch(()=>null);if(file){await mcbDbSet('media',n.id,file);audioFiles.set(n.id,file)}else{const url=urls.get(m.id);if(url)urls.set(n.id,url)}created.push(n)}
+  for(const {m} of accepted){const siblings=[...candidates,...created];const name=window.practiceUniqueMediaName(m.name,siblings);const n={...m,id:uid(),name,originMediaId:m.originMediaId||m.id,folderId:destFolder,bucketId:destBucket};const file=audioFiles.get(m.id)||await mcbDbGet('media',m.id).catch(()=>null);if(file){await mcbDbSet('media',n.id,file);audioFiles.set(n.id,file)}else{const url=urls.get(m.id);if(url)urls.set(n.id,url)}created.push(n)}
   dest.media.push(...created);if(created.length)window.practiceRecordUndo?.({kind:'copy',label:'paste copied files',entries:created.map(item=>({topic:dest,item}))});selected=new Set(created.map(m=>m.id));anchor=created[0]?.id||null;persist();render();
  }catch(e){alert('Copy failed; no project items were added: '+e.message)}finally{busy=false;refresh()}
 }
@@ -1286,7 +1340,7 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
  if(!dock||!toggle||!nodes)return;
  const expanded=new Set();
  const treeKey=(type,id)=>type+':'+id;
- function moveDragged(destination){
+ async function moveDragged(destination){
    const dragged=window.practiceDraggedMedia;
    if(!dragged)return false;
    const sourceSubject=data.subjects.find(s=>(s.topics||[]).some(t=>t.id===dragged.topicId));
@@ -1297,6 +1351,13 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
    if(!source||!target||!item){alert('Could not find the dragged media or destination.');return false}
    const nextFolder=destination.fid||null,nextBucket=destination.bid||null;
    if(source===target&&(item.folderId||null)===nextFolder&&(item.bucketId||null)===nextBucket)return true;
+   try{
+     const existing=target.media.filter(m=>window.practiceInLocation(m,nextFolder,nextBucket)&&m.id!==item.id);
+     for(const other of existing)if(await window.practiceSameMedia(item,other)){
+       window.practiceDuplicateNotice(1);window.practiceDraggedMedia=null;return false;
+     }
+     item.name=window.practiceUniqueMediaName(item.name,existing);
+   }catch(err){alert('Duplicate check failed; move cancelled: '+err.message);return false}
    // A move preserves the existing media ID and its linked local file.
    window.practiceRecordUndo?.({kind:'move',label:'tree drag move',entries:[{
      item,original:source,current:target,folderId:item.folderId||null,bucketId:item.bucketId||null,
