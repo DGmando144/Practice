@@ -160,17 +160,20 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 #practiceSearchDialog .search-hit-actions{display:flex;gap:7px;flex-wrap:wrap}
 #practiceSearchDialog .search-hit-actions button{padding:5px 9px;font-size:12px}
 #practiceSearchDialog .search-count{font-size:13px;color:#60718a}
-</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.147</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
+</style></head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button><button type="button" id="practiceSettingsOpen">Settings…</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.148</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceRecorderDock" aria-label="Recorder">
 <button type="button" id="practiceRecorderToggle" aria-expanded="true">● Recorder ▾</button>
 <div id="practiceRecorderBody">
+<div class="rec-source-row"><button type="button" id="practiceSourceWindow" class="selected" aria-pressed="true">Window Capture</button><button type="button" id="practiceAudioChoose">Choose Source</button></div>
+<div class="rec-source-device-row"><button type="button" id="practiceSourceDevice" aria-pressed="false">Audio Device Capture</button></div>
+<div class="rec-source-choose"><span id="practiceSourceLabel">No window/tab selected</span></div>
 <div class="rec-controls"><button type="button" id="practiceAudioTabStart" class="rec-record">● Record</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button><button type="button" id="practiceRecorderPlay" disabled>▶ Play</button></div>
-<div class="rec-secondary"><button type="button" id="practiceAudioStart">Record selected input instead</button></div>
+
 <div id="practiceRecorderClock">00:00</div><div id="practiceRecorderMeter" aria-label="Recording level meter"><div id="practiceRecorderMeterFill"></div><div id="practiceRecorderPeak"></div></div><div class="rec-scale"><span>−60</span><span>−24</span><span>−12</span><span>0 dBFS</span></div>
 <canvas id="practiceRecorderWave" width="480" height="72" aria-label="Live recording waveform"></canvas>
 <div id="practiceAudioStatus" class="setting-status" role="status" aria-live="polite">Ready.</div>
 <audio id="practiceAudioPreview" controls preload="metadata"></audio>
 <div class="rec-name"><label for="practiceRecordingName">Recording filename</label><input id="practiceRecordingName" type="text" value="Practice Recording.webm"></div>
-<div class="rec-save"><button type="button" id="practiceAudioSave" disabled>Save to current Topic</button><button type="button" id="practiceAudioDownload" disabled>Download recording</button></div>
+<div class="rec-save"><button type="button" id="practiceAudioSave" disabled>Download and Save to Project</button><button type="button" id="practiceAudioDownload" disabled>Download Only</button></div>
 <details class="rec-diagnostics"><summary>Recording diagnostics</summary><div id="practiceAudioDiagnostics" style="white-space:pre-wrap">Awaiting recording.</div></details>
 </div></section><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
 <button type="button" id="practiceTreeToggle" aria-expanded="false" aria-controls="practiceTreePanel">▤ Folder Tree ▸</button>
@@ -1605,6 +1608,14 @@ dialog.querySelectorAll('input[name="practiceSearchScope"]').forEach(x=>x.addEve
 #practiceRecorderDock.collapsed #practiceRecorderBody{display:none}
 #practiceRecorderDock button{cursor:pointer;font-size:12px;padding:8px 5px}
 #practiceRecorderDock button:disabled{opacity:.42;cursor:not-allowed}
+.rec-source-row{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.rec-source-row button,.rec-source-device-row button{border:1px solid #aebfd3;border-radius:6px;background:#edf3fa;color:#163b68;font-weight:650}
+.rec-source-row button.selected,.rec-source-device-row button.selected{background:#173c68;color:#fff}
+.rec-source-device-row{display:block}
+.rec-source-device-row button{width:100%}
+.rec-source-choose{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:11px;color:#4c6078}
+.rec-source-choose span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.rec-source-choose button{flex-shrink:0;border:1px solid #aebfd3;border-radius:6px;background:#f5f8fd;color:#173c68}
 .rec-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
 #practiceRecorderDock .rec-record{background:#6e242b;color:#fff;border:1px solid #6e242b;border-radius:7px;font-weight:700}
 #practiceRecorderDock .rec-record.active{background:#ec292e;box-shadow:0 0 0 3px #ff424233}
@@ -1637,7 +1648,8 @@ dialog.querySelectorAll('input[name="practiceSearchScope"]').forEach(x=>x.addEve
 <script id="practice-audio-settings-v565145">
 (()=>{
 const $s=id=>document.getElementById(id), dlg=$s('practiceAudioSettings'),input=$s('practiceAudioInput'),output=$s('practiceAudioOutput'),preview=$s('practiceAudioPreview'),status=$s('practiceAudioStatus');
-let recorder=null,streams=[],context=null,recorded=null,previewUrl=null,parts=[],recordingType='',captureMode='input';
+let recorder=null,streams=[],context=null,recorded=null,previewUrl=null,parts=[],recordingType='',captureMode='tab';
+let selectedSource='tab', sharedCapture=null, chosenAudio=null;
 const format=$s('practiceAudioFormat'); let outputType='';
 const note=t=>status.textContent=t;
 const recToggle=$s('practiceRecorderToggle'),recDock=$s('practiceRecorderDock'),recRecord=$s('practiceAudioTabStart'),recClock=$s('practiceRecorderClock'),recPlay=$s('practiceRecorderPlay');
@@ -1726,6 +1738,28 @@ async function toMp3(blob){
   return new Blob(chunks,{type:'audio/mpeg'});
  }finally{await audioContext.close()}
 }
+function updateSourceUI(){
+ const tab=selectedSource==='tab';
+ $s('practiceSourceWindow').classList.toggle('selected',tab);$s('practiceSourceDevice').classList.toggle('selected',!tab);
+ $s('practiceSourceWindow').setAttribute('aria-pressed',String(tab));$s('practiceSourceDevice').setAttribute('aria-pressed',String(!tab));
+ $s('practiceAudioChoose').disabled=!tab;
+ $s('practiceSourceLabel').textContent=tab?(chosenAudio?.readyState==='live'?'Selected: '+(chosenAudio.label||'shared audio'):'No window/tab selected'):'Input: '+(input.selectedOptions[0]?.textContent||'System default');
+}
+function clearShared(){if(sharedCapture){sharedCapture.getTracks().forEach(t=>t.stop());sharedCapture=null;}chosenAudio=null;updateSourceUI()}
+async function chooseSource(){
+ if(recorder?.state==='recording'){note('Stop recording before changing the source.');return}
+ if(!navigator.mediaDevices?.getDisplayMedia){note('Sharing is unavailable. Use HTTPS in Chrome.');return}
+ try{
+  // Do not terminate the old source until a new one has been selected successfully.
+  const next=await navigator.mediaDevices.getDisplayMedia({video:true,audio:{echoCancellation:{ideal:false},noiseSuppression:{ideal:false},autoGainControl:{ideal:false},channelCount:{ideal:2}}});
+  const tracks=next.getAudioTracks();
+  if(!tracks.length){next.getTracks().forEach(t=>t.stop());note('No audio shared. Select a tab and enable Share tab audio.');return}
+  clearShared();sharedCapture=next;chosenAudio=tracks[0];
+  const v=next.getVideoTracks()[0];v?.addEventListener('ended',()=>{if(sharedCapture!==next)return;if(recorder?.state==='recording')stop();clearShared();note('Chrome sharing ended. Choose Source to reconnect.')},{once:true});
+  chosenAudio.addEventListener('ended',()=>{if(sharedCapture===next){if(recorder?.state==='recording')stop();clearShared();note('Shared audio ended. Choose Source again.')}},{once:true});
+  updateSourceUI();note('Source selected. Click Record to start; selection stays active between takes while sharing continues.');
+ }catch(e){if(e.name!=='NotAllowedError')note('Could not choose source: '+e.message);else note('Source selection cancelled.');}
+}
 async function start(mode='input'){
  if(!supported){note('Recording requires a supported browser on HTTPS or localhost.');return}
  captureMode=mode;recorded=null;parts=[];if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;preview.removeAttribute('src')}
@@ -1733,28 +1767,17 @@ async function start(mode='input'){
  try{
   let stream;
   if(mode==='tab'){
-   if(!navigator.mediaDevices.getDisplayMedia)throw new Error('Chrome screen/tab sharing is unavailable. Open Practice! on HTTPS or localhost.');
-   const shared=await navigator.mediaDevices.getDisplayMedia({video:true,audio:{echoCancellation:{ideal:false},noiseSuppression:{ideal:false},autoGainControl:{ideal:false},channelCount:{ideal:2}}});
-   streams.push(shared);
-   const audioTracks=shared.getAudioTracks();
-   if(!audioTracks.length){release();throw new Error('No audio was shared. Select a Chrome tab and enable Share tab audio, then try again.');}
-   // Request processing OFF individually, without blocking recording if Chrome rejects it.
-   // Tab capture may expose fixed, read-only audio processing settings.
-   const track=audioTracks[0];
-   const keys=['echoCancellation','noiseSuppression','autoGainControl'];
-   const attempts=[];
+   if(!chosenAudio||chosenAudio.readyState!=='live')throw new Error('Click Choose Source first, then select a Chrome tab with audio sharing enabled.');
+   const track=chosenAudio;
+   const keys=['echoCancellation','noiseSuppression','autoGainControl'],attempts=[];
    for(const key of keys){
     const before=track.getSettings?.()[key];
     if(before===false){attempts.push(key+': OFF');continue;}
-    try{
-     await track.applyConstraints({[key]:{ideal:false}});
-     const after=track.getSettings?.()[key];
-     attempts.push(key+': '+(after===false?'OFF':after===true?'ON (Chrome did not honor request)':'not reported'));
-    }catch(err){attempts.push(key+': '+(before===true?'ON':'unknown')+' (Chrome rejected: '+(err.name||err.message)+')');}
+    try{await track.applyConstraints({[key]:{ideal:false}});const after=track.getSettings?.()[key];attempts.push(key+': '+(after===false?'OFF':after===true?'ON (Chrome did not honor request)':'not reported'))}
+    catch(err){attempts.push(key+': '+(before===true?'ON':'unknown')+' (Chrome rejected: '+(err.name||err.message)+')')}
    }
    window.practiceTabProcessingResult='Audio processing (actual browser settings):\n'+attempts.join('\n');
-   stream=new MediaStream(audioTracks);
-   shared.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(recorder?.state==='recording')stop()},{once:true}));
+   stream=new MediaStream([track]);
   }else{
    const chosen=input.value;
    const audioOptions={channelCount:{ideal:2},sampleRate:{ideal:48000},echoCancellation:false,noiseSuppression:false,autoGainControl:false};
@@ -1774,7 +1797,7 @@ async function start(mode='input'){
   recorder.onerror=e=>note('Recording error: '+(e.error?.message||'unknown'));
   recorder.onstop=async()=>{
    const original=new Blob(parts,{type:recordingType});
-   stopVisuals();release();
+   stopVisuals();if(mode!=='tab')release();
    if(!original.size){note('No audio was recorded.');return}
    recorded=original;outputType=recordingType;
    $s('practiceAudioDiagnostics').textContent+='\nOriginal WebM/Opus size: '+(original.size/1024).toFixed(1)+' KB. (A reliable measured bitrate requires duration/stream analysis.)';
@@ -1790,14 +1813,14 @@ async function start(mode='input'){
    if(format.value!=='mp3'||outputType==='audio/mpeg')note('Recording ready: '+ext+' ('+(recorded.size/1024).toFixed(0)+' KB). Listen, then save or download.');
   };
   recorder.start(500);startVisuals(stream);
-  $s('practiceAudioStart').disabled=true;$s('practiceAudioTabStart').disabled=true;$s('practiceAudioStop').disabled=false;
+  $s('practiceAudioTabStart').disabled=true;$s('practiceAudioStop').disabled=false;
   note(mode==='tab'?'Recording shared tab audio… Click Stop when finished.':'Recording from selected input…');
- }catch(e){stopVisuals();release();$s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;note('Could not start recording: '+e.message)}
+ }catch(e){stopVisuals();if(mode!=='tab')release();$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;note('Could not start recording: '+e.message)}
 }
 function stop(){
  if(recorder?.state==='recording')recorder.stop();
  stopVisuals();
- $s('practiceAudioStart').disabled=false;$s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;
+ $s('practiceAudioTabStart').disabled=false;$s('practiceAudioStop').disabled=true;
 }
 function filename(){
  let name=$s('practiceRecordingName').value.trim().replace(/[\\/:*?"<>|]/g,'_');
@@ -1810,7 +1833,7 @@ async function save(){
  if(!recorded?.size)return;
  if(!topicId||!subjectId){note('Open a Topic or Song Bucket before saving a recording. You can download it now.');return}
  const file=new File([recorded],filename(),{type:outputType});
- try{await addFiles([file],subjectId,topicId);note('Recording added to current location. Use File → Save to save project changes.')}catch(e){note('Could not add recording: '+e.message)}
+ try{await addFiles([file],subjectId,topicId);download();note('Recording downloaded and added to current Topic. Use File → Save to save project changes; downloaded files may need relinking when reopened.')}catch(e){note('Could not add recording: '+e.message+'. Nothing downloaded; use Download Only if desired.')}
 }
 function download(){
  if(!recorded?.size)return;
@@ -1824,9 +1847,12 @@ $s('practiceAudioClose').onclick=closePreferences;
 $s('practiceAudioX').onclick=closePreferences;
 dlg.addEventListener('cancel',e=>{if(recorder?.state==='recording'){e.preventDefault();note('Stop recording before closing Preferences.')}});
 $s('practiceAudioRefresh').onclick=()=>devices(true);
-$s('practiceAudioStart').onclick=()=>start('input');$s('practiceAudioTabStart').onclick=()=>start('tab');$s('practiceAudioStop').onclick=stop;
+$s('practiceSourceWindow').onclick=()=>{if(recorder?.state==='recording')return;selectedSource='tab';updateSourceUI();note('Window Capture selected. Choose Source if needed.')};
+$s('practiceSourceDevice').onclick=()=>{if(recorder?.state==='recording')return;selectedSource='input';updateSourceUI();note('Audio Device selected. Input is configured in Settings.')};
+$s('practiceAudioChoose').onclick=chooseSource;
+$s('practiceAudioTabStart').onclick=()=>start(selectedSource);$s('practiceAudioStop').onclick=stop;
 $s('practiceAudioSave').onclick=save;$s('practiceAudioDownload').onclick=download;
-input.onchange=storePrefs;output.onchange=setOutput;format.onchange=storePrefs;
-navigator.mediaDevices?.addEventListener?.('devicechange',()=>{if(dlg.open)devices(false)});
+input.onchange=()=>{storePrefs();updateSourceUI()};output.onchange=setOutput;format.onchange=storePrefs;
+navigator.mediaDevices?.addEventListener?.('devicechange',()=>{if(dlg.open)devices(false)});updateSourceUI();
 })();
 </script></body></html>
