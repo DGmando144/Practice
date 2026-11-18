@@ -1386,6 +1386,20 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-
   gap:6px!important;
 }
 </style>
+<style id="mcb-v202-mp3-centered-transport">
+/* Audio-only: the full control strip, including the clock, is centered as one
+   compact unit. Keep the V201 video layout untouched. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-scroll:has(.mcb-audio-tail) {
+ display:flex!important; flex-direction:row!important; align-items:center!important;
+ justify-content:center!important; width:100%!important; max-width:100%!important;
+ box-sizing:border-box!important; overflow-x:auto!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-scroll:has(.mcb-audio-tail) > .media-control-strip {
+ display:flex!important; flex:0 0 max-content!important; width:max-content!important;
+ min-width:max-content!important; margin-left:auto!important; margin-right:auto!important;
+ align-self:center!important; justify-content:center!important; gap:6px!important;
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
