@@ -1288,6 +1288,52 @@ body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-co
   background-position:center center!important;
 }
 </style>
+<style id="mcb-v196-tight-control-layout">
+/* V196: one compact 6px-spaced transport row; existing video/waveform sizes unchanged. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip,
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip {
+ display:flex!important;justify-content:flex-start!important;align-items:flex-start!important;align-content:flex-start!important;
+ flex-wrap:nowrap!important;column-gap:6px!important;row-gap:0!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip > *,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-video-tail,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-audio-tail {
+ margin:0!important;align-self:flex-start!important;flex:0 0 auto!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-video-tail,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-audio-tail {
+ display:flex!important;align-items:flex-start!important;gap:6px!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-control-unit,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-speed-unit,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-pitch-picker {
+ width:44px!important;min-width:44px!important;max-width:44px!important;flex:0 0 44px!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;
+ margin:0!important;padding:0!important;gap:3px!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-control-unit > button,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-control-unit > .help-popover-anchor > button,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-pitch-picker > #mcbPitchButton,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-speed-unit > .speed-picker {
+ box-sizing:border-box!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;margin:0!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-speed-unit > .speed-picker {
+ display:flex!important;align-items:center!important;justify-content:center!important;overflow:visible!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-speed-unit .mcb-native-speed-caption{display:none!important;}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-speed-unit .mcb-control-label{visibility:visible!important;display:block!important;}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-pitch-picker > #mcbPitchButton::before{content:none!important;}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-pitch-picker > #mcbPitchButton::after{font-size:13px!important;}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .mcb-pitch-picker > .mcb-control-label{display:block!important;}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-strip .media-timecode{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;
+ font-size:18px!important;line-height:1!important;font-weight:800!important;
+ min-width:156px!important;width:auto!important;max-width:none!important;
+ padding:0 9px!important;margin:0!important;align-self:flex-start!important;
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -1732,6 +1778,16 @@ function addMediaControls(media,r,host,file){
    tail.appendChild(helpUnit);
    tail.appendChild(clock);
  }
+ // V196: Pitch uses the same face + caption structure as the transport and Speed.
+ // The existing pitch button and its event listeners are kept intact.
+ const pitchWrapper=panel.querySelector('.mcb-pitch-picker');
+ if(pitchWrapper && !pitchWrapper.querySelector(':scope > .mcb-control-label')){
+   const pitchCaption=document.createElement('span');
+   pitchCaption.className='mcb-control-label';pitchCaption.textContent='Pitch';
+   pitchWrapper.appendChild(pitchCaption);
+ }
+ const v196SpeedLabel=panel.querySelector('.mcb-speed-unit > .mcb-control-label');
+ if(v196SpeedLabel) v196SpeedLabel.textContent='Speed';
  // Pitch button follows the native Speed control styling; sliders are inside a popover.
  const pitchUnit=panel.querySelector('.mcb-pitch-picker');
  const pitchButton=panel.querySelector('#mcbPitchButton');
