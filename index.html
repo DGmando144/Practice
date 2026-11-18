@@ -132,6 +132,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 .practice-tree-title{font-size:12px;font-weight:700;color:#60758e;padding:3px 9px 8px}
 .practice-tree-row{display:flex;align-items:center;min-height:30px;gap:3px;white-space:nowrap;border-radius:6px;padding-right:4px}
 .practice-tree-row:hover{background:#eaf2fb}
+.practice-tree-row.practice-tree-drop-target{background:#cce8ff;outline:2px solid #2678c7;outline-offset:-2px}
 .practice-tree-row.active{background:#dbeaff;color:#123e70;font-weight:700}
 .practice-tree-expander{flex:0 0 23px;width:23px;padding:3px 0;border:0;background:transparent;color:#45617e;cursor:pointer}
 .practice-tree-expander:disabled{cursor:default;opacity:.25}
@@ -139,7 +140,7 @@ header #projectState.mcb-project-banner{display:block;max-width:min(480px,100%);
 .practice-tree-icon{flex:0 0 auto;font-size:14px}
 @media(max-width:750px){#mcbMetronomeDock{width:100%}#practiceTreePanel{max-height:45vh}}
 </style>
-</head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.133</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
+</head><body><header class="practice-main-header"><div class="actions practice-file-actions"><details id="practiceFileMenu" class="practice-file-menu"><summary role="button" aria-label="File menu">File <span aria-hidden="true">▾</span></summary><div class="practice-file-menu-panel" role="group" aria-label="File actions"><button type="button" id="newProject">New</button><button type="button" id="load">Open</button><button type="button" id="closeProject">Close</button><button type="button" id="save">Save</button><button type="button" id="saveAs">Save as</button><button type="button" id="makeCopy">Make a copy</button><button type="button" id="importBundle">Import Bundle</button><button type="button" id="exportBundle" title="Share project with its local media">Export Bundle</button></div></details><div id="mcbProjectTitleBar" class="mcb-title-bar"><span id="projectState" class="mcb-project-banner" aria-live="polite">No Project Open</span></div><span id="mcbExportState" class="muted" style="font-size:12px" aria-live="polite"></span></div><h1 id="practiceAppTitle" class="practice-centered-title" tabindex="0" aria-label="Practice! Hold to reveal version" title="Press and hold to see version">♫ Practice!</h1><div class="practice-header-spacer" aria-hidden="true"></div><div id="practiceVersionPopup" class="practice-version-popup" role="status" aria-live="polite" hidden>Practice! V56.5.134</div></header><div id="mcbNotice" role="status" aria-live="polite" style="display:none;padding:9px 18px;background:#eaf2ff;color:#173c75;border-bottom:1px solid #b8d1fa"></div><div id="mcbPracticeLayout"><aside id="mcbMetronomeDock" class="collapsed"><button type="button" id="mcbMetronomeToggle" aria-expanded="false">♫ Metronome ▸</button><iframe id="mcbMetronomeFrame" title="MCB Metronome" src="metronome.html" loading="lazy" allow="autoplay"></iframe><section id="practiceTreeDock" class="collapsed" aria-label="Folder Tree">
 <button type="button" id="practiceTreeToggle" aria-expanded="false" aria-controls="practiceTreePanel">▤ Folder Tree ▸</button>
 <div id="practiceTreePanel" role="navigation" aria-label="Project folders">
 <div class="practice-tree-title">Project folders</div><div id="practiceTreeNodes"></div>
@@ -1276,8 +1277,8 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
 })();
 </script>
 
-<script id="practice-folder-tree-v565133">
-/* Folder Tree is navigation-only in this release. It does not mutate project data. */
+<script id="practice-folder-tree-v565134">
+/* Internal media drag onto tree destinations; move by default. */
 (function(){
  const dock=document.getElementById('practiceTreeDock');
  const toggle=document.getElementById('practiceTreeToggle');
@@ -1285,6 +1286,37 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
  if(!dock||!toggle||!nodes)return;
  const expanded=new Set();
  const treeKey=(type,id)=>type+':'+id;
+ function moveDragged(destination){
+   const dragged=window.practiceDraggedMedia;
+   if(!dragged)return false;
+   const sourceSubject=data.subjects.find(s=>(s.topics||[]).some(t=>t.id===dragged.topicId));
+   const source=sourceSubject?.topics.find(t=>t.id===dragged.topicId);
+   const targetSubject=data.subjects.find(s=>s.id===destination.sid);
+   const target=targetSubject?.topics.find(t=>t.id===destination.tid);
+   const item=source?.media.find(m=>m.id===dragged.mediaId);
+   if(!source||!target||!item){alert('Could not find the dragged media or destination.');return false}
+   const nextFolder=destination.fid||null,nextBucket=destination.bid||null;
+   if(source===target&&(item.folderId||null)===nextFolder&&(item.bucketId||null)===nextBucket)return true;
+   // A move preserves the existing media ID and its linked local file.
+   window.practiceRecordUndo?.({kind:'move',label:'tree drag move',entries:[{
+     item,original:source,current:target,folderId:item.folderId||null,bucketId:item.bucketId||null,
+     newFolderId:nextFolder,newBucketId:nextBucket
+   }]});
+   source.media.splice(source.media.indexOf(item),1);
+   item.folderId=nextFolder;item.bucketId=nextBucket;
+   target.media.push(item);
+   window.practiceDraggedMedia=null;
+   persist();render();
+   return true;
+ }
+ function attachDrop(line,destination){
+   if(!destination)return;
+   line.addEventListener('dragenter',e=>{if(!window.practiceDraggedMedia)return;e.preventDefault();line.classList.add('practice-tree-drop-target')});
+   line.addEventListener('dragover',e=>{if(!window.practiceDraggedMedia)return;e.preventDefault();e.stopPropagation();e.dataTransfer.dropEffect='move';line.classList.add('practice-tree-drop-target')});
+   line.addEventListener('dragleave',e=>{if(!line.contains(e.relatedTarget))line.classList.remove('practice-tree-drop-target')});
+   line.addEventListener('drop',e=>{if(!window.practiceDraggedMedia)return;e.preventDefault();e.stopPropagation();line.classList.remove('practice-tree-drop-target');moveDragged(destination)});
+ }
+ 
  toggle.addEventListener('click',()=>{
    const opened=dock.classList.toggle('collapsed')===false;
    toggle.setAttribute('aria-expanded',String(opened));
@@ -1299,7 +1331,7 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
    if(dock.classList.contains('collapsed'))return;
    nodes.replaceChildren();
    const subjects=Array.isArray(data?.subjects)?data.subjects:[];
-   const row=(type,obj,depth,active,hasChildren,open,click)=>{
+   const row=(type,obj,depth,active,hasChildren,open,click,destination=null)=>{
      const line=document.createElement('div');
      line.className='practice-tree-row'+(active?' active':'');
      line.style.paddingLeft=(depth*13+3)+'px';
@@ -1321,7 +1353,7 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
      name.type='button';name.className='practice-tree-name';
      name.textContent=obj.name;name.title=obj.name;
      name.onclick=click;
-     line.append(exp,icon,name);nodes.append(line);
+     line.append(exp,icon,name);attachDrop(line,destination);nodes.append(line);
    };
    for(const s of subjects){
      const sKey=treeKey('subject',s.id);
@@ -1332,18 +1364,18 @@ const observer=new MutationObserver(()=>{const next=loc();if(next!==selectionLoc
        const tKey=treeKey('topic',t.id);
        const folders=t.folders||[], roots=t.rootBuckets||[];
        const tOpen=expanded.has(tKey)||(s.id===subjectId&&t.id===topicId);
-       row('topic',t,1,s.id===subjectId&&t.id===topicId&&!folderId&&!bucketId,folders.length+roots.length>0,tOpen,()=>{expanded.add(sKey);expanded.add(tKey);go(s.id,t.id)});
+       row('topic',t,1,s.id===subjectId&&t.id===topicId&&!folderId&&!bucketId,folders.length+roots.length>0,tOpen,()=>{expanded.add(sKey);expanded.add(tKey);go(s.id,t.id)},{sid:s.id,tid:t.id});
        if(!tOpen)continue;
        for(const f of folders){
          const fKey=treeKey('folder',f.id);
          const fOpen=expanded.has(fKey)||(s.id===subjectId&&t.id===topicId&&f.id===folderId);
-         row('folder',f,2,s.id===subjectId&&t.id===topicId&&f.id===folderId&&!bucketId,(f.buckets||[]).length>0,fOpen,()=>{expanded.add(sKey);expanded.add(tKey);expanded.add(fKey);go(s.id,t.id,f.id)});
+         row('folder',f,2,s.id===subjectId&&t.id===topicId&&f.id===folderId&&!bucketId,(f.buckets||[]).length>0,fOpen,()=>{expanded.add(sKey);expanded.add(tKey);expanded.add(fKey);go(s.id,t.id,f.id)},{sid:s.id,tid:t.id,fid:f.id});
          if(fOpen)for(const b of f.buckets||[]){
-           row('bucket',b,3,s.id===subjectId&&t.id===topicId&&f.id===folderId&&b.id===bucketId,false,false,()=>go(s.id,t.id,f.id,b.id));
+           row('bucket',b,3,s.id===subjectId&&t.id===topicId&&f.id===folderId&&b.id===bucketId,false,false,()=>go(s.id,t.id,f.id,b.id),{sid:s.id,tid:t.id,fid:f.id,bid:b.id});
          }
        }
        for(const b of roots){
-         row('bucket',b,2,s.id===subjectId&&t.id===topicId&&!folderId&&b.id===bucketId,false,false,()=>go(s.id,t.id,null,b.id));
+         row('bucket',b,2,s.id===subjectId&&t.id===topicId&&!folderId&&b.id===bucketId,false,false,()=>go(s.id,t.id,null,b.id),{sid:s.id,tid:t.id,bid:b.id});
        }
      }
    }
