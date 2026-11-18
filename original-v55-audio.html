@@ -1357,6 +1357,35 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .m
  align-self:center!important;justify-content:center!important;
 }
 </style>
+
+<style id="mcb-v201-centered-transport">
+/* Center the complete compact transport row in its full-width scroll viewport.
+   The previous rule depended on .media-tools ancestry and did not reliably
+   apply in the embedded player. Keep the 44px controls and 6px gaps intact. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-scroll {
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  overflow-x:auto!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-scroll > .media-control-strip {
+  display:flex!important;
+  flex:0 0 max-content!important;
+  width:max-content!important;
+  min-width:max-content!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  align-self:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
