@@ -1593,16 +1593,16 @@ dialog.querySelectorAll('input[name="practiceSearchScope"]').forEach(x=>x.addEve
 <p class="setting-hint">Choose the Windows audio devices to use. Input can be a microphone, Stereo Mix, or an audio-interface loopback device. Output controls recording preview playback; it does not change Windows system audio routing. Device names may require microphone permission.</p>
 <div class="setting-row"><label for="practiceAudioInput">Input</label><select id="practiceAudioInput"><option value="">System default input</option></select></div>
 <div class="setting-row"><label for="practiceAudioOutput">Output</label><select id="practiceAudioOutput"><option value="">System default output</option></select></div>
-<div class="setting-row"><label for="practiceAudioFormat">Recording format</label><select id="practiceAudioFormat"><option value="mp3">MP3 — 256 kbps (high quality)</option><option value="webm">WebM / Opus — Chrome original</option></select></div>
+<div class="setting-row"><label for="practiceAudioFormat">Recording format</label><select id="practiceAudioFormat"><option value="mp3">MP3 — 256 kbps (conversion)</option><option value="webm">WebM / Opus — high quality test (256 kbps requested)</option></select></div>
 <div class="setting-actions"><button type="button" id="practiceAudioRefresh">Refresh devices / grant microphone access</button><button type="button" id="practiceAudioStart" class="primary">● Record</button><button type="button" id="practiceAudioTabStart">▣ Record Chrome Tab Audio</button><button type="button" id="practiceAudioStop" disabled>■ Stop</button></div>
-<div id="practiceAudioStatus" class="setting-status" role="status" aria-live="polite">Ready.</div>
+<div id="practiceAudioStatus" class="setting-status" role="status" aria-live="polite">Ready.</div><div id="practiceAudioDiagnostics" class="setting-hint" style="white-space:pre-wrap">Opus diagnostic: awaiting recording.</div>
 <audio id="practiceAudioPreview" controls></audio>
 <div class="setting-row"><label for="practiceRecordingName">Recording filename</label><input id="practiceRecordingName" type="text" value="Practice Recording.webm"></div>
 <div class="setting-actions"><button type="button" id="practiceAudioSave" disabled>Save recording to current Topic / folder</button><button type="button" id="practiceAudioDownload" disabled>Download recording</button></div>
-<p class="setting-hint">MP3 encoding uses an online encoder library and requires internet access. A failed conversion retains the original WebM file. Recording is saved only when you choose Save or Download. Keep this window open until you have saved your recording. To capture Windows playback, choose Stereo Mix or Loopback. Alternatively, click Record Chrome Tab Audio, select a tab in Chrome’s sharing dialog, and enable Share tab audio. Chrome may require HTTPS or localhost.</p>
+<p class="setting-hint">For this test, choose WebM / Opus and listen to the original before converting to MP3. 256 kbps is requested, not guaranteed by Chrome. MP3 encoding uses an online encoder library and requires internet access. A failed conversion retains the original WebM file. Recording is saved only when you choose Save or Download. Keep this window open until you have saved your recording. To capture Windows playback, choose Stereo Mix or Loopback. Alternatively, click Record Chrome Tab Audio, select a tab in Chrome’s sharing dialog, and enable Share tab audio. Chrome may require HTTPS or localhost.</p>
 <div class="settings-footer"><button type="button" id="practiceAudioClose">Close</button></div>
 </dialog>
-<script id="practice-audio-settings-v565143">
+<script id="practice-audio-settings-v565144">
 (()=>{
 const $s=id=>document.getElementById(id), dlg=$s('practiceAudioSettings'),input=$s('practiceAudioInput'),output=$s('practiceAudioOutput'),preview=$s('practiceAudioPreview'),status=$s('practiceAudioStatus');
 let recorder=null,streams=[],context=null,recorded=null,previewUrl=null,parts=[],recordingType='',captureMode='input';
@@ -1611,7 +1611,7 @@ const note=t=>status.textContent=t;
 const supported=!!navigator.mediaDevices?.getUserMedia&&!!window.MediaRecorder;
 function storePrefs(){try{localStorage.setItem('practiceAudioPreferences',JSON.stringify({input:input.value,output:output.value,format:format.value}))}catch(e){}}
 function prefs(){try{return JSON.parse(localStorage.getItem('practiceAudioPreferences')||'{}')}catch(e){return {}}}
-format.value=prefs().format||'mp3';
+format.value='webm'; // Opus quality diagnostic: explicitly default to original recording
 function fill(select,devices,fallback,chosen){
  select.replaceChildren(new Option(fallback,''));
  devices.forEach((d,i)=>select.add(new Option(d.label||((d.kind==='audioinput'?'Microphone ':'Speaker ')+(i+1)),d.deviceId)));
@@ -1700,11 +1700,18 @@ async function start(mode='input'){
    shared.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(recorder?.state==='recording')stop()},{once:true}));
   }else{
    const chosen=input.value;
-   const mic=await navigator.mediaDevices.getUserMedia({audio:chosen?{deviceId:{exact:chosen}}:true});
+   const audioOptions={channelCount:{ideal:2},sampleRate:{ideal:48000},echoCancellation:false,noiseSuppression:false,autoGainControl:false};
+   if(chosen)audioOptions.deviceId={exact:chosen};
+   const mic=await navigator.mediaDevices.getUserMedia({audio:audioOptions});
    streams.push(mic);
    stream=new MediaStream(mic.getAudioTracks());
   }
-  const mt=mime();recorder=new MediaRecorder(stream,mt?{mimeType:mt}:undefined);
+  const mt=mime();
+  const recordingOptions={audioBitsPerSecond:256000};
+  if(mt)recordingOptions.mimeType=mt;
+  recorder=new MediaRecorder(stream,recordingOptions);
+  const settings=stream.getAudioTracks()[0]?.getSettings?.()||{};
+  $s('practiceAudioDiagnostics').textContent='Capture track: '+JSON.stringify({label:stream.getAudioTracks()[0]?.label,channelCount:settings.channelCount,sampleRate:settings.sampleRate,echoCancellation:settings.echoCancellation,noiseSuppression:settings.noiseSuppression,autoGainControl:settings.autoGainControl})+'\nRecorder: '+(recorder.mimeType||mt)+' | requested 256 kbps | browser reports '+(recorder.audioBitsPerSecond||'unknown')+' bps';
   recordingType=recorder.mimeType||mt||'audio/webm';
   recorder.ondataavailable=e=>{if(e.data.size)parts.push(e.data)};
   recorder.onerror=e=>note('Recording error: '+(e.error?.message||'unknown'));
@@ -1713,6 +1720,7 @@ async function start(mode='input'){
    release();
    if(!original.size){note('No audio was recorded.');return}
    recorded=original;outputType=recordingType;
+   $s('practiceAudioDiagnostics').textContent+='\nOriginal WebM/Opus size: '+(original.size/1024).toFixed(1)+' KB. (A reliable measured bitrate requires duration/stream analysis.)';
    if(format.value==='mp3'){
     note('Converting to MP3 at 256 kbps… please wait.');
     try{recorded=await toMp3(original);outputType='audio/mpeg'}
