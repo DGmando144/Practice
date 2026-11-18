@@ -1481,6 +1481,15 @@ html.mcb-embedded-loading .resource-preview:not(.floating-player) > .media-topba
 .resource-preview:not(.floating-player) .media-control-strip .timecode{font-size:11px!important;white-space:nowrap!important;flex:0 0 auto!important}
 /* Keep wave canvas at its original size. */
 </style>
+<style id="mcb-v189-waveform-height">
+/* MP4 waveform: 105px -> 73.5px, preserving the full video height. */
+html body .video-practice-view:not(.floating-player) .wave-canvas{height:73.5px!important;max-height:none!important}
+/* Do not show the former drag-to-resize divider. */
+html body .video-practice-view .media-splitter{display:none!important}
+/* Use the space recovered from the waveform instead of introducing a scroll region. */
+html body .video-practice-view:not(.floating-player):not(.player-expanded) > .media-tools{max-height:none!important;overflow-y:visible!important}
+html body .video-practice-view:not(.floating-player):not(.player-expanded) .media-control-scroll{max-height:none!important;overflow-y:visible!important}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
