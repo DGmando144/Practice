@@ -84,16 +84,16 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
 .mini-media-player .media-control-strip{gap:3px!important}
 .mini-media-player .media-control-strip button{font-size:0!important;line-height:1!important;min-width:29px;height:29px;padding:3px 5px!important;border-radius:5px}
 .mini-media-player .media-control-strip button::before{font-size:17px;line-height:1;display:inline-block;vertical-align:middle}
-.mini-media-player #mediaPlayPause::before{content:'⏯'}
-.mini-media-player #mediaPlayStart::before{content:'⏮'}
-.mini-media-player #jumpA::before{content:'↤'}
-.mini-media-player #waveStart::before{content:'['}
-.mini-media-player #waveEnd::before{content:']'}
-.mini-media-player #toggleLoop::before{content:'↻'}
-.mini-media-player #clearLoop::before{content:'✕'}
-.mini-media-player #jumpBack::before{content:'↶'}
-.mini-media-player #jumpForward::before{content:'↷'}
-.mini-media-player #mediaHelp::before{content:'?'}
+.mini-media-player #mediaPlayPause::before{content:"⏯"}
+.mini-media-player #mediaPlayStart::before{content:"⏮"}
+.mini-media-player #jumpA::before{content:"↤"}
+.mini-media-player #waveStart::before{content:"["}
+.mini-media-player #waveEnd::before{content:"]"}
+.mini-media-player #toggleLoop::before{content:"↻"}
+.mini-media-player #clearLoop::before{content:"✕"}
+.mini-media-player #jumpBack::before{content:"↶"}
+.mini-media-player #jumpForward::before{content:"↷"}
+.mini-media-player #mediaHelp::before{content:"?"}
 .mini-media-player #speedButton{font-size:11px!important;min-width:60px;padding:3px 5px!important}
 .mini-media-player .speed-menu button{font-size:12px!important;min-width:42px}
 .mini-media-player .speed-menu button::before{content:none!important}
@@ -224,19 +224,19 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
 .media-tools .media-control-strip{height:auto!important;min-height:0!important;display:flex!important;align-items:flex-start!important;flex-wrap:wrap!important;gap:8px!important}
 .media-tools .mcb-control-unit{display:flex;flex-direction:column;align-items:center;gap:5px;flex:0 0 auto;min-width:70px}
 .media-tools .mcb-control-unit>button,.media-tools .mcb-control-unit>.help-popover-anchor>button{display:flex!important;align-items:center!important;justify-content:center!important;width:68px!important;height:68px!important;min-width:68px!important;max-width:68px!important;padding:0!important;margin:0!important;border:2px solid #80b7ec!important;border-radius:13px!important;background:linear-gradient(#f3faff,#a9d4ff)!important;box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940!important;color:transparent!important;font-size:0!important;line-height:0!important;overflow:hidden}
-.media-tools .mcb-control-unit>button::before,.media-tools .mcb-control-unit>.help-popover-anchor>button::before{content:''!important;display:block!important;flex:0 0 48px!important;width:48px!important;height:43px!important;background-position:center!important;background-repeat:no-repeat!important;background-size:contain!important}
+.media-tools .mcb-control-unit>button::before,.media-tools .mcb-control-unit>.help-popover-anchor>button::before{content:""!important;display:block!important;flex:0 0 48px!important;width:48px!important;height:43px!important;background-position:center!important;background-repeat:no-repeat!important;background-size:contain!important}
 .media-tools .mcb-control-label{font-size:12px!important;line-height:1.15!important;font-weight:800!important;color:#18375d!important;text-align:center;max-width:84px;min-height:27px}
 .media-tools .mcb-control-unit #mediaPlayPause{background:linear-gradient(#20d313,#07852d)!important;border-color:#06782c!important;box-shadow:inset 0 2px 2px #7cff72,0 3px 5px #14532d60!important}
 .media-tools .mcb-control-unit #mediaPlayPause::before{filter:brightness(0) invert(1)}
 .media-tools .mcb-control-unit #clearLoop{background:linear-gradient(#285586,#102f59)!important;border-color:#102d53!important}
 .media-tools .mcb-control-unit #toggleLoop[aria-pressed=true]{background:linear-gradient(#b9dcff,#77b0ee)!important;border-color:#337fce!important}
 .media-tools .mcb-control-unit .help-popover-anchor{height:68px!important;display:block!important}
-.media-tools .mcb-speed-unit{min-width:122px}
-.media-tools .mcb-speed-unit .speed-picker{height:68px!important;position:relative!important;margin:0!important}
-.media-tools .mcb-speed-unit #speedButton{width:122px!important;min-width:122px!important;height:68px!important;min-height:68px!important;padding:6px!important;border-radius:13px!important;background:linear-gradient(#f3faff,#a9d4ff)!important;border:2px solid #458ee2!important;box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940!important;color:#18375d!important;font-size:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important}
-.media-tools .mcb-speed-unit #speedButton::before{content:'SPEED';display:block;font-size:22px!important;line-height:1.05!important;font-weight:900!important}
-.media-tools .mcb-speed-unit #speedButton::after{content:attr(data-speed);display:block;font-size:27px!important;line-height:1.1!important;font-weight:900!important}
-.media-tools .mcb-speed-unit .mcb-control-label{visibility:hidden}
+
+
+
+
+
+
 .media-tools .mini-media-player .media-control-strip button::before{font-size:initial!important}
 .media-tools .mcb-control-unit>button:hover{filter:brightness(1.07)}
 .media-tools .mcb-control-unit>button:focus-visible{outline:3px solid #f4a632!important;outline-offset:2px}
@@ -244,8 +244,8 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
 .mini-media-player .media-tools .media-control-scroll,.floating-player .media-tools .media-control-scroll{height:auto!important;overflow:visible!important}
 .mini-media-player .media-tools .media-control-strip{height:auto!important;flex-wrap:wrap!important}
 .mini-media-player .media-tools .media-control-strip .mcb-control-unit>button{width:68px!important;height:68px!important;min-width:68px!important}
-.mini-media-player .media-tools .media-control-strip .mcb-speed-unit .speed-picker{height:68px!important}
-.mini-media-player .media-tools .media-control-strip .mcb-speed-unit #speedButton{font-size:0!important;width:122px!important;height:68px!important}
+
+
 .mini-media-player .media-tools .media-control-strip button::before{font-size:initial!important}
 .media-tools .mcb-control-unit #jumpToIn::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2060%2048%22%20fill%3D%22%2318375d%22%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%228%22%20height%3D%2234%22%2F%3E%3Cpath%20d%3D%22M17%2024%2051%204V44Z%22%2F%3E%3C%2Fsvg%3E")!important}
 .media-tools .mcb-control-unit #jumpToOut::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2060%2048%22%20fill%3D%22%2318375d%22%3E%3Cpath%20d%3D%22M9%204%2043%2024%209%2044Z%22%2F%3E%3Crect%20x%3D%2247%22%20y%3D%227%22%20width%3D%228%22%20height%3D%2234%22%2F%3E%3C%2Fsvg%3E")!important}
@@ -275,13 +275,11 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
 }
 .floating-player.mini-media-player .media-tools .mcb-control-label{font-size:9px!important;max-width:58px!important;min-height:22px!important}
 .floating-player.mini-media-player .media-tools .mcb-control-unit .help-popover-anchor{height:46px!important}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit{min-width:88px!important}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit .speed-picker{height:46px!important}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit #speedButton{
-  width:88px!important;min-width:88px!important;max-width:88px!important;height:46px!important;min-height:46px!important;padding:3px!important;
-}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit #speedButton::before{font-size:14px!important}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit #speedButton::after{font-size:18px!important}
+
+
+
+
+
 .floating-player.mini-media-player .media-topbar .media-fullscreen-btn,
 .floating-player.mini-media-player .media-topbar .mcb-float-audio-close{display:none!important}
 
@@ -295,11 +293,11 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
  .media-tools .mcb-control-unit>button::before,.media-tools .mcb-control-unit>.help-popover-anchor>button::before{width:clamp(26px,8vw,39px)!important;height:clamp(25px,8vw,37px)!important;flex-basis:clamp(26px,8vw,39px)!important}
  .media-tools .mcb-control-unit .help-popover-anchor{height:clamp(40px,12vw,54px)!important}
  .media-tools .mcb-control-label{font-size:clamp(8px,2.5vw,11px)!important;max-width:clamp(42px,13vw,62px)!important;min-height:24px!important;line-height:1.1!important;overflow-wrap:normal!important}
- .media-tools .mcb-speed-unit{min-width:clamp(72px,23vw,104px)!important}
- .media-tools .mcb-speed-unit .speed-picker{height:clamp(40px,12vw,54px)!important}
- .media-tools .mcb-speed-unit #speedButton{width:clamp(72px,23vw,104px)!important;min-width:clamp(72px,23vw,104px)!important;max-width:clamp(72px,23vw,104px)!important;height:clamp(40px,12vw,54px)!important;min-height:clamp(40px,12vw,54px)!important;padding:2px!important}
- .media-tools .mcb-speed-unit #speedButton::before{font-size:clamp(12px,4vw,18px)!important}
- .media-tools .mcb-speed-unit #speedButton::after{font-size:clamp(16px,5vw,23px)!important}
+ 
+ 
+ 
+ 
+ 
 }
 @media (max-width: 370px){
  .media-tools .media-control-strip{gap:4px!important}
@@ -336,13 +334,11 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
  }
  .media-tools .mcb-control-label,.floating-player.mini-media-player .media-tools .mcb-control-label{font-size:8px!important;line-height:1.1!important;max-width:39px!important;min-height:18px!important;white-space:normal!important}
  .media-tools .mcb-control-unit .help-popover-anchor,.floating-player.mini-media-player .media-tools .mcb-control-unit .help-popover-anchor{height:clamp(29px,8vw,35px)!important}
- .media-tools .mcb-speed-unit,.floating-player.mini-media-player .media-tools .mcb-speed-unit{min-width:56px!important}
- .media-tools .mcb-speed-unit .speed-picker,.mini-media-player .media-tools .media-control-strip .mcb-speed-unit .speed-picker,.floating-player.mini-media-player .media-tools .mcb-speed-unit .speed-picker{height:clamp(29px,8vw,35px)!important}
- .media-tools .mcb-speed-unit #speedButton,.mini-media-player .media-tools .media-control-strip .mcb-speed-unit #speedButton,.floating-player.mini-media-player .media-tools .mcb-speed-unit #speedButton{
-  width:56px!important;min-width:56px!important;max-width:56px!important;height:clamp(29px,8vw,35px)!important;min-height:clamp(29px,8vw,35px)!important;border-radius:6px!important;padding:1px!important
- }
- .media-tools .mcb-speed-unit #speedButton::before,.floating-player.mini-media-player .media-tools .mcb-speed-unit #speedButton::before{font-size:10px!important}
- .media-tools .mcb-speed-unit #speedButton::after,.floating-player.mini-media-player .media-tools .mcb-speed-unit #speedButton::after{font-size:13px!important}
+ 
+ 
+ 
+ 
+ 
  .media-tools{padding:6px!important}
  .media-tools .media-control-scroll{padding:3px 0 5px!important}
 }
@@ -363,13 +359,11 @@ label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,select,t
 }
 .floating-player.mini-media-player .media-tools .media-control-strip .mcb-control-label{font-size:8px!important;line-height:1.05!important;max-width:38px!important;min-height:17px!important;overflow-wrap:normal!important}
 .floating-player.mini-media-player .media-tools .media-control-strip .mcb-control-unit .help-popover-anchor{height:30px!important}
-.floating-player.mini-media-player .media-tools .media-control-strip .mcb-speed-unit{width:66px!important;min-width:66px!important;max-width:66px!important;flex:0 0 66px!important}
-.floating-player.mini-media-player .media-tools .media-control-strip .mcb-speed-unit .speed-picker{height:30px!important}
-.floating-player.mini-media-player .media-tools .media-control-strip .mcb-speed-unit #speedButton{
- width:64px!important;min-width:64px!important;max-width:64px!important;height:30px!important;min-height:30px!important;max-height:30px!important;padding:1px!important
-}
-.floating-player.mini-media-player .media-tools .media-control-strip .mcb-speed-unit #speedButton::before{font-size:9px!important}
-.floating-player.mini-media-player .media-tools .media-control-strip .mcb-speed-unit #speedButton::after{font-size:12px!important}
+
+
+
+
+
 
 
 /* Managed player: only the outer MCB toolbar is visible when docked. */
@@ -417,121 +411,43 @@ html body .pip-audio-player .speed-menu[hidden]{display:none!important}
 .speed-menu.mcb-speed-open[hidden]{display:none!important}
 
 /* V56.5.33: native MP3 speed picker remains usable in original, mini and PiP views. */
-.media-tools .mcb-speed-unit #speedButton.mcb-native-speed,
-.mini-media-player .media-tools .mcb-speed-unit #speedButton.mcb-native-speed,
-.pip-audio-player .media-tools .mcb-speed-unit #speedButton.mcb-native-speed{
- appearance:auto!important;-webkit-appearance:menulist!important;
- font-size:15px!important;line-height:normal!important;color:#18375d!important;
- text-align:center!important;cursor:pointer!important;padding:2px!important;
- background:#d8ebff!important;border:2px solid #458ee2!important;
- pointer-events:auto!important;opacity:1!important;
-}
-.media-tools .mcb-speed-unit #speedButton.mcb-native-speed::before,
-.media-tools .mcb-speed-unit #speedButton.mcb-native-speed::after{content:none!important}
+
+
 /* V56.5.34: the original MCB player inherited legacy button-only styling
    (display:flex, font-size:0, and generated pseudo-elements) on the new
    native SELECT. Restore real select rendering in the embedded fullscreen view.
    Floating player styling and all playback logic are left intact. */
-html body:not(.pip-audio-player) .media-tools .mcb-speed-unit select#speedButton.mcb-native-speed {
-  display:block!important;
-  appearance:menulist!important;
-  -webkit-appearance:menulist!important;
-  font-size:18px!important;
-  line-height:normal!important;
-  font-weight:700!important;
-  text-align:center!important;
-  color:#18375d!important;
-  width:122px!important;
-  min-width:122px!important;
-  height:68px!important;
-  padding:8px 5px!important;
-  overflow:visible!important;
-  pointer-events:auto!important;
-  cursor:pointer!important;
-}
-html body:not(.pip-audio-player) .media-tools .mcb-speed-unit select#speedButton.mcb-native-speed option {
-  font-size:18px!important;
-  color:#18375d!important;
-  background:white!important;
-}
+
+
 /* V56.5.35: keep the functional native dropdown, restore visible label, rate and native arrow in all MP3 views. */
-.media-tools .mcb-speed-unit .speed-picker{position:relative!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;box-sizing:border-box!important;overflow:visible!important}
-.media-tools .mcb-speed-unit .mcb-native-speed-caption{display:block!important;position:relative!important;z-index:1!important;font-size:11px!important;font-weight:800!important;line-height:13px!important;color:#18375d!important;text-align:center!important;pointer-events:none!important;flex:0 0 auto!important}
-html body .media-tools .mcb-speed-unit select#speedButton.mcb-native-speed{display:block!important;box-sizing:border-box!important;flex:1 1 auto!important;width:100%!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:20px!important;padding:0 2px!important;font-size:14px!important;font-weight:700!important;line-height:normal!important;text-align:center!important;appearance:menulist!important;-webkit-appearance:menulist!important;cursor:pointer!important}
-html body:not(.pip-audio-player) .media-tools .mcb-speed-unit .speed-picker{height:68px!important}
-html body:not(.pip-audio-player) .media-tools .mcb-speed-unit select#speedButton.mcb-native-speed{height:48px!important;min-height:30px!important;font-size:18px!important}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit .mcb-native-speed-caption,.pip-audio-player .media-tools .mcb-speed-unit .mcb-native-speed-caption{font-size:9px!important;line-height:10px!important}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit select#speedButton.mcb-native-speed,.pip-audio-player .media-tools .mcb-speed-unit select#speedButton.mcb-native-speed{font-size:12px!important;min-height:18px!important}
+
+
+
+
+
+
+
 /* V56.5.36: Audio-only speed caption: earlier 35px compact layouts clipped
    the stacked caption. Overlay the caption at the top of the select and
    reserve room for it inside the native dropdown; keep the arrow clickable. */
-.media-tools .mcb-speed-unit.mcb-audio-speed-label .speed-picker{
-  position:relative!important;display:block!important;height:48px!important;
-  min-height:48px!important;overflow:visible!important;
-}
-.media-tools .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption{
-  display:block!important;visibility:visible!important;opacity:1!important;
-  position:absolute!important;top:3px!important;left:3px!important;right:3px!important;
-  z-index:3!important;height:14px!important;line-height:14px!important;
-  color:#18375d!important;font-size:12px!important;font-weight:900!important;
-  text-align:center!important;pointer-events:none!important;
-}
-html body .media-tools .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed{
-  display:block!important;position:relative!important;width:100%!important;
-  min-width:0!important;max-width:100%!important;height:48px!important;
-  min-height:48px!important;padding:18px 3px 2px!important;
-  font-size:15px!important;line-height:normal!important;
-  appearance:menulist!important;-webkit-appearance:menulist!important;
-  color:#18375d!important;cursor:pointer!important;
-}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit.mcb-audio-speed-label .speed-picker,
-.pip-audio-player .media-tools .mcb-speed-unit.mcb-audio-speed-label .speed-picker{height:40px!important;min-height:40px!important}
-html body .floating-player.mini-media-player .media-tools .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed,
-html body .pip-audio-player .media-tools .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed{
-  height:40px!important;min-height:40px!important;padding-top:15px!important;font-size:12px!important;
-}
-.floating-player.mini-media-player .media-tools .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption,
-.pip-audio-player .media-tools .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption{font-size:10px!important;top:2px!important}
+
+
+
+
+
+
 
 /* V56.5.37 — MP3-only control sizing and responsive floating timeline.
    The native select remains intact; these rules change only presentation. */
-html body .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label {
-  min-width:70px!important; width:70px!important; flex:0 0 70px!important;
-}
-html body .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label .speed-picker {
-  width:68px!important; height:68px!important; min-height:68px!important;
-  box-sizing:border-box!important;
-}
-html body .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption {
-  top:10px!important; font-size:12px!important; line-height:15px!important;
-}
-html body .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  width:68px!important; min-width:68px!important; max-width:68px!important;
-  height:68px!important; min-height:68px!important; max-height:68px!important;
-  padding:25px 2px 4px!important; font-size:15px!important;
-  border-radius:13px!important;
-}
+
+
+
+
 /* The compact MP3 float uses the same height as the other compact buttons. */
-html body .floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label,
-html body .pip-audio-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label {
-  width:38px!important; min-width:38px!important; max-width:38px!important;
-  flex:0 0 38px!important;
-}
-html body .floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label .speed-picker,
-html body .pip-audio-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label .speed-picker {
-  width:38px!important; height:30px!important; min-height:30px!important;
-}
-html body .floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption,
-html body .pip-audio-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption {
-  top:1px!important; left:0!important; right:0!important;
-  font-size:9px!important; line-height:10px!important;
-}
-html body .floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed,
-html body .pip-audio-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  width:38px!important; min-width:38px!important; max-width:38px!important;
-  height:30px!important; min-height:30px!important; max-height:30px!important;
-  padding:10px 0 0!important; font-size:10px!important; border-radius:6px!important;
-}
+
+
+
+
 /* Floating MP3: use all available horizontal width, keeping controls in one row.
    When too narrow, scroll the row rather than wrapping after Nudge -. */
 html body .pip-audio-player .media-tools.mcb-audio-transport {
@@ -603,14 +519,8 @@ html body .pip-audio-player .media-tools.mcb-audio-transport .wave-wrap {
   max-height:none!important; overflow:hidden!important; margin-bottom:2px!important;
 }
 /* Speed label stays the same size; enlarge the selected numeric value. */
-html body .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  font-size:23px!important; font-weight:800!important;
-  letter-spacing:-.7px!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed,
-html body .floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  font-size:14px!important; font-weight:800!important; letter-spacing:-.5px!important;
-}
+
+
 
 /* V56.5.39: audio Float responsive controls, based on actual Float width,
    not browser viewport. Preserve minimum usable tap targets and wrapping. */
@@ -657,31 +567,11 @@ html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-stri
 html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .help-popover-anchor {
   height:clamp(27px, 6.9cqw, 39px)!important;
 }
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label,
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label .speed-picker {
-  width:clamp(35px, 8.5cqw, 49px)!important;
-  min-width:clamp(35px, 8.5cqw, 49px)!important;
-  max-width:clamp(35px, 8.5cqw, 49px)!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label {
-  flex:0 0 clamp(35px, 8.5cqw, 49px)!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label .speed-picker,
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  height:clamp(27px, 6.9cqw, 39px)!important;
-  min-height:clamp(27px, 6.9cqw, 39px)!important;
-  max-height:clamp(27px, 6.9cqw, 39px)!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  width:clamp(35px, 8.5cqw, 49px)!important;
-  min-width:clamp(35px, 8.5cqw, 49px)!important;
-  max-width:clamp(35px, 8.5cqw, 49px)!important;
-  font-size:clamp(12px, 2.8cqw, 17px)!important;
-  padding:clamp(9px, 2.3cqw, 13px) 0 0!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label .mcb-native-speed-caption {
-  font-size:9px!important;line-height:10px!important;top:1px!important;
-}
+
+
+
+
+
 
 /* V56.5.40: MP3 Float opens wide enough for a single transport row.
    Responsive wrapping from V56.5.39 remains when user narrows window. */
@@ -736,15 +626,8 @@ html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-stri
   width:100%!important;min-width:0!important;max-width:100%!important;
   box-sizing:border-box!important;
 }
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label {
-  width:clamp(35px, 8.2cqw, 46px)!important;
-  min-width:35px!important;max-width:46px!important;
-  flex:0 0 clamp(35px, 8.2cqw, 46px)!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label .speed-picker,
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  width:100%!important;min-width:0!important;max-width:100%!important;
-}
+
+
 html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip > .mcb-control-unit:has(#mediaHelp) {
   margin-left:0!important;order:0!important;
 }
@@ -810,16 +693,8 @@ html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-stri
   width:max-content!important; min-width:100%!important;
   gap:2px!important;
 }
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip > .mcb-control-unit:not(.mcb-speed-unit) {
-  width:27px!important; min-width:27px!important; max-width:27px!important;
-  flex:0 0 27px!important; margin:0!important; padding:0!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip > .mcb-control-unit:not(.mcb-speed-unit) > button,
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip > .mcb-control-unit:not(.mcb-speed-unit) > .help-popover-anchor > button {
-  width:27px!important; min-width:27px!important; max-width:27px!important;
-  height:29px!important; min-height:29px!important; max-height:29px!important;
-  box-sizing:border-box!important; margin:0!important; padding:1px!important;
-}
+
+
 html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-control-unit:has(#mediaHelp) {
   width:27px!important; min-width:27px!important; max-width:27px!important;
   flex:0 0 27px!important; order:0!important;
@@ -829,14 +704,8 @@ html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-stri
   height:29px!important; min-height:29px!important; max-height:29px!important;
   display:block!important; flex:none!important; position:relative!important;
 }
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label {
-  width:38px!important; min-width:38px!important; max-width:38px!important;
-  flex:0 0 38px!important;
-}
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label .speed-picker,
-html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip .mcb-speed-unit.mcb-audio-speed-label select#speedButton.mcb-native-speed {
-  width:38px!important; min-width:38px!important; max-width:38px!important;
-}
+
+
 
 
 /* V56.5.45 — MP3 only: structural tail for Help + timecode. */
@@ -1103,26 +972,10 @@ html body .pip-audio-player .media-tools.mcb-audio-transport .media-control-stri
 
 /* V56.5.64 — MP4-only cosmetic alignment to the working MP3 controls.
    Do not modify audio styling or the native speed selector's behavior. */
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit {
-  width:70px!important;min-width:70px!important;max-width:70px!important;flex:0 0 70px!important;
-}
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .speed-picker {
-  position:relative!important;display:block!important;width:68px!important;
-  height:68px!important;min-height:68px!important;box-sizing:border-box!important;
-}
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .mcb-native-speed-caption {
-  position:absolute!important;top:10px!important;left:2px!important;right:2px!important;
-  z-index:3!important;display:block!important;visibility:visible!important;
-  font-size:12px!important;line-height:15px!important;font-weight:900!important;
-  text-align:center!important;pointer-events:none!important;
-}
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit select#speedButton.mcb-native-speed {
-  display:block!important;width:68px!important;min-width:68px!important;max-width:68px!important;
-  height:68px!important;min-height:68px!important;max-height:68px!important;
-  padding:25px 2px 4px!important;border-radius:13px!important;
-  font-size:23px!important;font-weight:800!important;letter-spacing:-.7px!important;
-  appearance:menulist!important;-webkit-appearance:menulist!important;
-}
+
+
+
+
 html body .media-tools:not(.mcb-audio-transport) #mediaTimecode {
   display:inline-flex!important;align-items:center!important;justify-content:center!important;
   font-size:14px!important;line-height:20px!important;font-weight:700!important;
@@ -1145,52 +998,20 @@ html body .video-practice-view.player-expanded .media-tools:not(.mcb-audio-trans
   overflow:visible!important;min-height:27px!important;line-height:1.15!important;
 }
 /* MP4 Float: match the compact MP3 Speed control and legible timecode. */
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit {
-  width:38px!important;min-width:38px!important;max-width:38px!important;flex:0 0 38px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .speed-picker {
-  width:38px!important;height:30px!important;min-height:30px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .mcb-native-speed-caption {
-  top:1px!important;left:0!important;right:0!important;font-size:9px!important;line-height:10px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit select#speedButton.mcb-native-speed {
-  width:38px!important;min-width:38px!important;max-width:38px!important;
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-  padding:10px 0 0!important;font-size:14px!important;letter-spacing:-.5px!important;
-  border-radius:6px!important;
-}
+
+
+
+
 html body .pip-video-player .media-tools:not(.mcb-audio-transport) #mediaTimecode {
   font-size:13px!important;line-height:20px!important;min-width:105px!important;
 }
 
 /* V56.5.65 — MP4 ONLY. Match the MP3's compact, stacked Speed design,
    while respecting the MP4's smaller control row. No JS or MP3 changes. */
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit {
-  display:flex!important; flex-direction:column!important; align-items:center!important;
-  width:38px!important; min-width:38px!important; max-width:38px!important; flex:0 0 38px!important;
-  gap:3px!important;
-}
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .speed-picker {
-  position:relative!important; display:block!important; width:38px!important;
-  height:38px!important; min-height:38px!important; max-height:38px!important;
-  overflow:visible!important; margin:0!important; padding:0!important;
-}
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .mcb-native-speed-caption {
-  position:absolute!important; display:block!important; visibility:visible!important;
-  top:2px!important; left:1px!important; right:1px!important; height:12px!important;
-  font-size:10px!important; line-height:12px!important; font-weight:900!important;
-  z-index:3!important; pointer-events:none!important; text-align:center!important;
-}
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit select#speedButton.mcb-native-speed {
-  display:block!important; position:relative!important; box-sizing:border-box!important;
-  width:38px!important; min-width:38px!important; max-width:38px!important;
-  height:38px!important; min-height:38px!important; max-height:38px!important;
-  padding:13px 0 1px!important; margin:0!important; border-radius:7px!important;
-  font-size:13px!important; line-height:normal!important; font-weight:800!important;
-  letter-spacing:-.5px!important; color:#18375d!important;
-  appearance:menulist!important; -webkit-appearance:menulist!important;
-}
+
+
+
+
 /* Readable MP3-style tabular timecode, sized to the MP4 control row. */
 html body .video-practice-view .media-tools:not(.mcb-audio-transport) #mediaTimecode {
   display:inline-flex!important; align-items:center!important; justify-content:center!important;
@@ -1220,79 +1041,33 @@ html body .pip-video-player .media-tools:not(.mcb-audio-transport) #mediaTimecod
   font-size:15px!important; font-weight:800!important; min-width:119px!important;
   padding:4px 6px!important; line-height:20px!important;
 }
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit {
-  width:34px!important; min-width:34px!important; max-width:34px!important; flex:0 0 34px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .speed-picker,
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit select#speedButton.mcb-native-speed {
-  width:34px!important; min-width:34px!important; max-width:34px!important;
-  height:32px!important; min-height:32px!important; max-height:32px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .mcb-native-speed-caption {
-  top:1px!important; font-size:9px!important; line-height:10px!important; height:10px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-speed-unit select#speedButton.mcb-native-speed {
-  padding:11px 0 0!important; font-size:12px!important;
-}
+
+
+
+
 /* V56.5.66 — MP4 Float ONLY: Speed face same 32x30 as neighboring buttons.
    Keep the native select and all Speed event handlers unchanged. */
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit {
-  width:38px!important;min-width:38px!important;max-width:38px!important;flex:0 0 38px!important;
-  margin:0!important;padding:0!important;align-items:center!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker {
-  width:32px!important;min-width:32px!important;max-width:32px!important;
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-  margin:0!important;padding:0!important;box-sizing:border-box!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  width:32px!important;min-width:32px!important;max-width:32px!important;
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-  padding:11px 0 0!important;margin:0!important;border-radius:6px!important;
-  box-sizing:border-box!important;font-size:12px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > .mcb-native-speed-caption {
-  top:1px!important;left:0!important;right:0!important;font-size:9px!important;line-height:10px!important;
-}
+
+
+
+
 
 /* V56.5.67 — MP4-only size parity with adjacent control faces.
    The native speed SELECT and its event listeners remain untouched.
    Large: 68px faces; detached Float: 32x30px faces. */
-html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit {
-  width:70px!important;min-width:70px!important;max-width:70px!important;flex:0 0 70px!important;
-}
-html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker,
-html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  width:68px!important;min-width:68px!important;max-width:68px!important;
-  height:68px!important;min-height:68px!important;max-height:68px!important;
-  box-sizing:border-box!important;border-radius:13px!important;
-}
-html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > .mcb-native-speed-caption {
-  top:10px!important;font-size:12px!important;line-height:15px!important;height:15px!important;
-}
-html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  padding:25px 2px 4px!important;font-size:23px!important;letter-spacing:-.7px!important;
-}
+
+
+
+
 html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) #mediaTimecode {
   font-size:34px!important;line-height:1.15!important;min-width:0!important;
   font-variant-numeric:tabular-nums!important;
 }
 /* Detached MP4: match neighboring 32x30 faces, not the large-screen 68px rules. */
-html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit {
-  width:38px!important;min-width:38px!important;max-width:38px!important;flex:0 0 38px!important;
-}
-html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker,
-html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  width:32px!important;min-width:32px!important;max-width:32px!important;
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-  box-sizing:border-box!important;border-radius:6px!important;
-}
-html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > .mcb-native-speed-caption {
-  top:1px!important;font-size:9px!important;line-height:10px!important;height:10px!important;
-}
-html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  padding:11px 0 0!important;font-size:12px!important;
-}
+
+
+
+
 html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) #mediaTimecode {
   font-size:15px!important;line-height:1.15!important;min-width:0!important;
   font-variant-numeric:tabular-nums!important;
@@ -1300,23 +1075,9 @@ html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.
 
 /* V56.5.68 — MP4 Speed: visual parity with neighboring button faces.
    MP4 only; no changes to the native select, handlers, or audio styling. */
-html body .video-practice-view:not(.pip-video-player) .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed,
-html body .pip-video-player.floating-player.mini-media-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  display:block!important;
-  border:2px solid #80b7ec!important;
-  background:linear-gradient(#f3faff,#a9d4ff)!important;
-  box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940!important;
-  color:#18375d!important;
-  text-align:center!important;
-  margin:0!important;
-  box-sizing:border-box!important;
-  cursor:pointer!important;
-}
+
 /* The Speed caption is an overlay and must not intercept the selector. */
-html body .media-tools:not(.mcb-audio-transport) .mcb-speed-unit .mcb-native-speed-caption {
-  pointer-events:none!important;
-  color:#18375d!important;
-}
+
 
 /* V56.5.69: MP4-only Help/timecode pairing in Large and Float.
    Keep the pair as one flex item so they cannot split across rows. */
@@ -1344,62 +1105,31 @@ html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-video-ta
 /* V56.5.72 — MP4 Float only. The floating player removes the
    floating-player and mini-media-player classes, leaving pip-video-player.
    Keep the native Speed select at a fixed 32x30px in every PiP size. */
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit {
-  width:38px!important;min-width:38px!important;max-width:38px!important;flex:0 0 38px!important;
-  margin:0!important;padding:0!important;align-items:center!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker,
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  width:32px!important;min-width:32px!important;max-width:32px!important;
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-  box-sizing:border-box!important;border-radius:6px!important;
-  margin:0!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker {
-  padding:0!important;flex:0 0 32px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > .mcb-native-speed-caption {
-  top:1px!important;font-size:9px!important;line-height:10px!important;height:10px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip > .mcb-speed-unit > .speed-picker > select#speedButton.mcb-native-speed {
-  padding:11px 0 0!important;font-size:12px!important;flex:0 0 32px!important;
-}
+
+
+
+
+
 
 /* V56.5.73: lock ONLY the ordinary MP4 Document-PiP transport buttons to
    the small size, regardless of PiP viewport width or responsive breakpoints.
    The native Speed select and its wrapper are intentionally untouched. */
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit) {
-  width:38px!important;min-width:38px!important;max-width:38px!important;
-  flex:0 0 38px!important;gap:1px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit)>button,
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit)>.help-popover-anchor>button {
-  width:32px!important;min-width:32px!important;max-width:32px!important;
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-  box-sizing:border-box!important;padding:2px!important;border-radius:6px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit)>button::before,
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit)>.help-popover-anchor>button::before {
-  width:23px!important;height:22px!important;flex:0 0 23px!important;
-  background-size:contain!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit)>.help-popover-anchor {
-  height:30px!important;min-height:30px!important;max-height:30px!important;
-}
-html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-control-strip .mcb-control-unit:not(.mcb-speed-unit)>.mcb-control-label {
-  font-size:8px!important;line-height:1.05!important;max-width:38px!important;min-height:17px!important;
-}
+
+
+
+
+
 
 /* V56.5.99 — Pitch button shares Speed's distinct two-line design and dimensions. */
-.media-tools .mcb-pitch-picker{flex:0 0 auto!important;min-width:122px}
-.media-tools .mcb-pitch-picker #mcbPitchButton{width:122px!important;min-width:122px!important;height:68px!important;min-height:68px!important;padding:6px!important;border-radius:13px!important;background:linear-gradient(#f3faff,#a9d4ff)!important;border:2px solid #458ee2!important;box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940!important;color:#18375d!important;font-size:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important}
-.media-tools .mcb-pitch-picker #mcbPitchButton::before{content:'PITCH';display:block;font-size:22px!important;line-height:1.05!important;font-weight:900!important}
-.media-tools .mcb-pitch-picker #mcbPitchButton::after{content:attr(data-pitch);display:block;font-size:27px!important;line-height:1.1!important;font-weight:900!important}
-.floating-player.mini-media-player .media-tools .mcb-pitch-picker{min-width:88px!important}
-.floating-player.mini-media-player .media-tools .mcb-pitch-picker #mcbPitchButton{width:88px!important;min-width:88px!important;height:46px!important;min-height:46px!important}
-.floating-player.mini-media-player .media-tools .mcb-pitch-picker #mcbPitchButton::before{font-size:14px!important}
-.floating-player.mini-media-player .media-tools .mcb-pitch-picker #mcbPitchButton::after{font-size:18px!important}
-@media(max-width:700px){.media-tools .mcb-pitch-picker{min-width:56px!important}.media-tools .mcb-pitch-picker #mcbPitchButton{width:56px!important;min-width:56px!important;max-width:56px!important;height:clamp(29px,8vw,35px)!important;min-height:clamp(29px,8vw,35px)!important;border-radius:6px!important;padding:1px!important}.media-tools .mcb-pitch-picker #mcbPitchButton::before{font-size:10px!important}.media-tools .mcb-pitch-picker #mcbPitchButton::after{font-size:13px!important}}
+
+
+
+
+
+
+
+
+
 /* V56.5.100: centered near top of screen, enlarged, labeled pitch scales. */
 .media-tools .mcb-pitch-menu{position:fixed!important;top:clamp(12px,4vh,48px)!important;left:50vw!important;bottom:auto!important;transform:translateX(-50%)!important;width:680px!important;min-width:0!important;max-width:calc(100vw - 24px)!important;max-height:calc(100dvh - 24px)!important;overflow:auto!important;padding:24px!important;z-index:2147483640!important}
 .media-tools .mcb-pitch-menu[hidden]{display:none!important}
@@ -1411,6 +1141,25 @@ html body .pip-video-player .media-tools:not(.mcb-audio-transport) .media-contro
 .media-tools .mcb-pitch-zero i{width:19px;height:2px;background:#2163a6;flex-basis:19px}
 .media-tools .mcb-pitch-zero small{font-weight:900;color:#154e88}
 @media(max-width:620px){.media-tools .mcb-pitch-menu{padding:12px!important}.media-tools .mcb-pitch-slider{min-width:0!important;font-size:13px!important}.media-tools .mcb-pitch-menu>div{gap:2px!important}.media-tools .mcb-pitch-range-wrap{height:260px!important;gap:1px!important}.media-tools .mcb-pitch-range-wrap input{height:260px!important;width:26px!important}.media-tools .mcb-pitch-scale{width:34px!important;flex-basis:34px!important}.media-tools .mcb-pitch-tick small{font-size:9px!important}}
+
+
+
+/* V56.5.192: canonical Speed/Pitch sizing. One definition, no competing historic overrides. */
+.media-tools .media-control-strip > .mcb-speed-unit,
+.media-tools .media-control-strip > .mcb-pitch-picker {flex:0 0 78px; width:78px; min-width:78px; max-width:78px; box-sizing:border-box; margin:0; position:relative; align-self:flex-start;}
+.media-tools .media-control-strip > .mcb-speed-unit > .speed-picker {position:relative;display:flex;flex-direction:column;justify-content:center;align-items:stretch;width:100%;height:52px;box-sizing:border-box;margin:0;}
+.media-tools .media-control-strip .mcb-speed-unit .mcb-native-speed-caption {position:relative;display:block;z-index:1;flex:0 0 auto;font-size:11px;line-height:13px;font-weight:800;text-align:center;color:#18375d;pointer-events:none;}
+.media-tools .media-control-strip .mcb-speed-unit select#speedButton.mcb-native-speed {display:block;box-sizing:border-box;flex:1 1 auto;width:100%;min-width:0;max-width:100%;height:33px;min-height:25px;padding:1px 2px;font-size:15px;font-weight:800;text-align:center;color:#18375d;border:2px solid #80b7ec;border-radius:9px;background:linear-gradient(#f3faff,#a9d4ff);box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940;appearance:menulist;-webkit-appearance:menulist;cursor:pointer;}
+.media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton {display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-width:0;max-width:100%;height:52px;min-height:52px;margin:0;padding:3px 2px;border-radius:10px;border:2px solid #80b7ec;background:linear-gradient(#f3faff,#a9d4ff);box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940;color:#18375d;font-size:0;line-height:1;}
+.media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton::before {content:'PITCH';display:block;font-size:12px;line-height:16px;font-weight:900;}
+.media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton::after {content:attr(data-pitch);display:block;font-size:17px;line-height:21px;font-weight:900;white-space:nowrap;}
+.media-tools .media-control-strip .mcb-speed-unit .mcb-control-label {visibility:hidden;}
+/* Float keeps both controls proportional rather than falling back to old fixed dimensions. */
+.floating-player.mini-media-player .media-tools .media-control-strip > .mcb-speed-unit,
+.floating-player.mini-media-player .media-tools .media-control-strip > .mcb-pitch-picker {flex-basis:68px;width:68px;min-width:68px;max-width:68px;}
+.floating-player.mini-media-player .media-tools .media-control-strip > .mcb-speed-unit > .speed-picker,
+.floating-player.mini-media-player .media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton {height:44px;min-height:44px;}
+.floating-player.mini-media-player .media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton::after {font-size:15px;}
 
 </style>
 <style id="mcb-v56528-controls">
@@ -1511,6 +1260,33 @@ html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-pla
 html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .wave-canvas{height:73.5px!important;max-height:none!important}
 /* No inner vertical scrollbar in the embedded player card. */
 html body.v563-audio-mode #resourcePreviewCard{overflow:hidden!important}
+</style>
+
+<style id="mcb-v191-single-title-centered-controls">
+/* In embedded Practice!, the outer viewer owns the only visible title.
+   The retired resource-preview card's own heading was the second title row. */
+body.v563-audio-mode #resourcePreviewCard > .row:first-child {
+  display:none!important;visibility:hidden!important;height:0!important;
+  min-height:0!important;margin:0!important;padding:0!important;
+  border:0!important;overflow:hidden!important;
+}
+/* The video starts immediately beneath the outer title/action row. */
+body.v563-audio-mode #resourcePreviewCard #resourcePreview {
+  margin-top:0!important;padding-top:0!important;
+}
+/* Center the existing SVG artwork inside each blue control. Do not change
+   the established button dimensions, spacing, or transport functionality. */
+body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > button,
+body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > .help-popover-anchor > button {
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  text-align:center!important;text-indent:0!important;
+}
+body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > button::before,
+body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools .mcb-control-unit > .help-popover-anchor > button::before {
+  margin-left:auto!important;margin-right:auto!important;
+  align-self:center!important;flex-shrink:0!important;
+  background-position:center center!important;
+}
 </style>
 </head>
 <body>
@@ -1961,7 +1737,7 @@ function addMediaControls(media,r,host,file){
  const pitchButton=panel.querySelector('#mcbPitchButton');
  pitchButton.style.cssText='';
  // Match the native Speed control dimensions, including compact/mobile/floating layouts.
- pitchButton.classList.add('mcb-pitch-speed-style');
+ // Pitch uses the same canonical control geometry as Speed.
  panel.querySelectorAll('.mcb-pitch-slider').forEach(el=>{el.style.cssText='display:flex;flex-direction:column;align-items:center;gap:12px;font-size:19px;font-weight:800;min-width:155px';const slider=el.querySelector('input');slider.style.cssText='writing-mode:vertical-lr;direction:rtl;appearance:slider-vertical;width:38px;height:340px;cursor:pointer';el.querySelector('output').style.cssText='font-size:21px;font-weight:800;font-variant-numeric:tabular-nums'});
  // Visible scale hash marks and numeric anchors for all three pitch controls.
  panel.querySelectorAll('.mcb-pitch-slider').forEach(label=>{
