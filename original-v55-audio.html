@@ -2611,7 +2611,7 @@ function makeMediaViewer(file,r,host){
   try{window.parent?.MCB_expandEmbeddedMedia?.()}catch(e){console.warn(e)}
  };
  const switchMedia=document.createElement('button');switchMedia.type='button';switchMedia.className='secondary mcb-mini-action';switchMedia.textContent='Switch Media ↔';switchMedia.title='Bring the other player forward';switchMedia.onclick=()=>{try{if(window.parent!==window&&typeof window.parent.MCB_switchMedia==='function'){window.parent.MCB_switchMedia();return;}}catch(e){}alert('Open a second player in the Practice Room to switch between them.')};
- const close=document.createElement('button');close.className='secondary mcb-float-audio-close mcb-mini-action';close.textContent='Close Player';close.onclick=()=>{
+ const close=document.createElement('button');close.className='secondary mcb-float-audio-close mcb-mini-action';close.textContent='Close Player';close.onclick=()=>{ if(window.parent!==window && typeof window.parent.MCB_closeDetachedPlayer==='function'){window.parent.MCB_closeDetachedPlayer();return;}
   // A detached player must close its PiP window and its own Class media slot.
   if(playerPipWindow){const restore=pipPlayerRestore;pipPlayerRestore=null;if(restore)restore();try{playerPipWindow.close()}catch(e){}playerPipWindow=null;}
   if(window.parent!==window){try{window.parent.postMessage({type:'MCB_V563_CLOSE'},window.location.origin);return;}catch(e){console.warn('Close message failed',e)}}
