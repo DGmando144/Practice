@@ -1147,9 +1147,9 @@ html body .pip-video-player .media-tools:not(.mcb-audio-transport) .mcb-video-ta
 /* V56.5.192: canonical Speed/Pitch sizing. One definition, no competing historic overrides. */
 .media-tools .media-control-strip > .mcb-speed-unit,
 .media-tools .media-control-strip > .mcb-pitch-picker {flex:0 0 56px; width:56px; min-width:56px; max-width:56px; box-sizing:border-box; margin:0; position:relative; align-self:flex-start;}
-.media-tools .media-control-strip > .mcb-speed-unit > .speed-picker {position:relative;display:flex;flex-direction:column;justify-content:center;align-items:stretch;width:100%;height:42px;box-sizing:border-box;margin:0;}
+.media-tools .media-control-strip > .mcb-speed-unit > .speed-picker {position:relative;display:flex;flex-direction:column;justify-content:center;align-items:stretch;width:100%;height:42px;box-sizing:border-box;margin:0;border:2px solid #80b7ec;border-radius:9px;background:linear-gradient(#f3faff,#a9d4ff);box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940;overflow:hidden;}
 .media-tools .media-control-strip .mcb-speed-unit .mcb-native-speed-caption {position:relative;display:block;z-index:1;flex:0 0 auto;font-size:10px;line-height:11px;font-weight:800;text-align:center;color:#18375d;pointer-events:none;}
-.media-tools .media-control-strip .mcb-speed-unit select#speedButton.mcb-native-speed {display:block;box-sizing:border-box;flex:1 1 auto;width:100%;min-width:0;max-width:100%;height:27px;min-height:25px;padding:1px 2px;font-size:13px;font-weight:800;text-align:center;color:#18375d;border:2px solid #80b7ec;border-radius:9px;background:linear-gradient(#f3faff,#a9d4ff);box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940;appearance:menulist;-webkit-appearance:menulist;cursor:pointer;}
+.media-tools .media-control-strip .mcb-speed-unit select#speedButton.mcb-native-speed {display:block;box-sizing:border-box;flex:1 1 auto;width:100%;min-width:0;max-width:100%;height:27px;min-height:25px;padding:1px 2px;font-size:13px;font-weight:800;text-align:center;color:#18375d;border:0;border-radius:0;background:transparent;box-shadow:none;appearance:menulist;-webkit-appearance:menulist;cursor:pointer;}
 .media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton {display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-width:0;max-width:100%;height:42px;min-height:42px;margin:0;padding:2px 2px;border-radius:10px;border:2px solid #80b7ec;background:linear-gradient(#f3faff,#a9d4ff);box-shadow:inset 0 2px 2px #fff,0 3px 5px #194b7940;color:#18375d;font-size:0;line-height:1;}
 .media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton::before {content:'PITCH';display:block;font-size:10px;line-height:13px;font-weight:900;}
 .media-tools .media-control-strip > .mcb-pitch-picker > #mcbPitchButton::after {content:attr(data-pitch);display:block;font-size:13px;line-height:16px;font-weight:900;white-space:nowrap;}
@@ -1246,17 +1246,17 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player):not(.pip-video-
 /* Keep the large video and use the V189 shorter waveform. */
 html body.v563-audio-mode #resourcePreview.video-practice-view > .media-splitter{display:none!important;height:0!important;flex:0 0 0!important}
 html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) > .media-tools{
- overflow:visible!important;overflow-y:visible!important;max-height:none!important;min-height:0!important;flex:0 0 auto!important;
+ display:flex!important;flex-direction:column!important;justify-content:flex-end!important;gap:4px!important; overflow:visible!important;overflow-y:visible!important;max-height:none!important;min-height:0!important;flex:0 0 auto!important;
 }
 html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-scroll{
- overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important;max-height:none!important;padding:2px 0!important;
+ margin-top:0!important;flex:0 0 auto!important; overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important;max-height:none!important;padding:2px 0!important;
 }
 html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip{
- display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;gap:5px!important;width:100%!important;min-width:0!important;
+ display:flex!important;flex-wrap:nowrap!important;align-items:flex-end!important;justify-content:flex-start!important;gap:10px!important;width:100%!important;min-width:0!important;
 }
-html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip > *{min-width:0!important;flex-shrink:1!important}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip > *{min-width:0!important;flex-shrink:0!important;align-self:flex-end!important}
 html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip button{max-width:48px!important;padding:0!important;font-size:10px!important}
-html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip .media-timecode{white-space:nowrap!important;font-size:18px!important;padding:5px 12px!important}
+html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .media-control-strip .media-timecode{white-space:nowrap!important;font-size:18px!important;line-height:24px!important;padding:7px 10px!important;min-width:136px!important;width:auto!important;max-width:none!important;flex:0 0 auto!important;text-align:center!important;font-variant-numeric:tabular-nums!important}
 html body.v563-audio-mode #resourcePreview.video-practice-view:not(.floating-player) .wave-canvas{height:73.5px!important;max-height:none!important}
 /* No inner vertical scrollbar in the embedded player card. */
 html body.v563-audio-mode #resourcePreviewCard{overflow:hidden!important}
