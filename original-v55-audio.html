@@ -1432,6 +1432,32 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player)
 .mcb-speed-reset{width:auto!important;min-width:0!important;height:30px!important;padding:0 9px!important;font-size:12px!important}
 .mcb-speed-limits{font-size:11px;opacity:.75;margin-top:8px}
 </style>
+<style id="mcb-v206-diagnostic-modal-style">
+.mcb-v206-speed-dialog{position:fixed!important;inset:0!important;margin:auto!important;
+  width:min(440px,calc(100vw - 32px))!important;max-width:440px!important;
+  max-height:calc(100vh - 32px)!important;overflow:auto!important;
+  padding:20px!important;border:3px solid #f5b942!important;border-radius:12px!important;
+  background:#17283d!important;color:#fff!important;box-shadow:0 16px 55px #000b!important;
+  z-index:2147483647!important;font:15px/1.5 system-ui,sans-serif!important;
+  box-sizing:border-box!important;text-align:left!important;transform:none!important;opacity:1!important;
+  visibility:visible!important;}
+.mcb-v206-speed-dialog:not([open]){display:none!important}
+.mcb-v206-speed-dialog::backdrop{background:rgba(0,0,0,.50)!important}
+.mcb-v206-speed-dialog .mcb-v206-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.mcb-v206-speed-dialog button{width:auto!important;min-width:0!important;height:auto!important;
+  padding:7px 12px!important;border-radius:6px!important;background:#3b79ac!important;color:white!important;
+  font-size:14px!important;cursor:pointer!important}
+.mcb-v206-speed-dialog input[type=range]{display:block!important;width:100%!important;height:28px!important;
+  margin:12px 0 20px!important;accent-color:#69bbff!important;opacity:1!important;visibility:visible!important}
+.mcb-v206-speed-dialog input[type=number]{display:inline-block!important;width:85px!important;min-width:85px!important;
+  padding:7px!important;background:white!important;color:#18263b!important;border:1px solid #9bc5eb!important;
+  font-size:16px!important}
+.mcb-v206-speed-dialog .mcb-v206-number{display:flex;gap:12px;align-items:end;justify-content:space-between}
+.mcb-v206-speed-dialog .mcb-v206-readout{font-size:20px;color:#9bd3ff}
+.mcb-v206-speed-dialog .mcb-v206-status{margin-top:16px;padding:10px;background:#063b30;
+  border:1px solid #66d5a9;border-radius:6px;color:#d4ffed;font-size:13px;overflow-wrap:anywhere}
+.mcb-v206-speed-dialog .mcb-v206-help{font-size:13px;color:#d6e2f2;margin:10px 0}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2058,59 +2084,70 @@ function addMediaControls(media,r,host,file){
   requestAnimationFrame(()=>{if(speedSelect.isConnected) speedSelect.blur();});
  });
   showSpeed();
-  // V204: MP3 only: compact Speed button opens combined range + numeric panel.
+  // V206 MP3 diagnostic: native modal dialog is rendered in browser top layer,
+  // bypassing all overflow, stacking context and legacy popover positioning rules.
   if(r.kind==='audio'){
     const host=speedSelect.parentElement;
     speedSelect.style.display='none';
     const trigger=document.createElement('button');
     trigger.type='button';trigger.className='secondary mcb-speed-trigger';
-    trigger.title='Adjust MP3 speed';trigger.setAttribute('aria-label','Adjust MP3 speed');
+    trigger.title='Test MP3 speed slider';trigger.setAttribute('aria-label','Test MP3 speed slider');
     trigger.textContent=Number(speed).toFixed(2)+'×';
-    const panel=document.createElement('div');panel.className='mcb-speed-panel';panel.hidden=true;
-    panel.innerHTML='<div class="mcb-speed-panel-head"><strong>Playback speed</strong><button type="button" class="mcb-speed-dismiss" aria-label="Close speed controls">×</button></div><input type="range" min="0.25" max="2" step="0.05" aria-label="Speed slider"><div class="mcb-speed-panel-bottom"><label>Speed <input type="number" min="0.25" max="2" step="0.05" aria-label="Numeric playback speed"></label><span>×</span><button type="button" class="mcb-speed-reset">Reset 1×</button></div><div class="mcb-speed-limits"><span>0.25×</span><span>2.00×</span></div>';
-    host.style.position='relative';
     host.append(trigger);
-    // Render above all player containers so overflow/clipping cannot hide the panel.
-    document.body.append(panel);
-    function positionSpeedPanel(){
-      const rect=trigger.getBoundingClientRect();
-      const w=Math.min(270,window.innerWidth-24);
-      const x=Math.max(12,Math.min(window.innerWidth-w-12,rect.left+rect.width/2-w/2));
-      const h=panel.offsetHeight||165;
-      const above=rect.top>=h+12;
-      panel.style.left=x+'px';
-      panel.style.top=(above?rect.top-h-9:rect.bottom+9)+'px';
-      panel.style.bottom='auto';
-      panel.style.transform='none';
+    const dialog=document.createElement('dialog');
+    dialog.className='mcb-v206-speed-dialog';
+    dialog.setAttribute('aria-label','MP3 speed diagnostic');
+    dialog.innerHTML=`<div class="mcb-v206-head"><strong>V206 · MP3 Speed Diagnostic</strong><button type="button" data-action="close" aria-label="Close diagnostic">✕</button></div>
+      <p class="mcb-v206-help">If you can see this window, the Speed button click and popup display are working.</p>
+      <label for="mcb-v206-range">Playback speed <strong class="mcb-v206-readout">1.00×</strong></label>
+      <input id="mcb-v206-range" type="range" min="0.25" max="2" step="0.05" value="1">
+      <div class="mcb-v206-number"><label>Exact speed <input type="number" min="0.25" max="2" step="0.05" value="1.00"></label><button type="button" data-action="reset">Reset 1×</button></div>
+      <div class="mcb-v206-status" role="status" aria-live="polite">Waiting for Speed click…</div>
+      <p class="mcb-v206-help">Change the slider, then check whether the audio speeds up or slows down.</p>`;
+    document.body.append(dialog);
+    const range=dialog.querySelector('input[type="range"]');
+    const numeric=dialog.querySelector('input[type="number"]');
+    const readout=dialog.querySelector('.mcb-v206-readout');
+    const status=dialog.querySelector('.mcb-v206-status');
+    function updateDiagnostic(message){
+      range.value=String(speed);numeric.value=Number(speed).toFixed(2);
+      readout.textContent=Number(speed).toFixed(2)+'×';
+      trigger.textContent=Number(speed).toFixed(2)+'×';
+      status.textContent=message+' | audio.playbackRate: '+Number(media.playbackRate).toFixed(2)+'×';
     }
-    panel.style.position='fixed';
-    panel.style.zIndex='2147483647';
-    
-    const range=panel.querySelector('input[type="range"]');
-    const numeric=panel.querySelector('input[type="number"]');
-    function updatePanel(){range.value=String(speed);numeric.value=Number(speed).toFixed(2);trigger.textContent=Number(speed).toFixed(2)+'×';}
-    function applySpeed(value){
-      const n=Number(value);if(!Number.isFinite(n))return;
-      speed=Math.max(.25,Math.min(2,Math.round(n*20)/20));
-      media.playbackRate=speed;setPitchCorrection(true);showSpeed();save();updatePanel();
+    function applyDiagnosticSpeed(value,origin){
+      const n=Number(value);
+      if(!Number.isFinite(n)){status.textContent='INVALID numeric speed: '+value;return;}
+      try{
+        speed=Math.max(.25,Math.min(2,Math.round(n*20)/20));
+        media.playbackRate=speed;
+        setPitchCorrection(true);showSpeed();save();
+        updateDiagnostic(origin+' changed speed to '+speed.toFixed(2)+'×');
+      }catch(err){status.textContent='ERROR changing speed: '+err.message;console.error('V206 speed diagnostic:',err);}
     }
-    trigger.addEventListener('click',(e)=>{
-      e.stopPropagation();
-      panel.hidden=!panel.hidden;
-      if(!panel.hidden){updatePanel();positionSpeedPanel();}
+    trigger.addEventListener('click',e=>{
+      e.preventDefault();e.stopPropagation();
+      try{
+        if(!dialog.isConnected)document.body.append(dialog);
+        if(dialog.open){dialog.close();return;}
+        updateDiagnostic('Speed click received');
+        dialog.showModal();
+        updateDiagnostic('Popup OPEN — click handler and modal both worked');
+      }catch(err){
+        console.error('V206 popup diagnostic:',err);
+        dialog.setAttribute('open','');
+        dialog.style.display='block';
+        updateDiagnostic('Modal error: '+err.message+' — using fallback display');
+      }
     });
-    panel.addEventListener('click',e=>e.stopPropagation());
-    range.addEventListener('input',()=>applySpeed(range.value));
-    numeric.addEventListener('change',()=>applySpeed(numeric.value));
-    numeric.addEventListener('keydown',e=>{if(e.key==='Enter'){applySpeed(numeric.value);numeric.blur();}});
-    panel.querySelector('.mcb-speed-reset').addEventListener('click',()=>applySpeed(1));
-    panel.querySelector('.mcb-speed-dismiss').addEventListener('click',()=>{panel.hidden=true;});
-    document.addEventListener('click',e=>{
-      if(!host.contains(e.target)&&!panel.contains(e.target))panel.hidden=true;
-    });
-    window.addEventListener('resize',()=>{if(!panel.hidden)positionSpeedPanel();});
-    window.addEventListener('scroll',()=>{if(!panel.hidden)positionSpeedPanel();},true);
-    updatePanel();
+    range.addEventListener('input',()=>applyDiagnosticSpeed(range.value,'Slider'));
+    numeric.addEventListener('change',()=>applyDiagnosticSpeed(numeric.value,'Number'));
+    numeric.addEventListener('keydown',e=>{if(e.key==='Enter')applyDiagnosticSpeed(numeric.value,'Number');});
+    dialog.querySelector('[data-action="reset"]').addEventListener('click',()=>applyDiagnosticSpeed(1,'Reset'));
+    dialog.querySelector('[data-action="close"]').addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+    dialog.addEventListener('close',()=>{if(dialog.style.display==='block')dialog.style.display='';});
+    updateDiagnostic('Ready to test');
   }
   function setPitchCorrection(on){for(const key of ['preservesPitch','mozPreservesPitch','webkitPreservesPitch']){if(key in media)try{media[key]=on}catch(e){}}}
  setPitchCorrection(true);
