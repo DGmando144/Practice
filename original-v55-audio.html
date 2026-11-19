@@ -1471,6 +1471,53 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player)
 .mcb-v214-combined .mcb-v212-slider-group input{margin:0!important}
 .mcb-v214-combined .mcb-v212-coarse{display:none!important}
 </style>
+<style id="mcb-v215-compact-speed-pitch">
+/* Compact only the large MP3 Speed/Pitch panel. Preserve its controls and JS. */
+#resourcePreview:not(.floating-player) .mcb-v209-speed-panel.mcb-v214-combined{
+ width:min(100%,620px)!important;
+ max-width:620px!important;
+ padding:8px 12px!important;
+ margin-top:6px!important;
+ margin-bottom:5px!important;
+ box-sizing:border-box!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v211-heading{
+ grid-template-columns:72px minmax(0,1fr) 20px!important;
+ gap:5px!important;
+ margin-bottom:2px!important;
+ min-height:30px!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v211-heading strong{font-size:15px!important}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-readout{gap:4px!important}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-readout output{
+ padding:3px 5px!important;min-width:65px!important;font-size:16px!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-readout button{
+ width:29px!important;min-width:29px!important;height:27px!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-speed-track{margin:2px 0 4px!important}
+#resourcePreview:not(.floating-player) .mcb-v214-combined input[type=range]{height:18px!important;margin:0!important}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v209-presets{
+ margin-top:4px!important;margin-bottom:0!important;gap:4px!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v211-pitch-section{
+ margin-top:7px!important;padding-top:6px!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-pitch-sliders{
+ gap:12px!important;margin-top:3px!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-slider-group{
+ gap:0!important;min-width:0!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-slider-group span{
+ font-size:15px!important;font-weight:800!important;line-height:1.2!important;
+}
+#resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-coarse{display:none!important}
+@media(max-width:520px){
+ #resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v211-heading{grid-template-columns:54px minmax(0,1fr) 0!important}
+ #resourcePreview:not(.floating-player) .mcb-v214-combined .mcb-v212-pitch-sliders{gap:7px!important}
+}
+</style>
 <style id="mcb-v210-integrated-button-art">
 /* V210: integrated SVG artwork: button face and icon form one scalable image. Large MP3 only. */
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-control-unit #jumpToIn{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f3faff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23a9d4ff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%2380b7ec%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M14%2014%20Q44%206%2074%2014%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%2F%3E%3Csvg%20x%3D%2216%22%20y%3D%2218%22%20width%3D%2256%22%20height%3D%2252%22%20viewBox%3D%220%200%2060%2048%22%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%228%22%20height%3D%2234%22%2F%3E%3Cpath%20d%3D%22M17%2024%2051%204V44Z%22%2F%3E%3C%2Fsvg%3E%3C%2Fsvg%3E")!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat!important;background-size:100% 100%!important;border:0!important;box-shadow:none!important;border-radius:0!important}
