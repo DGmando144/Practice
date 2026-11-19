@@ -1662,6 +1662,31 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mc
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-speed-unit{display:none!important}
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-native-speed-caption{display:none!important}
 </style>
+<style id="mcb-v219-timecode-clear-mark-out">
+/* MP3 large only. V218 row placement remains untouched. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-audio-tail > #mediaTimecode {
+  font-size:23.4px!important;line-height:1!important;
+  height:57px!important;min-height:57px!important;max-height:57px!important;
+  min-width:203px!important;padding:0 12px!important;
+}
+/* Replace the dedicated Pitch face with a separate Clear Mark Out control in large MP3. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-pitch-picker > #mcbPitchButton {display:none!important}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-pitch-picker > #mcbClearMarkOut {
+  display:block!important;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22%231d416d%22%20stroke%3D%22%23153353%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M14%2015%20Q44%207%2074%2015%22%20stroke%3D%22%236b8fb4%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M31%2027%20H58%20V59%20H46%20M31%2027%20V41%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%2F%3E%3Cpath%20d%3D%22M31%2027%20V41%22%20stroke%3D%22%23a8d2f7%22%20stroke-width%3D%223%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E")!important;
+  background-color:transparent!important;background-size:100% 100%!important;
+  background-position:center!important;background-repeat:no-repeat!important;
+  border:0!important;box-shadow:none!important;border-radius:0!important;
+  width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+  padding:0!important;margin:0 auto!important;font-size:0!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-pitch-picker > #mcbClearMarkOut::before,
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-pitch-picker > #mcbClearMarkOut::after {content:none!important;display:none!important}
+/* Show the correct caption in each player mode. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-pitch-picker > .mcb-original-pitch-caption{display:none!important}
+html body.v563-audio-mode #resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-pitch-picker > .mcb-clear-out-caption{display:none!important}
+/* Float and video retain original Pitch button. */
+.mcb-pitch-picker > #mcbClearMarkOut {display:none}
+</style>
 <style id="mcb-v218-transport-then-panels">
 /* V218: Put the transport and controls on SEPARATE rows. V217 appended the
    panel inside .media-control-scroll, whose flex-direction:row caused the bug.
@@ -2145,6 +2170,19 @@ function addMediaControls(media,r,host,file){
  const pitchUnit=panel.querySelector('.mcb-pitch-picker');
  const pitchButton=panel.querySelector('#mcbPitchButton');
  pitchButton.style.cssText='';
+ // V219: clear only the OUT marker; leave Clear Markers and F shortcut intact.
+ // The legacy pitch control is retained for float, but is hidden in large MP3.
+ if(r.kind==='audio' && pitchUnit && !pitchUnit.querySelector('#mcbClearMarkOut')){
+   const clearOutBtn=document.createElement('button');
+   clearOutBtn.type='button';clearOutBtn.id='mcbClearMarkOut';
+   clearOutBtn.className='secondary';clearOutBtn.textContent='Clear Mark Out';
+   clearOutBtn.title='Clear Mark Out (F)';clearOutBtn.setAttribute('aria-label','Clear Mark Out');
+   clearOutBtn.addEventListener('click',()=>activeClearOut?.());
+   pitchUnit.insertBefore(clearOutBtn,pitchButton.nextSibling);
+   const caption=pitchUnit.querySelector(':scope > .mcb-control-label');
+   if(caption){caption.classList.add('mcb-original-pitch-caption');const newCaption=caption.cloneNode(true);newCaption.classList.remove('mcb-original-pitch-caption');newCaption.classList.add('mcb-clear-out-caption');newCaption.textContent='Clear Mark Out';pitchUnit.appendChild(newCaption);}
+ }
+
  // Match the native Speed control dimensions, including compact/mobile/floating layouts.
  // Pitch uses the same canonical control geometry as Speed.
  panel.querySelectorAll('.mcb-pitch-slider').forEach(el=>{el.style.cssText='display:flex;flex-direction:column;align-items:center;gap:12px;font-size:19px;font-weight:800;min-width:155px';const slider=el.querySelector('input');slider.style.cssText='writing-mode:vertical-lr;direction:rtl;appearance:slider-vertical;width:38px;height:340px;cursor:pointer';el.querySelector('output').style.cssText='font-size:21px;font-weight:800;font-variant-numeric:tabular-nums'});
