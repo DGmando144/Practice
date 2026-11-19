@@ -1421,42 +1421,18 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player)
   margin:0!important;
 }
 </style>
-<style id="mcb-v204-speed-slider">
-.mcb-speed-trigger{width:44px!important;min-width:44px!important;max-width:44px!important;height:44px!important;min-height:44px!important;max-height:44px!important;padding:0 2px!important;font-size:11px!important;font-weight:700!important;white-space:nowrap!important;display:flex!important;align-items:center!important;justify-content:center!important}
-.mcb-speed-panel{position:fixed;z-index:2147483000;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);width:270px;max-width:calc(100vw - 24px);box-sizing:border-box;padding:13px;border-radius:12px;background:#202630;color:#f5f7fb;border:1px solid #677282;box-shadow:0 12px 32px #0009;font-size:13px;text-align:left}
-.mcb-speed-panel[hidden]{display:none!important}
-.mcb-speed-panel-head,.mcb-speed-panel-bottom,.mcb-speed-limits{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.mcb-speed-panel-head{margin-bottom:12px}.mcb-speed-dismiss{font-size:20px!important;width:27px!important;height:27px!important;min-width:27px!important;padding:0!important}
-.mcb-speed-panel input[type=range]{width:100%;display:block;margin:6px 0 14px;accent-color:#76b9f7}
-.mcb-speed-panel-bottom label{display:flex;align-items:center;gap:6px}.mcb-speed-panel input[type=number]{width:67px!important;min-width:67px!important;padding:5px!important;box-sizing:border-box!important;color:#fff;background:#323b48;border:1px solid #798493;border-radius:5px}
-.mcb-speed-reset{width:auto!important;min-width:0!important;height:30px!important;padding:0 9px!important;font-size:12px!important}
-.mcb-speed-limits{font-size:11px;opacity:.75;margin-top:8px}
-</style>
-<style id="mcb-v206-diagnostic-modal-style">
-.mcb-v206-speed-dialog{position:fixed!important;inset:0!important;margin:auto!important;
-  width:min(440px,calc(100vw - 32px))!important;max-width:440px!important;
-  max-height:calc(100vh - 32px)!important;overflow:auto!important;
-  padding:20px!important;border:3px solid #f5b942!important;border-radius:12px!important;
-  background:#17283d!important;color:#fff!important;box-shadow:0 16px 55px #000b!important;
-  z-index:2147483647!important;font:15px/1.5 system-ui,sans-serif!important;
-  box-sizing:border-box!important;text-align:left!important;transform:none!important;opacity:1!important;
-  visibility:visible!important;}
-.mcb-v206-speed-dialog:not([open]){display:none!important}
-.mcb-v206-speed-dialog::backdrop{background:rgba(0,0,0,.50)!important}
-.mcb-v206-speed-dialog .mcb-v206-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.mcb-v206-speed-dialog button{width:auto!important;min-width:0!important;height:auto!important;
-  padding:7px 12px!important;border-radius:6px!important;background:#3b79ac!important;color:white!important;
-  font-size:14px!important;cursor:pointer!important}
-.mcb-v206-speed-dialog input[type=range]{display:block!important;width:100%!important;height:28px!important;
-  margin:12px 0 20px!important;accent-color:#69bbff!important;opacity:1!important;visibility:visible!important}
-.mcb-v206-speed-dialog input[type=number]{display:inline-block!important;width:85px!important;min-width:85px!important;
-  padding:7px!important;background:white!important;color:#18263b!important;border:1px solid #9bc5eb!important;
-  font-size:16px!important}
-.mcb-v206-speed-dialog .mcb-v206-number{display:flex;gap:12px;align-items:end;justify-content:space-between}
-.mcb-v206-speed-dialog .mcb-v206-readout{font-size:20px;color:#9bd3ff}
-.mcb-v206-speed-dialog .mcb-v206-status{margin-top:16px;padding:10px;background:#063b30;
-  border:1px solid #66d5a9;border-radius:6px;color:#d4ffed;font-size:13px;overflow-wrap:anywhere}
-.mcb-v206-speed-dialog .mcb-v206-help{font-size:13px;color:#d6e2f2;margin:10px 0}
+
+<style id="mcb-v209-speed-style">
+/* MP3-only, permanently visible speed controls; not a popover. */
+.mcb-v209-speed-panel{display:block!important;position:relative!important;visibility:visible!important;opacity:1!important;box-sizing:border-box!important;width:min(100%,610px)!important;max-width:100%!important;margin:10px auto 6px!important;padding:10px 13px!important;border:1px solid #7896b4!important;border-radius:9px!important;background:#e9f3fd!important;color:#193956!important;box-shadow:none!important;z-index:auto!important;font:13px system-ui,sans-serif!important}
+.mcb-v209-speed-top{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-bottom:7px!important;font-weight:700!important}
+.mcb-v209-speed-value{font-variant-numeric:tabular-nums;font-weight:800;font-size:15px}
+.mcb-v209-speed-slide{display:flex!important;align-items:center!important;gap:9px!important}
+.mcb-v209-speed-slide span{white-space:nowrap;font-size:11px}
+.mcb-v209-speed-slide input[type=range]{display:block!important;position:static!important;flex:1 1 auto!important;min-width:70px!important;width:auto!important;height:22px!important;opacity:1!important;visibility:visible!important;appearance:auto!important;accent-color:#286aa7!important;cursor:pointer!important;pointer-events:auto!important}
+.mcb-v209-presets{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:6px!important;margin-top:9px!important}
+.mcb-v209-presets .mcb-v209-preset{position:static!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:51px!important;height:30px!important;padding:3px 7px!important;border:1px solid #6c91b5!important;border-radius:6px!important;background:#fff!important;color:#183c60!important;font:700 12px system-ui,sans-serif!important;cursor:pointer!important;pointer-events:auto!important}
+.mcb-v209-presets .mcb-v209-preset[aria-pressed=true]{background:#2a659e!important;color:#fff!important;border-color:#1e4c7d!important}
 </style>
 </head>
 <body>
@@ -2083,104 +2059,45 @@ function addMediaControls(media,r,host,file){
   // Defer blur until the browser has applied the selection, preserving mouse interaction.
   requestAnimationFrame(()=>{if(speedSelect.isConnected) speedSelect.blur();});
  });
-  showSpeed();
-  // V206 MP3 diagnostic: native modal dialog is rendered in browser top layer,
-  // bypassing all overflow, stacking context and legacy popover positioning rules.
-  if(r.kind==='audio'){
-    const host=speedSelect.parentElement;
-    speedSelect.style.display='none';
-    const trigger=document.createElement('button');
-    trigger.type='button';trigger.className='secondary mcb-speed-trigger';
-    trigger.title='Test MP3 speed slider';trigger.setAttribute('aria-label','Test MP3 speed slider');
-    trigger.textContent=Number(speed).toFixed(2)+'×';
-    host.append(trigger);
-    // V207: independent always-visible diagnostic HUD, deliberately outside player CSS.
-    const hud=document.createElement('div');
-    hud.id='mcb-v207-speed-click-monitor';
-    hud.setAttribute('role','status');
-    hud.style.cssText='position:fixed!important;right:12px!important;top:12px!important;z-index:2147483646!important;background:#102b45!important;color:#fff!important;border:3px solid #ffd05a!important;border-radius:10px!important;padding:12px!important;width:280px!important;max-width:calc(100vw - 24px)!important;box-sizing:border-box!important;font:13px/1.45 system-ui,sans-serif!important;box-shadow:0 4px 18px #0008!important;pointer-events:auto!important;';
-    hud.innerHTML='<b style="color:#ffd05a">V207 · MP3 Speed Click Monitor</b><div data-v207-count>Captured Speed clicks: 0</div><div data-v207-handler>Button handler calls: 0</div><div data-v207-popup>Popup: not attempted</div><div data-v207-target>Last clicked element: none</div><button type="button" data-v207-test style="margin-top:7px;padding:5px 10px;color:#102b45;background:#ffd05a;border:0;border-radius:5px;cursor:pointer">Test popup directly</button>';
-    document.body.append(hud);
-    let captureCount=0, handlerCount=0;
-    const setHud=(key,value)=>{const el=hud.querySelector('[data-v207-'+key+']');if(el)el.textContent=value;};
-    // Capture-phase monitoring runs before target/bubble handlers, including stopPropagation.
-    document.addEventListener('click',event=>{
-      const target=event.target;
-      if(!target || !target.closest)return;
-      const isSpeed=target===trigger || trigger.contains(target) || !!target.closest('.mcb-speed-unit');
-      if(isSpeed){captureCount++;setHud('count','Captured Speed clicks: '+captureCount);}
-      const desc=(target.tagName||'?').toLowerCase()+(target.id?'#'+target.id:'')+(target.className&&typeof target.className==='string'?'.'+target.className.trim().replace(/\s+/g,'.'):'');
-      setHud('target','Last clicked element: '+desc.slice(0,95));
-    },true);
-    // Surface layout clues without changing the approved controls.
-    const geometry=trigger.getBoundingClientRect();
-    const probe=document.createElement('div');probe.style.cssText='margin-top:5px;font-size:11px;color:#cce5ff';
-    probe.textContent='Speed button rect: '+Math.round(geometry.width)+'×'+Math.round(geometry.height)+'; visible: '+(getComputedStyle(trigger).display!=='none');
-    hud.append(probe);
-    const dialog=document.createElement('dialog');
-    dialog.className='mcb-v206-speed-dialog';
-    dialog.setAttribute('aria-label','MP3 speed diagnostic');
-    dialog.innerHTML=`<div class="mcb-v206-head"><strong>V206 · MP3 Speed Diagnostic</strong><button type="button" data-action="close" aria-label="Close diagnostic">✕</button></div>
-      <p class="mcb-v206-help">If you can see this window, the Speed button click and popup display are working.</p>
-      <label for="mcb-v206-range">Playback speed <strong class="mcb-v206-readout">1.00×</strong></label>
-      <input id="mcb-v206-range" type="range" min="0.25" max="2" step="0.05" value="1">
-      <div class="mcb-v206-number"><label>Exact speed <input type="number" min="0.25" max="2" step="0.05" value="1.00"></label><button type="button" data-action="reset">Reset 1×</button></div>
-      <div class="mcb-v206-status" role="status" aria-live="polite">Waiting for Speed click…</div>
-      <p class="mcb-v206-help">Change the slider, then check whether the audio speeds up or slows down.</p>`;
-    document.body.append(dialog);
-    hud.querySelector('[data-v207-test]').addEventListener('click',e=>{
-      e.stopPropagation();
-      try{if(!dialog.open)dialog.showModal();setHud('popup','Direct test: dialog OPEN='+dialog.open);}
-      catch(err){setHud('popup','Direct test ERROR: '+err.message);console.error('V207 direct popup test',err);}
-    });
-    const range=dialog.querySelector('input[type="range"]');
-    const numeric=dialog.querySelector('input[type="number"]');
-    const readout=dialog.querySelector('.mcb-v206-readout');
-    const status=dialog.querySelector('.mcb-v206-status');
-    function updateDiagnostic(message){
-      range.value=String(speed);numeric.value=Number(speed).toFixed(2);
-      readout.textContent=Number(speed).toFixed(2)+'×';
-      trigger.textContent=Number(speed).toFixed(2)+'×';
-      status.textContent=message+' | audio.playbackRate: '+Number(media.playbackRate).toFixed(2)+'×';
-    }
-    function applyDiagnosticSpeed(value,origin){
-      const n=Number(value);
-      if(!Number.isFinite(n)){status.textContent='INVALID numeric speed: '+value;return;}
-      try{
-        speed=Math.max(.25,Math.min(2,Math.round(n*20)/20));
-        media.playbackRate=speed;
-        setPitchCorrection(true);showSpeed();save();
-        updateDiagnostic(origin+' changed speed to '+speed.toFixed(2)+'×');
-      }catch(err){status.textContent='ERROR changing speed: '+err.message;console.error('V206 speed diagnostic:',err);}
-    }
-    trigger.addEventListener('click',e=>{
-      handlerCount++;setHud('handler','Button handler calls: '+handlerCount);
-      e.preventDefault();e.stopPropagation();
-      try{
-        if(!dialog.isConnected)document.body.append(dialog);
-        if(dialog.open){dialog.close();setHud('popup','Popup: closed by button');return;}
-        updateDiagnostic('Speed click received');
-        dialog.showModal();
-        setHud('popup','Popup: showModal succeeded; open='+dialog.open);
-        updateDiagnostic('Popup OPEN — click handler and modal both worked');
-      }catch(err){
-        setHud('popup','Popup ERROR: '+err.message);
-        console.error('V207 popup diagnostic:',err);
-        dialog.setAttribute('open','');
-        dialog.style.display='block';
-        updateDiagnostic('Modal error: '+err.message+' — using fallback display');
-      }
-    });
-    range.addEventListener('input',()=>applyDiagnosticSpeed(range.value,'Slider'));
-    numeric.addEventListener('change',()=>applyDiagnosticSpeed(numeric.value,'Number'));
-    numeric.addEventListener('keydown',e=>{if(e.key==='Enter')applyDiagnosticSpeed(numeric.value,'Number');});
-    dialog.querySelector('[data-action="reset"]').addEventListener('click',()=>applyDiagnosticSpeed(1,'Reset'));
-    dialog.querySelector('[data-action="close"]').addEventListener('click',()=>dialog.close());
-    dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
-    dialog.addEventListener('close',()=>{if(dialog.style.display==='block')dialog.style.display='';});
-    updateDiagnostic('Ready to test');
-  }
-  function setPitchCorrection(on){for(const key of ['preservesPitch','mozPreservesPitch','webkitPreservesPitch']){if(key in media)try{media[key]=on}catch(e){}}}
+ showSpeed();
+ // V209: Always-visible MP3 speed controls; no dialog, popover, or shortcut.
+ if(r.kind==='audio'){
+   const strip=speedSelect.closest('.media-control-strip');
+   const panel=document.createElement('section');
+   panel.className='mcb-v209-speed-panel';
+   panel.setAttribute('aria-label','MP3 playback speed controls');
+   panel.innerHTML='<div class="mcb-v209-speed-top"><label for="mcb-v209-speed-range">Playback speed</label><output class="mcb-v209-speed-value">1.00×</output></div><div class="mcb-v209-speed-slide"><span>0.25×</span><input id="mcb-v209-speed-range" type="range" min="0.25" max="2" step="0.05" value="1" aria-label="Playback speed"><span>2.00×</span></div><div class="mcb-v209-presets" aria-label="Preset playback speeds"></div>';
+   const range=panel.querySelector('input[type="range"]');
+   const valueDisplay=panel.querySelector('output');
+   const presets=panel.querySelector('.mcb-v209-presets');
+   const choices=[0.5,0.75,1,1.25,1.5,2];
+   function syncPanel(){
+     range.value=String(speed);
+     valueDisplay.textContent=Number(speed).toFixed(2)+'×';
+     for(const b of presets.querySelectorAll('button'))b.setAttribute('aria-pressed',String(Math.abs(Number(b.dataset.rate)-speed)<.001));
+   }
+   function applySpeed(value){
+     const n=Number(value);
+     if(!Number.isFinite(n))return;
+     speed=Math.max(.25,Math.min(2,Math.round(n*20)/20));
+     media.playbackRate=speed;
+     setPitchCorrection(true);
+     showSpeed();syncPanel();save();
+   }
+   for(const v of choices){
+     const b=document.createElement('button');b.type='button';b.className='mcb-v209-preset';
+     b.dataset.rate=String(v);b.textContent=v.toFixed(2)+'×';
+     b.addEventListener('click',()=>applySpeed(v));presets.append(b);
+   }
+   range.addEventListener('input',()=>applySpeed(range.value));
+   // Place below the entire row, not inside the clipped Speed button wrapper.
+   if(strip && strip.parentElement)strip.insertAdjacentElement('afterend',panel);
+   else speedSelect.closest('.mcb-speed-unit')?.insertAdjacentElement('afterend',panel);
+   // Retain the existing live-value Speed button without opening a popup.
+   speedSelect.style.pointerEvents='none';speedSelect.tabIndex=-1;
+   syncPanel();
+ }
+ function setPitchCorrection(on){for(const key of ['preservesPitch','mozPreservesPitch','webkitPreservesPitch']){if(key in media)try{media[key]=on}catch(e){}}}
  setPitchCorrection(true);
  media.playbackRate=speed;media.defaultPlaybackRate=speed;
  function valid(){return state.a!==null&&state.b!==null&&state.b>state.a+.05}
@@ -2911,38 +2828,5 @@ window.addEventListener('message' ,async function(event){
 </script>
 
 
-<script id="mcb-v208-f9-speed-shortcut">
-(function(){
- let d=null;
- function show(){
-  const media=[...document.querySelectorAll('audio')].find(x=>x.currentSrc||x.src)||document.querySelector('audio');
-  if(!media){alert('V208: No MP3 audio element found. Open an MP3 first.');return;}
-  if(!d){
-   d=document.createElement('dialog');d.id='mcb-v208-f9-dialog';
-   d.style.cssText='border:3px solid #ffd05a;border-radius:12px;padding:20px;background:#102b45;color:white;max-width:min(410px,90vw);width:390px;box-shadow:0 15px 45px #0009;font:15px system-ui,sans-serif;';
-   d.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><strong>V208 · F9 MP3 Speed</strong><button type="button" data-close style="font-size:20px;cursor:pointer">✕</button></div><p>Independent keyboard diagnostic — bypasses the Speed button.</p><label>Speed: <output data-value>1.00×</output></label><input data-range type="range" min="0.25" max="2" step="0.05" value="1" style="display:block;width:100%;margin:15px 0"><label>Exact speed: <input data-number type="number" min="0.25" max="2" step="0.05" value="1" style="width:85px"></label><button type="button" data-reset style="margin-left:12px">Reset 1×</button><p data-status style="font-size:12px;color:#ffe7a1">Waiting for adjustment</p>';
-   document.body.appendChild(d);
-   d.querySelector('[data-close]').onclick=()=>d.close();
-   d.querySelector('[data-reset]').onclick=()=>setRate(1);
-   d.querySelector('[data-range]').addEventListener('input',e=>setRate(e.target.value));
-   d.querySelector('[data-number]').addEventListener('input',e=>{if(e.target.value!=='')setRate(e.target.value)});
-  }
-  function setRate(v){
-   const n=Math.max(.25,Math.min(2,Number(v)||1));
-   const active=[...document.querySelectorAll('audio')].find(x=>x.currentSrc||x.src)||document.querySelector('audio');
-   if(active)active.playbackRate=n;
-   d.querySelector('[data-range]').value=n;
-   d.querySelector('[data-number]').value=n.toFixed(2);
-   d.querySelector('[data-value]').textContent=n.toFixed(2)+'×';
-   d.querySelector('[data-status]').textContent='Audio playbackRate: '+(active?active.playbackRate:'not found');
-  }
-  setRate(media.playbackRate||1);
-  try{if(!d.open)d.showModal();else d.focus();}
-  catch(err){alert('V208 speed dialog error: '+err.message);console.error(err);}
- }
- window.addEventListener('keydown',e=>{if(e.key==='F9'&&!e.repeat&&!e.ctrlKey&&!e.altKey&&!e.metaKey){e.preventDefault();e.stopImmediatePropagation();show();}},true);
- window.addEventListener('message',e=>{if(e.data&&e.data.type==='MCB_V208_SPEED_F9')show();});
-})();
-</script>
 </body>
 </html>

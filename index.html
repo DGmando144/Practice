@@ -2535,15 +2535,17 @@ body.mcb-pdf-player-active #mcbPdfBuilder[open]{z-index:3100!important}
  toggle.addEventListener('click',()=>queueMicrotask(()=>{const shown=!dock.classList.contains('collapsed');view.textContent=(shown?'✓ ':'')+'Folder Tree';view.setAttribute('aria-checked',String(shown));localStorage.setItem('mcb-folder-tree-visible',String(shown))}));
 })();
 </script>
-<style id="mcb-sheetmusic-icon-style">.mcb-pdf-setlist .icon{display:flex;align-items:center;justify-content:center}.mcb-pdf-setlist .mcb-sheetmusic-stack{display:block;max-width:100%;height:auto}</style><script id="mcb-v208-parent-shortcut">
-// F9 works even when keyboard focus is in the main Practice! page.
-window.addEventListener('keydown',function(e){
- if(e.key!=='F9'||e.repeat||e.ctrlKey||e.altKey||e.metaKey)return;
- e.preventDefault();e.stopPropagation();
- const frames=[...document.querySelectorAll('iframe')];
- const player=frames.find(f=>(f.getAttribute('src')||'').includes('original-v55-audio.html'));
- if(player&&player.contentWindow){player.contentWindow.postMessage({type:'MCB_V208_SPEED_F9'},'*');}
- else alert('V208: Open an MP3 first, then press F9 to open its speed dialog.');
-},true);
-</script>
+<style id="mcb-sheetmusic-icon-style">.mcb-pdf-setlist .icon{display:flex;align-items:center;justify-content:center}.mcb-pdf-setlist .mcb-sheetmusic-stack{display:block;max-width:100%;height:auto}</style>
+<style id="mcb-v209-home-version-style">#mcb-v209-home-version{position:fixed;right:12px;bottom:8px;z-index:50;font:11px system-ui,sans-serif;color:#667d94;background:#f4f8fcde;border:1px solid #b8c9d8;border-radius:5px;padding:3px 7px;pointer-events:none}</style>
+<script id="mcb-v209-home-version-script">(function(){
+ function init(){
+   const heading=document.getElementById('heading');if(!heading)return;
+   const label=document.createElement('div');label.id='mcb-v209-home-version';label.textContent='Practice! V56.5.209';document.body.append(label);
+   const update=()=>{const back=document.getElementById('back');const home=document.getElementById('practiceHome');const subjects=heading.textContent.trim()==='Subjects';label.hidden=!(subjects && (!back||back.classList.contains('hidden')) && (!home||home.classList.contains('hidden')));};
+   new MutationObserver(update).observe(heading,{childList:true,subtree:true,characterData:true});
+   const bar=document.querySelector('main .bar');if(bar)new MutationObserver(update).observe(bar,{attributes:true,subtree:true,attributeFilter:['class']});
+   update();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();</script>
 </body></html>
