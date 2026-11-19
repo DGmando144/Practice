@@ -2156,8 +2156,8 @@ function addMediaControls(media,r,host,file){
    else speedSelect.closest('.mcb-speed-unit')?.insertAdjacentElement('afterend',panel);
 
 
-   // V212: Coarse preset buttons remain under the speed slider.
-   panel.classList.add('mcb-v211-combined','mcb-v212-combined');
+   // V213: Keep speed presets; pitch readout buttons adjust semitones.
+   panel.classList.add('mcb-v211-combined','mcb-v212-combined','mcb-v213-combined');
    panel.setAttribute('aria-label','MP3 speed and pitch');
    const top=panel.querySelector('.mcb-v209-speed-top');
    top.className='mcb-v211-heading';
@@ -2178,21 +2178,16 @@ function addMediaControls(media,r,host,file){
      <div class="mcb-v211-heading">
        <strong>Pitch</strong>
        <div class="mcb-v212-readout">
-         <button type="button" class="mcb-v211-step" data-pitch-fine="-1" aria-label="Lower pitch one cent">−</button>
+         <button type="button" class="mcb-v211-step" data-pitch-fine="-1" aria-label="Lower pitch one semitone">−</button>
          <output class="mcb-v211-value" id="mcb-v211-pitch-value">0.00</output>
-         <button type="button" class="mcb-v211-step" data-pitch-fine="1" aria-label="Raise pitch one cent">+</button>
+         <button type="button" class="mcb-v211-step" data-pitch-fine="1" aria-label="Raise pitch one semitone">+</button>
        </div><span></span>
      </div>
      <div class="mcb-v212-pitch-sliders">
        <label class="mcb-v212-slider-group"><span>Semitones</span><input id="mcb-v212-semitones" type="range" min="-11" max="11" step="1" value="0" aria-label="Semitone adjustment"></label>
        <label class="mcb-v212-slider-group"><span>Cents</span><input id="mcb-v212-cents" type="range" min="-99" max="99" step="1" value="0" aria-label="Cent adjustment"></label>
      </div>
-     <div class="mcb-v212-coarse" aria-label="Pitch coarse adjustment">
-       <button type="button" class="mcb-v211-step" data-pitch-semi="-1">−1 semitone</button>
-       <button type="button" class="mcb-v211-step" data-pitch-semi="1">+1 semitone</button>
-       <button type="button" class="mcb-v211-step" data-pitch-cents="-10">−10 cents</button>
-       <button type="button" class="mcb-v211-step" data-pitch-cents="10">+10 cents</button>
-     </div>`;
+     `;
    panel.append(pitchSection);
    const semiRange=pitchSection.querySelector('#mcb-v212-semitones');
    const centsRange=pitchSection.querySelector('#mcb-v212-cents');
@@ -2221,11 +2216,7 @@ function addMediaControls(media,r,host,file){
    semiRange.addEventListener('dblclick',e=>{e.preventDefault();setPanelPitch(0,centsRange.value)});
    centsRange.addEventListener('dblclick',e=>{e.preventDefault();setPanelPitch(semiRange.value,0)});
    for(const btn of pitchSection.querySelectorAll('[data-pitch-fine]'))
-     btn.addEventListener('click',()=>setPanelPitch(Number(semiRange.value),Number(centsRange.value)+Number(btn.dataset.pitchFine)));
-   for(const btn of pitchSection.querySelectorAll('[data-pitch-semi]'))
-     btn.addEventListener('click',()=>setPanelPitch(Number(semiRange.value)+Number(btn.dataset.pitchSemi),Number(centsRange.value)));
-   for(const btn of pitchSection.querySelectorAll('[data-pitch-cents]'))
-     btn.addEventListener('click',()=>setPanelPitch(Number(semiRange.value),Number(centsRange.value)+Number(btn.dataset.pitchCents)));
+     btn.addEventListener('click',()=>setPanelPitch(Number(semiRange.value)+Number(btn.dataset.pitchFine),Number(centsRange.value)));
    [pitchOct,pitchSemi,pitchCents].forEach(el=>el.addEventListener('input',syncPitchPanel));
    // Clicking a control should not steal the media player's spacebar shortcut.
    panel.addEventListener('keydown',e=>{
