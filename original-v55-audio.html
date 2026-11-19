@@ -1941,6 +1941,51 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mc
 #resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut::after{display:none!important;content:none!important}
 #resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit .mcb-control-label{white-space:normal!important;text-align:center!important;line-height:1.05!important}
 </style>
+<style id="mcb-v226-float-specific-fixes">
+/* Float-only, including detached Document Picture-in-Picture body (which lacks the main-page body classes). */
+#resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit {
+ display:flex!important;position:relative!important;visibility:visible!important;opacity:1!important;
+ flex:0 0 44px!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+ flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;
+ margin:0 3px!important;padding:0!important;
+}
+#resourcePreview.pip-audio-player .mcb-float-clear-out-unit > #mcbFloatClearMarkOut,
+#resourcePreview.floating-player .mcb-float-clear-out-unit > #mcbFloatClearMarkOut {
+ display:block!important;visibility:visible!important;opacity:1!important;
+ box-sizing:border-box!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;
+ background-color:transparent!important;background-size:100% 100%!important;
+ border:0!important;padding:0!important;font-size:0!important;color:transparent!important;
+}
+#resourcePreview.pip-audio-player .mcb-float-clear-out-unit > .mcb-control-label,
+#resourcePreview.floating-player .mcb-float-clear-out-unit > .mcb-control-label {
+ display:block!important;text-align:center!important;white-space:normal!important;line-height:1.04!important;
+ width:60px!important;min-width:60px!important;font-size:10px!important;
+}
+/* Full 44px Help control, matching the V221 button faces. */
+#resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .mcb-audio-tail .help-popover-anchor,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-audio-tail .help-popover-anchor {
+ flex:0 0 44px!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+}
+#resourcePreview.pip-audio-player .media-tools.mcb-audio-transport #mediaHelp,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport #mediaHelp {
+ box-sizing:border-box!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;
+ font-size:0!important;display:flex!important;align-items:center!important;justify-content:center!important;
+}
+/* Triple the original float time numeral size (roughly 16px -> 48px). */
+#resourcePreview.pip-audio-player .media-tools.mcb-audio-transport #mediaTimecode,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport #mediaTimecode {
+ font-size:48px!important;line-height:1.12!important;font-weight:900!important;
+ width:auto!important;min-width:max-content!important;max-width:none!important;
+ height:auto!important;min-height:58px!important;max-height:none!important;
+ padding:5px 12px!important;white-space:nowrap!important;flex-shrink:0!important;
+}
+/* Preserve access to all controls if the float window is too narrow for the larger clock. */
+#resourcePreview.pip-audio-player .media-control-scroll,
+#resourcePreview.floating-player .media-control-scroll {overflow-x:auto!important;}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -3191,6 +3236,17 @@ function makeMediaViewer(file,r,host){
      playerPipWindow=pip;pipPlayerRestore=restore;
      pip.document.addEventListener('keydown',mcbMediaShortcuts,true);
      host.classList.add('floating-player','mini-media-player','pip-audio-player');
+     // V226: place Clear Mark Out as a real transport control in the detached float.
+     // The original button's handler is retained; this only moves its unit into the strip.
+     if(host.querySelector('.media-tools.mcb-audio-transport')){
+       const markerUnit=host.querySelector('#clearMarkers')?.closest('.mcb-control-unit');
+       const outUnit=host.querySelector('.mcb-float-clear-out-unit');
+       if(markerUnit && outUnit){markerUnit.insertAdjacentElement('afterend',outUnit);
+         outUnit.style.setProperty('display','flex','important');
+         const outButton=outUnit.querySelector('#mcbFloatClearMarkOut');
+         if(outButton){outButton.style.setProperty('display','block','important');outButton.style.setProperty('visibility','visible','important');}
+       }
+     }
      full.textContent='Full Screen';
      host.classList.remove('player-expanded','video-practice-view');
      host.style.cssText='';float.textContent='Float Player';
