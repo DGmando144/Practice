@@ -1434,6 +1434,23 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player)
 .mcb-v209-presets .mcb-v209-preset{position:static!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:51px!important;height:30px!important;padding:3px 7px!important;border:1px solid #6c91b5!important;border-radius:6px!important;background:#fff!important;color:#183c60!important;font:700 12px system-ui,sans-serif!important;cursor:pointer!important;pointer-events:auto!important}
 .mcb-v209-presets .mcb-v209-preset[aria-pressed=true]{background:#2a659e!important;color:#fff!important;border-color:#1e4c7d!important}
 </style>
+
+<style id="mcb-v211-combined-panel">
+/* Only the large MP3 player receives the combined controls. */
+#resourcePreview:not(.floating-player) .mcb-v209-speed-panel.mcb-v211-combined{width:min(100%,750px)!important;padding:12px 17px!important}
+.mcb-v211-combined .mcb-v211-heading{display:grid;grid-template-columns:100px 1fr 80px;align-items:center;gap:8px;margin:0 0 5px}
+.mcb-v211-combined .mcb-v211-heading strong{font-size:15px}
+.mcb-v211-combined .mcb-v211-value{text-align:center;font-weight:800;font-size:17px;font-variant-numeric:tabular-nums}
+.mcb-v211-combined .mcb-v211-track{display:grid;grid-template-columns:42px minmax(80px,1fr) 42px;align-items:center;gap:8px}
+.mcb-v211-combined .mcb-v211-track input[type=range]{width:100%!important;min-width:0!important;accent-color:#286aa7!important;cursor:pointer!important}
+.mcb-v211-combined .mcb-v211-step{height:30px!important;border:1px solid #6c91b5!important;background:#fff!important;color:#183c60!important;border-radius:6px!important;font-weight:800!important;cursor:pointer!important}
+.mcb-v211-combined .mcb-v211-pitch-section{margin-top:12px;padding-top:10px;border-top:1px solid #b1c9df}
+.mcb-v211-combined .mcb-v211-pitch-label{font-size:12px;color:#365a7a}
+.mcb-v211-combined .mcb-v211-pitch-track{display:grid;grid-template-columns:42px minmax(80px,1fr) 42px;align-items:center;gap:8px}
+.mcb-v211-combined .mcb-v211-pitch-track input[type=range]{width:100%!important;min-width:0!important;accent-color:#286aa7!important;cursor:pointer!important}
+.mcb-v211-combined .mcb-v211-pitch-legend{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#365a7a}
+.mcb-v211-combined .mcb-v209-presets{margin-top:9px!important}
+</style>
 <style id="mcb-v210-integrated-button-art">
 /* V210: integrated SVG artwork: button face and icon form one scalable image. Large MP3 only. */
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-control-unit #jumpToIn{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f3faff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23a9d4ff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%2380b7ec%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M14%2014%20Q44%206%2074%2014%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%2F%3E%3Csvg%20x%3D%2216%22%20y%3D%2218%22%20width%3D%2256%22%20height%3D%2252%22%20viewBox%3D%220%200%2060%2048%22%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%228%22%20height%3D%2234%22%2F%3E%3Cpath%20d%3D%22M17%2024%2051%204V44Z%22%2F%3E%3C%2Fsvg%3E%3C%2Fsvg%3E")!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat!important;background-size:100% 100%!important;border:0!important;box-shadow:none!important;border-radius:0!important}
@@ -2104,7 +2121,7 @@ function addMediaControls(media,r,host,file){
    const choices=[0.5,0.75,1,1.25,1.5,2];
    function syncPanel(){
      range.value=String(speed);
-     valueDisplay.textContent=Number(speed).toFixed(2)+'×';
+     valueDisplay.textContent=panel.classList.contains('mcb-v211-combined')?Math.round(speed*100)+'%':Number(speed).toFixed(2)+'×';
      for(const b of presets.querySelectorAll('button'))b.setAttribute('aria-pressed',String(Math.abs(Number(b.dataset.rate)-speed)<.001));
    }
    function applySpeed(value){
@@ -2124,6 +2141,56 @@ function addMediaControls(media,r,host,file){
    // Place below the entire row, not inside the clipped Speed button wrapper.
    if(strip && strip.parentElement)strip.insertAdjacentElement('afterend',panel);
    else speedSelect.closest('.mcb-speed-unit')?.insertAdjacentElement('afterend',panel);
+
+   // V211: Combine speed and pitch in the existing lower panel.
+   // The old Pitch button and its full editor remain operational.
+   panel.classList.add('mcb-v211-combined');
+   panel.setAttribute('aria-label','MP3 speed and pitch');
+   const top=panel.querySelector('.mcb-v209-speed-top');
+   top.className='mcb-v211-heading';
+   top.innerHTML='<strong>Speed</strong><output class="mcb-v209-speed-value mcb-v211-value">100%</output><span></span>';
+   const speedSlide=panel.querySelector('.mcb-v209-speed-slide');
+   speedSlide.className='mcb-v211-track';
+   speedSlide.innerHTML='<button type="button" class="mcb-v211-step" data-step="-0.05" aria-label="Decrease speed">−</button><input id="mcb-v209-speed-range" type="range" min="0.25" max="2" step="0.05" value="1" aria-label="Playback speed"><button type="button" class="mcb-v211-step" data-step="0.05" aria-label="Increase speed">+</button>';
+   // The previous range was replaced, so reconnect its event listener.
+   const speedRange=panel.querySelector('#mcb-v209-speed-range');
+   speedRange.addEventListener('input',()=>applySpeed(speedRange.value));
+   for(const b of speedSlide.querySelectorAll('button'))b.addEventListener('click',()=>applySpeed(speed+Number(b.dataset.step)));
+   const pitchSection=document.createElement('div');
+   pitchSection.className='mcb-v211-pitch-section';
+   pitchSection.innerHTML='<div class="mcb-v211-heading"><div><strong>Pitch</strong><div class="mcb-v211-pitch-label">Semitones</div></div><output class="mcb-v211-value" id="mcb-v211-pitch-value">0.00</output><span class="mcb-v211-pitch-label">Cents</span></div><div class="mcb-v211-pitch-track"><button type="button" class="mcb-v211-step" data-cents="-1" aria-label="Decrease pitch one cent">−</button><input id="mcb-v211-pitch-range" type="range" min="-1100" max="1100" step="1" value="0" aria-label="Pitch in semitones and cents"><button type="button" class="mcb-v211-step" data-cents="1" aria-label="Increase pitch one cent">+</button></div><div class="mcb-v211-pitch-legend"><span>−11 semitones</span><span>+11 semitones</span></div>';
+   panel.append(pitchSection);
+   const pitchRange=pitchSection.querySelector('#mcb-v211-pitch-range');
+   const pitchOutput=pitchSection.querySelector('#mcb-v211-pitch-value');
+   function pitchPanelValue(cents){
+     const sign=cents<0?'−':cents>0?'+':'';
+     const abs=Math.abs(cents);
+     return sign+Math.floor(abs/100)+'.'+String(abs%100).padStart(2,'0');
+   }
+   function syncPitchPanel(){
+     const cents=Math.max(-1100,Math.min(1100,Math.round(pitch*100)));
+     pitchRange.value=String(cents);
+     pitchOutput.textContent=pitchPanelValue(cents);
+   }
+   function applyPanelPitch(cents){
+     const n=Math.max(-1100,Math.min(1100,Math.round(Number(cents))));
+     if(!Number.isFinite(n))return;
+     pitchOct.value='0';
+     pitchSemi.value=String(Math.trunc(n/100));
+     pitchCents.value=String(n-Math.trunc(n/100)*100);
+     updatePitch();
+     syncPitchPanel();
+   }
+   pitchRange.addEventListener('input',()=>applyPanelPitch(pitchRange.value));
+   for(const b of pitchSection.querySelectorAll('button'))b.addEventListener('click',()=>applyPanelPitch(Number(pitchRange.value)+Number(b.dataset.cents)));
+   [pitchOct,pitchSemi,pitchCents].forEach(el=>el.addEventListener('input',syncPitchPanel));
+   syncPitchPanel();
+   // Override the old display synchronization without affecting speed logic.
+   function refreshCombinedSpeed(){speedRange.value=String(speed);valueDisplay.textContent=Math.round(speed*100)+'%';}
+   range.addEventListener('input',refreshCombinedSpeed);
+   for(const b of presets.querySelectorAll('button'))b.addEventListener('click',refreshCombinedSpeed);
+   for(const b of speedSlide.querySelectorAll('button'))b.addEventListener('click',refreshCombinedSpeed);
+   refreshCombinedSpeed();
    // Retain the existing live-value Speed button without opening a popup.
    speedSelect.style.pointerEvents='none';speedSelect.tabIndex=-1;
    syncPanel();
