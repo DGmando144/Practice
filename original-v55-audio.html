@@ -2019,6 +2019,28 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mc
 #resourcePreview.pip-audio-player #mediaHelp::before,
 #resourcePreview.floating-player #mediaHelp::before {font-size:27px!important;font-weight:900!important}
 </style>
+
+<style id="mcb-v228-float-layout">
+html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .media-control-strip{
+ display:flex!important;flex-flow:row wrap!important;justify-content:center!important;
+ align-items:flex-start!important;width:100%!important;max-width:100%!important;
+ margin:0 auto!important;gap:4px!important;
+}
+html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport #mediaTimecode{
+ font-size:clamp(17px,2.2vw,24px)!important;line-height:1.1!important;
+ min-width:0!important;width:auto!important;padding:5px 9px!important;
+ letter-spacing:0!important;flex:0 0 auto!important;
+}
+html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{
+ display:flex!important;visibility:visible!important;opacity:1!important;flex:0 0 44px!important;
+ width:44px!important;flex-direction:column!important;align-items:center!important;
+}
+html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+ background-size:100% 100%!important;
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -3269,6 +3291,70 @@ function makeMediaViewer(file,r,host){
      playerPipWindow=pip;pipPlayerRestore=restore;
      pip.document.addEventListener('keydown',mcbMediaShortcuts,true);
      host.classList.add('floating-player','mini-media-player','pip-audio-player');
+
+     // V228: mount the Clear Mark Out control in the *actual transport strip*.
+     // Detached PiP can use a different document, so style the control directly.
+     {
+       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
+       const marker=strip?.querySelector('#clearMarkers');
+       const markerUnit=marker?.closest('.mcb-control-unit');
+       if(strip && markerUnit){
+         let out=strip.querySelector('.mcb-float-clear-out-unit');
+         if(!out){
+           out=host.ownerDocument.createElement('div');
+           out.className='mcb-control-unit mcb-float-clear-out-unit';
+           const b=host.ownerDocument.createElement('button');
+           b.type='button';b.id='mcbFloatClearMarkOut';b.title='Clear Mark Out (F)';
+           b.setAttribute('aria-label','Clear Mark Out');
+           b.addEventListener('click',()=>activeClearOut?.());
+           const label=host.ownerDocument.createElement('span');
+           label.className='mcb-control-label';label.innerHTML='Clear<br>Mark Out';
+           out.append(b,label);
+         }
+         markerUnit.insertAdjacentElement('afterend',out);
+         out.style.setProperty('display','flex','important');
+         out.style.setProperty('flex','0 0 44px','important');
+         out.style.setProperty('width','44px','important');
+         out.style.setProperty('flex-direction','column','important');
+         out.style.setProperty('align-items','center','important');
+         out.style.setProperty('visibility','visible','important');
+         const b=out.querySelector('button');
+         const iconSvg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="square"/></svg>';
+         b.style.setProperty('background-image','url("data:image/svg+xml,'+encodeURIComponent(iconSvg)+'")','important');
+         b.style.setProperty('background-size','100% 100%','important');
+         b.style.setProperty('background-position','center','important');
+         b.style.setProperty('background-repeat','no-repeat','important');
+         b.style.setProperty('background-color','transparent','important');
+         b.style.setProperty('display','block','important');
+         b.style.setProperty('width','44px','important');
+         b.style.setProperty('height','44px','important');
+         b.style.setProperty('min-width','44px','important');
+         b.style.setProperty('visibility','visible','important');
+         b.style.setProperty('opacity','1','important');
+         b.style.setProperty('font-size','0','important');
+         b.style.setProperty('border','0','important');
+         const label=out.querySelector('.mcb-control-label');
+         label.style.setProperty('display','block','important');
+         label.style.setProperty('text-align','center','important');
+         label.style.setProperty('font-size','10px','important');
+         // Constrain the time readout and let the full control row center as a group.
+         const time=strip.querySelector('#mediaTimecode');
+         if(time){
+           time.style.setProperty('font-size','clamp(17px, 2.2vw, 24px)','important');
+           time.style.setProperty('line-height','1.1','important');
+           time.style.setProperty('min-width','0','important');
+           time.style.setProperty('width','auto','important');
+           time.style.setProperty('padding','5px 9px','important');
+           time.style.setProperty('letter-spacing','0','important');
+         }
+         strip.style.setProperty('display','flex','important');
+         strip.style.setProperty('flex-wrap','wrap','important');
+         strip.style.setProperty('justify-content','center','important');
+         strip.style.setProperty('width','100%','important');
+         strip.style.setProperty('max-width','100%','important');
+         strip.style.setProperty('margin','0 auto','important');
+       }
+     }
      // V227: guarantee an independent Clear Mark Out control in the actual detached float.
      // This must not depend on the older Pitch button or its wrapper.
      {
