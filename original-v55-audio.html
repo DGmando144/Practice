@@ -2052,6 +2052,31 @@ display:flex!important;visibility:visible!important;opacity:1!important;
 display:block!important;visibility:visible!important;opacity:1!important;
 }
 </style>
+<style id="mcb-v230-responsive-float">
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport .media-control-strip{
+ display:flex!important;flex-flow:row wrap!important;align-items:flex-start!important;
+ justify-content:center!important;gap:4px!important;width:100%!important;max-width:100%!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport .mcb-audio-tail{
+ display:inline-flex!important;align-items:flex-start!important;justify-content:center!important;
+ gap:5px!important;flex:0 1 auto!important;min-width:0!important;width:auto!important;
+ margin:0!important;padding:0!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport #mediaTimecode{
+ font-size:20px!important;line-height:1.1!important;min-width:0!important;width:auto!important;
+ max-width:100%!important;padding:5px 8px!important;white-space:nowrap!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport #mediaHelp,
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport #mcbFloatClearMarkOut{
+ box-sizing:border-box!important;width:44px!important;height:44px!important;
+ min-width:44px!important;min-height:44px!important;max-width:44px!important;max-height:44px!important;
+ background-size:100% 100%!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{
+ display:flex!important;flex:0 0 44px!important;width:44px!important;
+ flex-direction:column!important;align-items:center!important;
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -3396,6 +3421,51 @@ function makeMediaViewer(file,r,host){
          outUnit.style.setProperty('display','flex','important');
          const outButton=outUnit.querySelector('#mcbFloatClearMarkOut');
          if(outButton){outButton.style.setProperty('display','block','important');outButton.style.setProperty('visibility','visible','important');}
+       }
+     }
+     // V230: the clock and Help are inside .mcb-audio-tail, not the strip.
+     // Put the tail at the end of the same responsive row as all transport buttons.
+     // Keep the proven Clear Mark Out button immediately after Clear Markers.
+     {
+       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
+       const tail=host.querySelector('.media-tools.mcb-audio-transport .mcb-audio-tail');
+       if(strip && tail){
+         strip.appendChild(tail);
+         strip.style.setProperty('display','flex','important');
+         strip.style.setProperty('flex-flow','row wrap','important');
+         strip.style.setProperty('justify-content','center','important');
+         strip.style.setProperty('align-items','flex-start','important');
+         strip.style.setProperty('gap','4px','important');
+         strip.style.setProperty('max-width','100%','important');
+         tail.style.setProperty('display','inline-flex','important');
+         tail.style.setProperty('flex','0 1 auto','important');
+         tail.style.setProperty('align-items','flex-start','important');
+         tail.style.setProperty('justify-content','center','important');
+         tail.style.setProperty('gap','5px','important');
+         tail.style.setProperty('min-width','0','important');
+         tail.style.setProperty('margin','0','important');
+         const help=tail.querySelector('#mediaHelp');
+         const helpUnit=help?.closest('.mcb-control-unit');
+         if(helpUnit){
+           helpUnit.style.setProperty('flex','0 0 44px','important');
+           helpUnit.style.setProperty('width','44px','important');
+         }
+         if(help){
+           for(const [k,v] of Object.entries({width:'44px',height:'44px','min-width':'44px','max-width':'44px','min-height':'44px','max-height':'44px','box-sizing':'border-box'}))help.style.setProperty(k,v,'important');
+         }
+         const time=tail.querySelector('#mediaTimecode');
+         if(time){
+           for(const [k,v] of Object.entries({'font-size':'20px','line-height':'1.1','min-width':'0',width:'auto','max-width':'100%','padding':'5px 8px','letter-spacing':'0',margin:'0','white-space':'nowrap',flex:'0 1 auto'}))time.style.setProperty(k,v,'important');
+         }
+         const out=strip.querySelector('.mcb-float-clear-out-unit');
+         const marker=strip.querySelector('#clearLoop')?.closest('.mcb-control-unit');
+         if(marker && out){
+           marker.insertAdjacentElement('afterend',out);
+           out.style.setProperty('flex','0 0 44px','important');
+           out.style.setProperty('width','44px','important');
+           const b=out.querySelector('button');
+           if(b){b.style.setProperty('width','44px','important');b.style.setProperty('height','44px','important');}
+         }
        }
      }
      full.textContent='Full Screen';
