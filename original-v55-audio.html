@@ -1834,6 +1834,25 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .me
 html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-control-unit #mediaHelp::before{content:none!important;display:none!important}
 </style>
 
+<style id="mcb-v225-float-control-cleanup">
+/* Scope to floating MP3 player; do not alter normal MP3, MP4, or YouTube. */
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-speed-unit,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-pitch-picker,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-audio-speed-label,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-native-speed-caption {display:none!important;width:0!important;min-width:0!important;max-width:0!important;margin:0!important;padding:0!important;flex:0 0 0!important;}
+#resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{display:none!important}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;visibility:visible!important;}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22%231d416d%22%20stroke%3D%22%23153353%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M15%2015%20Q44%207%2073%2015%22%20stroke%3D%22%236b8fb4%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M31%2027%20H58%20V60%20H31%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%2F%3E%3C%2Fsvg%3E")!important;
+ background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;
+ border:0!important;box-shadow:none!important;padding:0!important;
+ color:transparent!important;font-size:0!important;
+}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut::before,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut::after{display:none!important;content:none!important}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit .mcb-control-label{white-space:normal!important;text-align:center!important;line-height:1.05!important}
+</style>
 <style id="mcb-v224-float-corrections">
 /* Float only. Normal MP3, MP4, and YouTube are not changed. */
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .mcb-float-clear-out-unit{display:none!important}
@@ -1902,6 +1921,25 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mc
 @media(max-width:650px){
  html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport > .mcb-v209-speed-panel.mcb-v216-side-by-side{grid-template-columns:minmax(0,1fr)!important}
 }
+</style>
+<style id="mcb-v225-float-control-cleanup-final">
+/* Scope to floating MP3 player; do not alter normal MP3, MP4, or YouTube. */
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-speed-unit,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-pitch-picker,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-audio-speed-label,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-native-speed-caption {display:none!important;width:0!important;min-width:0!important;max-width:0!important;margin:0!important;padding:0!important;flex:0 0 0!important;}
+#resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{display:none!important}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;visibility:visible!important;}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut{
+ display:block!important;visibility:visible!important;opacity:1!important;
+ background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22%231d416d%22%20stroke%3D%22%23153353%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M15%2015%20Q44%207%2073%2015%22%20stroke%3D%22%236b8fb4%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M31%2027%20H58%20V60%20H31%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%2F%3E%3C%2Fsvg%3E")!important;
+ background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;
+ border:0!important;box-shadow:none!important;padding:0!important;
+ color:transparent!important;font-size:0!important;
+}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut::before,
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit #mcbFloatClearMarkOut::after{display:none!important;content:none!important}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit .mcb-control-label{white-space:normal!important;text-align:center!important;line-height:1.05!important}
 </style>
 </head>
 <body>
@@ -2381,6 +2419,14 @@ function addMediaControls(media,r,host,file){
      floatBtn.type='button';floatBtn.id='mcbFloatClearMarkOut';
      floatBtn.setAttribute('aria-label','Clear Mark Out');
      floatBtn.title='Clear Mark Out (F)';floatBtn.textContent='Clear Mark Out';
+     // V225: inline artwork also works in the detached floating document.
+     floatBtn.style.setProperty('background-image','url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22%231d416d%22%20stroke%3D%22%23153353%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M15%2015%20Q44%207%2073%2015%22%20stroke%3D%22%236b8fb4%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M31%2027%20H58%20V60%20H31%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%2F%3E%3C%2Fsvg%3E")','important');
+     floatBtn.style.setProperty('background-size','100% 100%','important');
+     floatBtn.style.setProperty('background-position','center','important');
+     floatBtn.style.setProperty('background-repeat','no-repeat','important');
+     floatBtn.style.setProperty('background-color','transparent','important');
+     floatBtn.style.setProperty('color','transparent','important');
+     floatBtn.style.setProperty('font-size','0px','important');
      floatBtn.addEventListener('click',()=>activeClearOut?.());
      const floatCaption=document.createElement('span');
      floatCaption.className='mcb-control-label';
