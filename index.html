@@ -746,7 +746,7 @@ window.MCB_expandEmbeddedMedia=()=>{
 };
 window.MCB_openEmbeddedVideoPiP=async function(host, onOpened, onClosed, mediaType="video"){
  if(!window.documentPictureInPicture)throw new Error('This browser does not support Document Picture-in-Picture.');
- const pip=await window.documentPictureInPicture.requestWindow(mediaType==="audio"?{width:1180,height:230}:{width:640,height:400});
+ const pip=await window.documentPictureInPicture.requestWindow(mediaType==="audio"?{width:1050,height:510}:{width:640,height:400});
  window.MCB_activeDetachedPiP=pip;
  const sourceDoc=host.ownerDocument;
  const anchor=sourceDoc.createComment('V55 video float return point');
@@ -757,7 +757,95 @@ window.MCB_openEmbeddedVideoPiP=async function(host, onOpened, onClosed, mediaTy
  pip.document.body.style.cssText='margin:0;width:100%;height:100dvh;overflow:hidden;background:#fff';
  const floatStyle=pip.document.createElement('style');
  floatStyle.textContent='html,body{min-width:0!important;min-height:0!important} .pip-video-player{width:100%!important;height:100%!important;max-width:none!important;min-width:0!important;inset:0!important;position:relative!important;margin:0!important;overflow:auto!important} .pip-audio-player{position:relative!important;inset:0!important;width:100%!important;max-width:none!important;min-width:0!important;height:100%!important;margin:0!important;box-shadow:none!important;overflow:hidden!important;resize:none!important} .pip-audio-player.mini-media-player.floating-player{width:100%!important;max-width:100%!important;min-width:0!important;height:100%!important;box-sizing:border-box!important} .pip-audio-player.mini-media-player.floating-player>.media-tools{width:100%!important;max-width:100%!important;box-sizing:border-box!important} .pip-audio-player .media-tools.mcb-audio-transport .media-control-scroll{width:100%!important;max-width:100%!important;box-sizing:border-box!important;overflow-x:hidden!important} .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip{display:flex!important;flex-flow:row nowrap!important;width:max-content!important;min-width:0!important;max-width:none!important;align-items:flex-start!important;gap:3px!important} .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip>.mcb-audio-tail{display:flex!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;flex-flow:row nowrap!important;align-items:flex-start!important;gap:6px!important;margin:0!important;padding:0!important}';
- pip.document.head.append(floatStyle);
+ pip.document.head.append(floatStyle); 
+ // V223: Style the REAL detached Document Picture-in-Picture window.
+ // The old V222 rules required body.v563-audio-mode, which the PiP body lacks.
+ if(mediaType==='audio'){
+  const audioStyle=pip.document.createElement('style');
+  audioStyle.id='mcb-v223-real-audio-pip';
+  audioStyle.textContent=`
+   html,body{height:100%!important;min-width:0!important}
+   .pip-audio-player.floating-player.mini-media-player{
+     display:flex!important;flex-direction:column!important;gap:5px!important;
+     width:100%!important;height:100%!important;max-width:none!important;
+     padding:8px 12px!important;overflow:auto!important;background:#f5f9ff!important;
+   }
+   .pip-audio-player .media-topbar{flex:0 0 auto!important;margin-bottom:3px!important}
+   .pip-audio-player .media-video-region.audio-region{display:none!important}
+   .pip-audio-player .media-tools.mcb-audio-transport{
+     display:flex!important;flex-direction:column!important;align-items:stretch!important;
+     gap:8px!important;width:100%!important;max-width:100%!important;
+     padding:0!important;margin:0!important;overflow:visible!important;
+   }
+   .pip-audio-player .media-tools.mcb-audio-transport>.wave-wrap{
+     display:block!important;order:0!important;flex:0 0 auto!important;
+     width:100%!important;max-width:100%!important;margin:0!important;
+   }
+   .pip-audio-player .wave-canvas{height:160px!important;width:100%!important;max-width:100%!important}
+   .pip-audio-player .media-tools.mcb-audio-transport>.media-control-scroll{
+     display:block!important;order:1!important;width:100%!important;max-width:100%!important;
+     overflow-x:auto!important;overflow-y:visible!important;margin:0!important;padding:0!important;
+   }
+   .pip-audio-player .media-tools.mcb-audio-transport .media-control-strip{
+     display:flex!important;flex-flow:row wrap!important;align-items:flex-start!important;
+     justify-content:center!important;gap:5px!important;width:max-content!important;
+     max-width:100%!important;min-width:0!important;margin:0 auto!important;
+   }
+   .pip-audio-player .media-control-strip>.mcb-audio-tail{
+     display:flex!important;flex-flow:row nowrap!important;gap:5px!important;
+     flex:0 0 auto!important;width:auto!important;max-width:none!important;
+   }
+   .pip-audio-player .media-control-strip .mcb-control-unit{
+     flex:0 0 44px!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+     display:flex!important;flex-direction:column!important;align-items:center!important;gap:2px!important;
+   }
+   .pip-audio-player .media-control-strip .mcb-control-unit>button,
+   .pip-audio-player .media-control-strip .mcb-control-unit>.help-popover-anchor>button,
+   .pip-audio-player .media-control-strip .mcb-pitch-picker>#mcbClearMarkOut{
+     width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+     max-width:44px!important;max-height:44px!important;padding:0!important;
+     background-size:100% 100%!important;background-position:center!important;
+   }
+   .pip-audio-player .media-control-strip .mcb-control-label,
+   .pip-audio-player .mcb-clear-out-caption{
+     display:block!important;font-size:10px!important;font-weight:700!important;
+     line-height:1.1!important;min-height:23px!important;text-align:center!important;
+   }
+   .pip-audio-player .media-control-strip .speed-picker,
+   .pip-audio-player .media-control-strip #speedButton,
+   .pip-audio-player .media-control-strip #mcbPitchButton,
+   .pip-audio-player .media-control-strip .mcb-original-pitch-caption{display:none!important}
+   .pip-audio-player .media-control-strip #mcbClearMarkOut{display:block!important}
+   .pip-audio-player #mediaTimecode{font-size:20px!important;font-weight:900!important;min-width:160px!important}
+   .pip-audio-player .media-tools.mcb-audio-transport>.mcb-v209-speed-panel.mcb-v216-side-by-side{
+     display:grid!important;order:2!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+     gap:12px!important;width:min(100%,850px)!important;max-width:850px!important;
+     padding:0!important;margin:0 auto!important;border:0!important;background:transparent!important;
+     box-shadow:none!important;overflow:visible!important;
+   }
+   .pip-audio-player .mcb-v216-speed-column,.pip-audio-player .mcb-v211-pitch-section{
+     box-sizing:border-box!important;min-width:0!important;width:100%!important;
+     border:1px solid #8fb3d5!important;border-radius:8px!important;
+     background:#e8f2fc!important;padding:7px 10px!important;margin:0!important;
+   }
+   .pip-audio-player .mcb-v211-heading{display:grid!important;grid-template-columns:58px minmax(0,1fr) 10px!important;align-items:center!important;gap:4px!important;margin:0 0 3px!important}
+   .pip-audio-player .mcb-v212-readout{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important}
+   .pip-audio-player .mcb-v212-readout output{min-width:65px!important;font-size:15px!important;font-weight:800!important;text-align:center!important}
+   .pip-audio-player .mcb-v212-readout button{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:30px!important;height:28px!important;padding:0!important;line-height:1!important}
+   .pip-audio-player .mcb-v212-speed-track{margin:2px 0!important}
+   .pip-audio-player .mcb-v212-speed-track input,.pip-audio-player .mcb-v212-pitch-sliders input{width:100%!important;min-width:0!important}
+   .pip-audio-player .mcb-v209-presets{display:flex!important;justify-content:center!important;gap:4px!important;flex-wrap:wrap!important;margin-top:3px!important}
+   .pip-audio-player .mcb-v212-pitch-sliders{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:12px!important;margin-top:3px!important}
+   .pip-audio-player .mcb-v212-slider-group span{font-size:13px!important;font-weight:800!important;text-align:center!important}
+   .pip-audio-player .mcb-v212-coarse{display:none!important}
+   @media(max-width:650px){
+     .pip-audio-player .media-tools.mcb-audio-transport>.mcb-v209-speed-panel.mcb-v216-side-by-side{grid-template-columns:minmax(0,1fr)!important}
+     .pip-audio-player .wave-canvas{height:105px!important}
+   }
+  `;
+  pip.document.head.append(audioStyle);
+ }
+
  pip.document.body.append(host);
  // Reveal the underlying Practice Room, not the empty V55 iframe background.
  $('viewer').classList.add('mcb-pip-active');
@@ -2540,7 +2628,7 @@ body.mcb-pdf-player-active #mcbPdfBuilder[open]{z-index:3100!important}
 <script id="mcb-v209-home-version-script">(function(){
  function init(){
    const heading=document.getElementById('heading');if(!heading)return;
-   const label=document.createElement('div');label.id='mcb-v209-home-version';label.textContent='Practice! V56.5.222';document.body.append(label);
+   const label=document.createElement('div');label.id='mcb-v209-home-version';label.textContent='Practice! V56.5.223';document.body.append(label);
    const update=()=>{const back=document.getElementById('back');const home=document.getElementById('practiceHome');const subjects=heading.textContent.trim()==='Subjects';label.hidden=!(subjects && (!back||back.classList.contains('hidden')) && (!home||home.classList.contains('hidden')));};
    new MutationObserver(update).observe(heading,{childList:true,subtree:true,characterData:true});
    const bar=document.querySelector('main .bar');if(bar)new MutationObserver(update).observe(bar,{attributes:true,subtree:true,attributeFilter:['class']});
