@@ -1421,6 +1421,17 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player)
   margin:0!important;
 }
 </style>
+<style id="mcb-v204-speed-slider">
+.mcb-speed-trigger{width:44px!important;min-width:44px!important;max-width:44px!important;height:44px!important;min-height:44px!important;max-height:44px!important;padding:0 2px!important;font-size:11px!important;font-weight:700!important;white-space:nowrap!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.mcb-speed-panel{position:absolute;z-index:2147483000;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);width:270px;max-width:calc(100vw - 24px);box-sizing:border-box;padding:13px;border-radius:12px;background:#202630;color:#f5f7fb;border:1px solid #677282;box-shadow:0 12px 32px #0009;font-size:13px;text-align:left}
+.mcb-speed-panel[hidden]{display:none!important}
+.mcb-speed-panel-head,.mcb-speed-panel-bottom,.mcb-speed-limits{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mcb-speed-panel-head{margin-bottom:12px}.mcb-speed-dismiss{font-size:20px!important;width:27px!important;height:27px!important;min-width:27px!important;padding:0!important}
+.mcb-speed-panel input[type=range]{width:100%;display:block;margin:6px 0 14px;accent-color:#76b9f7}
+.mcb-speed-panel-bottom label{display:flex;align-items:center;gap:6px}.mcb-speed-panel input[type=number]{width:67px!important;min-width:67px!important;padding:5px!important;box-sizing:border-box!important;color:#fff;background:#323b48;border:1px solid #798493;border-radius:5px}
+.mcb-speed-reset{width:auto!important;min-width:0!important;height:30px!important;padding:0 9px!important;font-size:12px!important}
+.mcb-speed-limits{font-size:11px;opacity:.75;margin-top:8px}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2046,8 +2057,37 @@ function addMediaControls(media,r,host,file){
   // Defer blur until the browser has applied the selection, preserving mouse interaction.
   requestAnimationFrame(()=>{if(speedSelect.isConnected) speedSelect.blur();});
  });
- showSpeed();
- function setPitchCorrection(on){for(const key of ['preservesPitch','mozPreservesPitch','webkitPreservesPitch']){if(key in media)try{media[key]=on}catch(e){}}}
+  showSpeed();
+  // V204: MP3 only: compact Speed button opens combined range + numeric panel.
+  if(r.kind==='audio'){
+    const host=speedSelect.parentElement;
+    speedSelect.style.display='none';
+    const trigger=document.createElement('button');
+    trigger.type='button';trigger.className='secondary mcb-speed-trigger';
+    trigger.title='Adjust MP3 speed';trigger.setAttribute('aria-label','Adjust MP3 speed');
+    trigger.textContent=Number(speed).toFixed(2)+'×';
+    const panel=document.createElement('div');panel.className='mcb-speed-panel';panel.hidden=true;
+    panel.innerHTML='<div class="mcb-speed-panel-head"><strong>Playback speed</strong><button type="button" class="mcb-speed-dismiss" aria-label="Close speed controls">×</button></div><input type="range" min="0.25" max="2" step="0.05" aria-label="Speed slider"><div class="mcb-speed-panel-bottom"><label>Speed <input type="number" min="0.25" max="2" step="0.05" aria-label="Numeric playback speed"></label><span>×</span><button type="button" class="mcb-speed-reset">Reset 1×</button></div><div class="mcb-speed-limits"><span>0.25×</span><span>2.00×</span></div>';
+    host.style.position='relative';host.append(trigger,panel);
+    const range=panel.querySelector('input[type="range"]');
+    const numeric=panel.querySelector('input[type="number"]');
+    function updatePanel(){range.value=String(speed);numeric.value=Number(speed).toFixed(2);trigger.textContent=Number(speed).toFixed(2)+'×';}
+    function applySpeed(value){
+      const n=Number(value);if(!Number.isFinite(n))return;
+      speed=Math.max(.25,Math.min(2,Math.round(n*20)/20));
+      media.playbackRate=speed;setPitchCorrection(true);showSpeed();save();updatePanel();
+    }
+    trigger.addEventListener('click',(e)=>{e.stopPropagation();panel.hidden=!panel.hidden;if(!panel.hidden)updatePanel();});
+    panel.addEventListener('click',e=>e.stopPropagation());
+    range.addEventListener('input',()=>applySpeed(range.value));
+    numeric.addEventListener('change',()=>applySpeed(numeric.value));
+    numeric.addEventListener('keydown',e=>{if(e.key==='Enter'){applySpeed(numeric.value);numeric.blur();}});
+    panel.querySelector('.mcb-speed-reset').addEventListener('click',()=>applySpeed(1));
+    panel.querySelector('.mcb-speed-dismiss').addEventListener('click',()=>{panel.hidden=true;});
+    document.addEventListener('click',e=>{if(!host.contains(e.target))panel.hidden=true;});
+    updatePanel();
+  }
+  function setPitchCorrection(on){for(const key of ['preservesPitch','mozPreservesPitch','webkitPreservesPitch']){if(key in media)try{media[key]=on}catch(e){}}}
  setPitchCorrection(true);
  media.playbackRate=speed;media.defaultPlaybackRate=speed;
  function valid(){return state.a!==null&&state.b!==null&&state.b>state.a+.05}
