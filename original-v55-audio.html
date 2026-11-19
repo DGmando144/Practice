@@ -1400,6 +1400,27 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-control-
  align-self:center!important; justify-content:center!important; gap:6px!important;
 }
 </style>
+<style id="mcb-v203-mp3-help-width-fix">
+/* The older MP3 tail assigns Help's wrapper 68px while the compact button
+   occupies 44px. Make wrapper, unit and button share the 44px footprint. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player)
+.media-tools.mcb-audio-transport .media-control-strip .mcb-audio-tail > .mcb-control-unit,
+html body.v563-audio-mode #resourcePreview:not(.floating-player)
+.media-tools.mcb-audio-transport .media-control-strip .mcb-audio-tail .help-popover-anchor {
+  box-sizing:border-box!important;
+  flex:0 0 44px!important;
+  width:44px!important;min-width:44px!important;max-width:44px!important;
+  margin:0!important;padding:0!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player)
+.media-tools.mcb-audio-transport .media-control-strip .mcb-audio-tail #mediaHelp {
+  box-sizing:border-box!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  width:44px!important;min-width:44px!important;max-width:44px!important;
+  height:44px!important;min-height:44px!important;max-height:44px!important;
+  margin:0!important;
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
