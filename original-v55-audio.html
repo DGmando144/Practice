@@ -1833,6 +1833,76 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .me
 html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-control-unit #mediaHelp{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f3faff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23a9d4ff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%2380b7ec%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M14%2014%20Q44%206%2074%2014%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%2F%3E%3Csvg%20x%3D%2216%22%20y%3D%2218%22%20width%3D%2256%22%20height%3D%2252%22%20viewBox%3D%220%200%2060%2048%22%3E%3Ctext%20x%3D%2230%22%20y%3D%2242%22%20font-size%3D%2248%22%20font-weight%3D%22900%22%20text-anchor%3D%22middle%22%3E%3F%3C%2Ftext%3E%3C%2Fsvg%3E%3C%2Fsvg%3E")!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat!important;background-size:100% 100%!important;border:0!important;box-shadow:none!important;border-radius:0!important}
 html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-control-unit #mediaHelp::before{content:none!important;display:none!important}
 </style>
+
+<style id="mcb-v224-float-corrections">
+/* Float only. Normal MP3, MP4, and YouTube are not changed. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .mcb-float-clear-out-unit{display:none!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-float-clear-out-unit{display:flex!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-speed-unit,
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-pitch-picker{display:none!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit > #mcbFloatClearMarkOut{
+ background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22%231d416d%22%20stroke%3D%22%23153353%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M15%2015%20Q44%207%2073%2015%22%20stroke%3D%22%236b8fb4%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M31%2027%20H58%20V60%20H31%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22square%22%20stroke-linejoin%3D%22miter%22%2F%3E%3C%2Fsvg%3E")!important;
+ background-color:transparent!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important;
+ border:0!important;box-shadow:none!important;border-radius:0!important;font-size:0!important;color:transparent!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-float-clear-out-unit > #mcbFloatClearMarkOut::before,
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-float-clear-out-unit > #mcbFloatClearMarkOut::after{content:none!important;display:none!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .media-control-scroll{
+ width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .media-control-strip{
+ display:flex!important;flex-flow:row wrap!important;justify-content:center!important;align-items:flex-start!important;
+ gap:clamp(2px,.4vw,6px)!important;width:fit-content!important;max-width:100%!important;margin:0 auto!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-control-unit{
+ flex:0 0 clamp(32px,3.6vw,44px)!important;width:clamp(32px,3.6vw,44px)!important;
+ min-width:0!important;max-width:44px!important;align-items:center!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-control-unit > button,
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport .mcb-control-unit > .help-popover-anchor > button{
+ width:clamp(30px,3.4vw,44px)!important;height:clamp(30px,3.4vw,44px)!important;
+ min-width:0!important;min-height:0!important;max-width:44px!important;max-height:44px!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player #mediaTimecode{
+ font-size:clamp(17px,1.8vw,24px)!important;line-height:1.1!important;font-weight:800!important;
+ min-width:clamp(126px,11vw,170px)!important;padding:6px 9px!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport > .mcb-v209-speed-panel.mcb-v216-side-by-side{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:clamp(5px,1vw,12px)!important;width:min(100%,900px)!important;
+ max-width:900px!important;margin:3px auto 0!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v216-speed-column,
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v211-pitch-section{
+ padding:4px clamp(5px,1vw,9px)!important;min-width:0!important;margin:0!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v211-heading{
+ grid-template-columns:48px minmax(0,1fr) 0px!important;min-height:25px!important;
+ gap:3px!important;margin:0!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v211-heading strong{font-size:13px!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-readout{gap:3px!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-readout button{
+ width:25px!important;min-width:25px!important;height:24px!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-readout output{
+ min-width:55px!important;font-size:14px!important;padding:2px 3px!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-speed-track,
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-pitch-sliders{
+ margin:2px 0 0!important;
+}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-pitch-sliders{gap:7px!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-slider-group{gap:0!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v212-slider-group span{font-size:12px!important;line-height:1.1!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v209-presets{gap:2px!important;margin-top:2px!important}
+html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mcb-v209-presets button{
+ font-size:clamp(9px,1vw,12px)!important;padding:3px 4px!important;min-height:23px!important;
+}
+@media(max-width:650px){
+ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .media-tools.mcb-audio-transport > .mcb-v209-speed-panel.mcb-v216-side-by-side{grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2300,6 +2370,25 @@ function addMediaControls(media,r,host,file){
    clearOutBtn.title='Clear Mark Out (F)';clearOutBtn.setAttribute('aria-label','Clear Mark Out');
    clearOutBtn.addEventListener('click',()=>activeClearOut?.());
    pitchUnit.insertBefore(clearOutBtn,pitchButton.nextSibling);
+   // V224: a dedicated float-only control, directly after Clear Markers.
+   // Keep the original Clear Mark Out control untouched in the normal player.
+   const clearMarkersControl=panel.querySelector('#clearMarkers');
+   const clearMarkersUnit=clearMarkersControl?.closest('.mcb-control-unit');
+   if(clearMarkersUnit && !panel.querySelector('#mcbFloatClearMarkOut')){
+     const floatUnit=document.createElement('div');
+     floatUnit.className='mcb-control-unit mcb-float-clear-out-unit';
+     const floatBtn=document.createElement('button');
+     floatBtn.type='button';floatBtn.id='mcbFloatClearMarkOut';
+     floatBtn.setAttribute('aria-label','Clear Mark Out');
+     floatBtn.title='Clear Mark Out (F)';floatBtn.textContent='Clear Mark Out';
+     floatBtn.addEventListener('click',()=>activeClearOut?.());
+     const floatCaption=document.createElement('span');
+     floatCaption.className='mcb-control-label';
+     floatCaption.innerHTML='Clear<br>Mark Out';
+     floatUnit.append(floatBtn,floatCaption);
+     clearMarkersUnit.insertAdjacentElement('afterend',floatUnit);
+   }
+
    const caption=pitchUnit.querySelector(':scope > .mcb-control-label');
    if(caption){caption.classList.add('mcb-original-pitch-caption');const newCaption=caption.cloneNode(true);newCaption.classList.remove('mcb-original-pitch-caption');newCaption.classList.add('mcb-clear-out-caption');newCaption.innerHTML='Clear<br class="mcb-clear-caption-break">Mark Out';pitchUnit.appendChild(newCaption);}
  }
