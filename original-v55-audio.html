@@ -1662,6 +1662,31 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mc
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-speed-unit{display:none!important}
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-native-speed-caption{display:none!important}
 </style>
+<style id="mcb-v218-transport-then-panels">
+/* V218: Put the transport and controls on SEPARATE rows. V217 appended the
+   panel inside .media-control-scroll, whose flex-direction:row caused the bug.
+   The V218 DOM insertion moves the panel OUTSIDE that horizontal scroll row. */
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .media-control-scroll{
+ display:flex!important;flex-direction:row!important;justify-content:center!important;
+ align-items:center!important;width:100%!important;max-width:100%!important;
+ margin:0 auto!important;box-sizing:border-box!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .media-control-scroll > .media-control-strip{
+ display:flex!important;justify-content:center!important;align-items:flex-start!important;
+ flex:0 0 max-content!important;width:max-content!important;margin:0 auto!important;
+}
+html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport > .mcb-v209-speed-panel.mcb-v216-side-by-side{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ width:min(100%,830px)!important;max-width:830px!important;gap:12px!important;
+ margin:4px auto 0!important;padding:0!important;align-items:stretch!important;
+ border:0!important;background:transparent!important;box-shadow:none!important;
+}
+@media(max-width:620px){
+ html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport > .mcb-v209-speed-panel.mcb-v216-side-by-side{
+  grid-template-columns:minmax(0,1fr)!important;max-width:420px!important;
+ }
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2319,7 +2344,7 @@ function addMediaControls(media,r,host,file){
    }
    range.addEventListener('input',()=>applySpeed(range.value));
    // Place below the entire row, not inside the clipped Speed button wrapper.
-   if(strip && strip.parentElement)strip.insertAdjacentElement('afterend',panel);
+   if(strip && strip.closest('.media-control-scroll'))strip.closest('.media-control-scroll').insertAdjacentElement('afterend',panel);
    else speedSelect.closest('.mcb-speed-unit')?.insertAdjacentElement('afterend',panel);
 
 
