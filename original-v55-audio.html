@@ -2094,6 +2094,29 @@ function addMediaControls(media,r,host,file){
     trigger.title='Test MP3 speed slider';trigger.setAttribute('aria-label','Test MP3 speed slider');
     trigger.textContent=Number(speed).toFixed(2)+'×';
     host.append(trigger);
+    // V207: independent always-visible diagnostic HUD, deliberately outside player CSS.
+    const hud=document.createElement('div');
+    hud.id='mcb-v207-speed-click-monitor';
+    hud.setAttribute('role','status');
+    hud.style.cssText='position:fixed!important;right:12px!important;top:12px!important;z-index:2147483646!important;background:#102b45!important;color:#fff!important;border:3px solid #ffd05a!important;border-radius:10px!important;padding:12px!important;width:280px!important;max-width:calc(100vw - 24px)!important;box-sizing:border-box!important;font:13px/1.45 system-ui,sans-serif!important;box-shadow:0 4px 18px #0008!important;pointer-events:auto!important;';
+    hud.innerHTML='<b style="color:#ffd05a">V207 · MP3 Speed Click Monitor</b><div data-v207-count>Captured Speed clicks: 0</div><div data-v207-handler>Button handler calls: 0</div><div data-v207-popup>Popup: not attempted</div><div data-v207-target>Last clicked element: none</div><button type="button" data-v207-test style="margin-top:7px;padding:5px 10px;color:#102b45;background:#ffd05a;border:0;border-radius:5px;cursor:pointer">Test popup directly</button>';
+    document.body.append(hud);
+    let captureCount=0, handlerCount=0;
+    const setHud=(key,value)=>{const el=hud.querySelector('[data-v207-'+key+']');if(el)el.textContent=value;};
+    // Capture-phase monitoring runs before target/bubble handlers, including stopPropagation.
+    document.addEventListener('click',event=>{
+      const target=event.target;
+      if(!target || !target.closest)return;
+      const isSpeed=target===trigger || trigger.contains(target) || !!target.closest('.mcb-speed-unit');
+      if(isSpeed){captureCount++;setHud('count','Captured Speed clicks: '+captureCount);}
+      const desc=(target.tagName||'?').toLowerCase()+(target.id?'#'+target.id:'')+(target.className&&typeof target.className==='string'?'.'+target.className.trim().replace(/\s+/g,'.'):'');
+      setHud('target','Last clicked element: '+desc.slice(0,95));
+    },true);
+    // Surface layout clues without changing the approved controls.
+    const geometry=trigger.getBoundingClientRect();
+    const probe=document.createElement('div');probe.style.cssText='margin-top:5px;font-size:11px;color:#cce5ff';
+    probe.textContent='Speed button rect: '+Math.round(geometry.width)+'×'+Math.round(geometry.height)+'; visible: '+(getComputedStyle(trigger).display!=='none');
+    hud.append(probe);
     const dialog=document.createElement('dialog');
     dialog.className='mcb-v206-speed-dialog';
     dialog.setAttribute('aria-label','MP3 speed diagnostic');
@@ -2105,6 +2128,11 @@ function addMediaControls(media,r,host,file){
       <div class="mcb-v206-status" role="status" aria-live="polite">Waiting for Speed click…</div>
       <p class="mcb-v206-help">Change the slider, then check whether the audio speeds up or slows down.</p>`;
     document.body.append(dialog);
+    hud.querySelector('[data-v207-test]').addEventListener('click',e=>{
+      e.stopPropagation();
+      try{if(!dialog.open)dialog.showModal();setHud('popup','Direct test: dialog OPEN='+dialog.open);}
+      catch(err){setHud('popup','Direct test ERROR: '+err.message);console.error('V207 direct popup test',err);}
+    });
     const range=dialog.querySelector('input[type="range"]');
     const numeric=dialog.querySelector('input[type="number"]');
     const readout=dialog.querySelector('.mcb-v206-readout');
@@ -2126,15 +2154,18 @@ function addMediaControls(media,r,host,file){
       }catch(err){status.textContent='ERROR changing speed: '+err.message;console.error('V206 speed diagnostic:',err);}
     }
     trigger.addEventListener('click',e=>{
+      handlerCount++;setHud('handler','Button handler calls: '+handlerCount);
       e.preventDefault();e.stopPropagation();
       try{
         if(!dialog.isConnected)document.body.append(dialog);
-        if(dialog.open){dialog.close();return;}
+        if(dialog.open){dialog.close();setHud('popup','Popup: closed by button');return;}
         updateDiagnostic('Speed click received');
         dialog.showModal();
+        setHud('popup','Popup: showModal succeeded; open='+dialog.open);
         updateDiagnostic('Popup OPEN — click handler and modal both worked');
       }catch(err){
-        console.error('V206 popup diagnostic:',err);
+        setHud('popup','Popup ERROR: '+err.message);
+        console.error('V207 popup diagnostic:',err);
         dialog.setAttribute('open','');
         dialog.style.display='block';
         updateDiagnostic('Modal error: '+err.message+' — using fallback display');
