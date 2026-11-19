@@ -2027,7 +2027,7 @@ html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .me
  margin:0 auto!important;gap:4px!important;
 }
 html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport #mediaTimecode{
- font-size:clamp(17px,2.2vw,24px)!important;line-height:1.1!important;
+ font-size:clamp(16px,1.8vw,20px)!important;line-height:1.1!important;
  min-width:0!important;width:auto!important;padding:5px 9px!important;
  letter-spacing:0!important;flex:0 0 auto!important;
 }
@@ -2039,6 +2039,17 @@ html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .mc
  display:block!important;visibility:visible!important;opacity:1!important;
  width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
  background-size:100% 100%!important;
+}
+</style>
+<style id="mcb-v229-final-float-fixes">
+#resourcePreview.floating-player .media-tools.mcb-audio-transport #mediaTimecode{
+font-size:20px!important;line-height:1.1!important;padding:4px 8px!important;letter-spacing:0!important;
+}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{
+display:flex!important;visibility:visible!important;opacity:1!important;
+}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit>button{
+display:block!important;visibility:visible!important;opacity:1!important;
 }
 </style>
 </head>
@@ -2510,7 +2521,7 @@ function addMediaControls(media,r,host,file){
    pitchUnit.insertBefore(clearOutBtn,pitchButton.nextSibling);
    // V224: a dedicated float-only control, directly after Clear Markers.
    // Keep the original Clear Mark Out control untouched in the normal player.
-   const clearMarkersControl=panel.querySelector('#clearMarkers');
+   const clearMarkersControl=panel.querySelector('#clearLoop');
    const clearMarkersUnit=clearMarkersControl?.closest('.mcb-control-unit');
    if(clearMarkersUnit && !panel.querySelector('#mcbFloatClearMarkOut')){
      const floatUnit=document.createElement('div');
@@ -3296,7 +3307,7 @@ function makeMediaViewer(file,r,host){
      // Detached PiP can use a different document, so style the control directly.
      {
        const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
-       const marker=strip?.querySelector('#clearMarkers');
+       const marker=strip?.querySelector('#clearLoop');
        const markerUnit=marker?.closest('.mcb-control-unit');
        if(strip && markerUnit){
          let out=strip.querySelector('.mcb-float-clear-out-unit');
@@ -3340,7 +3351,7 @@ function makeMediaViewer(file,r,host){
          // Constrain the time readout and let the full control row center as a group.
          const time=strip.querySelector('#mediaTimecode');
          if(time){
-           time.style.setProperty('font-size','clamp(17px, 2.2vw, 24px)','important');
+           time.style.setProperty('font-size','clamp(16px, 1.8vw, 20px)','important');
            time.style.setProperty('line-height','1.1','important');
            time.style.setProperty('min-width','0','important');
            time.style.setProperty('width','auto','important');
@@ -3358,7 +3369,7 @@ function makeMediaViewer(file,r,host){
      // V227: guarantee an independent Clear Mark Out control in the actual detached float.
      // This must not depend on the older Pitch button or its wrapper.
      {
-       const markers=host.querySelector('#clearMarkers');
+       const markers=host.querySelector('#clearLoop');
        const markerUnit=markers?.closest('.mcb-control-unit') || markers?.parentElement;
        if(markerUnit){
          let unit=host.querySelector('.mcb-float-clear-out-unit');
@@ -3379,7 +3390,7 @@ function makeMediaViewer(file,r,host){
      // V226: place Clear Mark Out as a real transport control in the detached float.
      // The original button's handler is retained; this only moves its unit into the strip.
      if(host.querySelector('.media-tools.mcb-audio-transport')){
-       const markerUnit=host.querySelector('#clearMarkers')?.closest('.mcb-control-unit');
+       const markerUnit=host.querySelector('#clearLoop')?.closest('.mcb-control-unit');
        const outUnit=host.querySelector('.mcb-float-clear-out-unit');
        if(markerUnit && outUnit){markerUnit.insertAdjacentElement('afterend',outUnit);
          outUnit.style.setProperty('display','flex','important');
