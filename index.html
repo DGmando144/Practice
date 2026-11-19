@@ -2535,4 +2535,15 @@ body.mcb-pdf-player-active #mcbPdfBuilder[open]{z-index:3100!important}
  toggle.addEventListener('click',()=>queueMicrotask(()=>{const shown=!dock.classList.contains('collapsed');view.textContent=(shown?'✓ ':'')+'Folder Tree';view.setAttribute('aria-checked',String(shown));localStorage.setItem('mcb-folder-tree-visible',String(shown))}));
 })();
 </script>
-<style id="mcb-sheetmusic-icon-style">.mcb-pdf-setlist .icon{display:flex;align-items:center;justify-content:center}.mcb-pdf-setlist .mcb-sheetmusic-stack{display:block;max-width:100%;height:auto}</style></body></html>
+<style id="mcb-sheetmusic-icon-style">.mcb-pdf-setlist .icon{display:flex;align-items:center;justify-content:center}.mcb-pdf-setlist .mcb-sheetmusic-stack{display:block;max-width:100%;height:auto}</style><script id="mcb-v208-parent-shortcut">
+// F9 works even when keyboard focus is in the main Practice! page.
+window.addEventListener('keydown',function(e){
+ if(e.key!=='F9'||e.repeat||e.ctrlKey||e.altKey||e.metaKey)return;
+ e.preventDefault();e.stopPropagation();
+ const frames=[...document.querySelectorAll('iframe')];
+ const player=frames.find(f=>(f.getAttribute('src')||'').includes('original-v55-audio.html'));
+ if(player&&player.contentWindow){player.contentWindow.postMessage({type:'MCB_V208_SPEED_F9'},'*');}
+ else alert('V208: Open an MP3 first, then press F9 to open its speed dialog.');
+},true);
+</script>
+</body></html>
