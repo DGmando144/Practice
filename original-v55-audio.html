@@ -1464,6 +1464,13 @@ html body.v563-audio-mode #resourcePreview:not(.floating-player)
 .mcb-v212-combined .mcb-v212-coarse{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:12px}
 .mcb-v212-combined .mcb-v212-coarse button{padding:3px 9px;min-width:85px}
 </style>
+<style id="mcb-v214-pitch-layout">
+.mcb-v214-combined .mcb-v212-pitch-sliders{margin-top:5px!important;gap:16px!important}
+.mcb-v214-combined .mcb-v212-slider-group{gap:2px!important;align-items:stretch!important}
+.mcb-v214-combined .mcb-v212-slider-group span{display:block!important;text-align:center!important;font-size:15px!important;line-height:1.15!important;font-weight:800!important;color:#193956!important}
+.mcb-v214-combined .mcb-v212-slider-group input{margin:0!important}
+.mcb-v214-combined .mcb-v212-coarse{display:none!important}
+</style>
 <style id="mcb-v210-integrated-button-art">
 /* V210: integrated SVG artwork: button face and icon form one scalable image. Large MP3 only. */
 html body.v563-audio-mode #resourcePreview:not(.floating-player) .media-tools.mcb-audio-transport .mcb-control-unit #jumpToIn{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2288%22%20height%3D%2288%22%20viewBox%3D%220%200%2088%2088%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f3faff%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23a9d4ff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2284%22%20height%3D%2284%22%20rx%3D%2217%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%2380b7ec%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M14%2014%20Q44%206%2074%2014%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-opacity%3D%22.5%22%20stroke-width%3D%223%22%2F%3E%3Csvg%20x%3D%2216%22%20y%3D%2218%22%20width%3D%2256%22%20height%3D%2252%22%20viewBox%3D%220%200%2060%2048%22%3E%3Crect%20x%3D%225%22%20y%3D%227%22%20width%3D%228%22%20height%3D%2234%22%2F%3E%3Cpath%20d%3D%22M17%2024%2051%204V44Z%22%2F%3E%3C%2Fsvg%3E%3C%2Fsvg%3E")!important;background-color:transparent!important;background-position:center!important;background-repeat:no-repeat!important;background-size:100% 100%!important;border:0!important;box-shadow:none!important;border-radius:0!important}
@@ -2157,7 +2164,7 @@ function addMediaControls(media,r,host,file){
 
 
    // V213: Keep speed presets; pitch readout buttons adjust semitones.
-   panel.classList.add('mcb-v211-combined','mcb-v212-combined','mcb-v213-combined');
+   panel.classList.add('mcb-v211-combined','mcb-v212-combined','mcb-v213-combined','mcb-v214-combined');
    panel.setAttribute('aria-label','MP3 speed and pitch');
    const top=panel.querySelector('.mcb-v209-speed-top');
    top.className='mcb-v211-heading';
@@ -2184,11 +2191,13 @@ function addMediaControls(media,r,host,file){
        </div><span></span>
      </div>
      <div class="mcb-v212-pitch-sliders">
-       <label class="mcb-v212-slider-group"><span>Semitones</span><input id="mcb-v212-semitones" type="range" min="-11" max="11" step="1" value="0" aria-label="Semitone adjustment"></label>
-       <label class="mcb-v212-slider-group"><span>Cents</span><input id="mcb-v212-cents" type="range" min="-99" max="99" step="1" value="0" aria-label="Cent adjustment"></label>
+       <label class="mcb-v212-slider-group"><input id="mcb-v212-semitones" type="range" min="-11" max="11" step="1" value="0" aria-label="Semitone adjustment"><span>Semitones</span></label>
+       <label class="mcb-v212-slider-group"><input id="mcb-v212-cents" type="range" min="-99" max="99" step="1" value="0" aria-label="Cent adjustment"><span>Cents</span></label>
      </div>
      `;
    panel.append(pitchSection);
+   // Defensive cleanup: remove any older coarse pitch-button rows.
+   panel.querySelectorAll('.mcb-v212-coarse,[data-pitch-semi],[data-pitch-cents]').forEach(el=>el.remove());
    const semiRange=pitchSection.querySelector('#mcb-v212-semitones');
    const centsRange=pitchSection.querySelector('#mcb-v212-cents');
    const pitchOutput=pitchSection.querySelector('#mcb-v211-pitch-value');
@@ -2216,7 +2225,7 @@ function addMediaControls(media,r,host,file){
    semiRange.addEventListener('dblclick',e=>{e.preventDefault();setPanelPitch(0,centsRange.value)});
    centsRange.addEventListener('dblclick',e=>{e.preventDefault();setPanelPitch(semiRange.value,0)});
    for(const btn of pitchSection.querySelectorAll('[data-pitch-fine]'))
-     btn.addEventListener('click',()=>setPanelPitch(Number(semiRange.value)+Number(btn.dataset.pitchFine),Number(centsRange.value)));
+     btn.addEventListener('click',()=>setPanelPitch(Number(pitchSemi.value)+Number(btn.dataset.pitchFine),Number(pitchCents.value)));
    [pitchOct,pitchSemi,pitchCents].forEach(el=>el.addEventListener('input',syncPitchPanel));
    // Clicking a control should not steal the media player's spacebar shortcut.
    panel.addEventListener('keydown',e=>{
