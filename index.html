@@ -886,6 +886,35 @@ window.MCB_openEmbeddedVideoPiP=async function(host, onOpened, onClosed, mediaTy
  };
  pip.addEventListener('pagehide',restore,{once:true});
  try{onOpened(pip,restore)}catch(e){restore();pip.close();throw e}
+ // V237: enforce physical slider dimensions on the actual controls in Document PiP.
+ // Inline !important wins over inherited responsive range styling. No transport
+ // buttons are modified, and the docked player is not touched.
+ if(mediaType==='audio'){
+  const fixFloatSliders=()=>{
+   const root=pip.document.querySelector('.pip-audio-player');
+   if(!root)return;
+   for(const selector of ['.mcb-v212-speed-track input[type="range"]',
+                          '.mcb-v212-pitch-sliders input[type="range"]']){
+    root.querySelectorAll(selector).forEach(slider=>{
+     for(const [property,value] of Object.entries({
+       width:'90px','min-width':'90px','max-width':'90px',
+       height:'14px','min-height':'14px','max-height':'14px',
+       flex:'0 0 90px','box-sizing':'border-box',
+       margin:'0 auto','align-self':'center'
+     }))slider.style.setProperty(property,value,'important');
+    });
+   }
+   root.querySelectorAll('.mcb-v212-slider-group').forEach(group=>{
+    for(const key of ['width','min-width','max-width'])group.style.setProperty(key,'90px','important');
+    group.style.setProperty('flex','0 0 90px','important');
+   });
+   const speed=root.querySelector('.mcb-v212-speed-track');
+   if(speed){speed.style.setProperty('display','flex','important');speed.style.setProperty('justify-content','center','important');}
+  };
+  fixFloatSliders();
+  pip.addEventListener('resize',fixFloatSliders);
+  pip.addEventListener('pagehide',()=>pip.removeEventListener('resize',fixFloatSliders),{once:true});
+ }
  return pip;
 };
 window.addEventListener('message',event=>{
