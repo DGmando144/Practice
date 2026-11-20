@@ -2213,6 +2213,64 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mc
 .pip-video-player .media-tools.mcb-v240-video-transport .mcb-v216-speed-column,
 .pip-video-player .media-tools.mcb-v240-video-transport .mcb-v211-pitch-section{padding:4px 6px!important}
 </style>
+
+<style id="mcb-v241-mp4-transport-consolidation">
+/* V241: MP4-only alignment and legacy-control cleanup. MP3 selectors untouched. */
+#resourcePreview .media-tools.mcb-v240-video-transport .media-control-strip > .mcb-speed-unit,
+#resourcePreview .media-tools.mcb-v240-video-transport .media-control-strip > .mcb-pitch-picker,
+#resourcePreview .media-tools.mcb-v240-video-transport .media-control-strip > .mcb-control-unit:has(#speedButton),
+#resourcePreview .media-tools.mcb-v240-video-transport .media-control-strip > .mcb-control-unit:has(#mcbPitchButton){display:none!important}
+#resourcePreview .media-tools.mcb-v240-video-transport .media-control-scroll{
+ display:flex!important;justify-content:center!important;width:100%!important;max-width:100%!important;
+ overflow-x:auto!important;overflow-y:hidden!important;box-sizing:border-box!important;
+}
+#resourcePreview .media-tools.mcb-v240-video-transport .media-control-strip{
+ display:flex!important;flex-flow:row nowrap!important;justify-content:center!important;
+ align-items:flex-start!important;gap:6px!important;width:max-content!important;min-width:max-content!important;
+ margin:0 auto!important;
+}
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v209-speed-panel.mcb-v216-side-by-side{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ width:min(100%,830px)!important;max-width:830px!important;gap:12px!important;
+ margin:5px auto 0!important;padding:0!important;border:0!important;
+ background:transparent!important;box-shadow:none!important;align-items:stretch!important;
+}
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v216-speed-column,
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v211-pitch-section{
+ background:#e9f3fd!important;border:1px solid #8caac7!important;
+ padding:6px 10px 5px!important;margin:0!important;
+}
+/* The V239 absolute centered readout overlaps the video heading. Use a two-row
+   layout with a centered readout; leave approved slider tracks entirely alone. */
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v216-speed-column > .mcb-v211-heading,
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v211-pitch-section > .mcb-v211-heading{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:2px!important;min-height:0!important;
+ margin:0 0 4px!important;padding:0!important;
+}
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v216-speed-column > .mcb-v211-heading > .mcb-v212-readout,
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v211-pitch-section > .mcb-v211-heading > .mcb-v212-readout{
+ position:static!important;left:auto!important;transform:none!important;
+ display:flex!important;justify-content:center!important;align-items:center!important;
+ margin:0!important;
+}
+#resourcePreview .media-tools.mcb-v240-video-transport .mcb-v209-presets{
+ flex-wrap:nowrap!important;max-width:none!important;white-space:nowrap!important;
+}
+/* Float: retain V240's approved slider dimensions and allow horizontal scrolling
+   rather than compressing playback buttons or slider tracks. */
+#resourcePreview.pip-video-player .media-tools.mcb-v240-video-transport .media-control-scroll{
+ justify-content:flex-start!important;
+}
+#resourcePreview.pip-video-player .media-tools.mcb-v240-video-transport .media-control-strip{
+ margin:0 auto!important;
+}
+@media(max-width:620px){
+ #resourcePreview .media-tools.mcb-v240-video-transport .mcb-v209-speed-panel.mcb-v216-side-by-side{
+  grid-template-columns:minmax(0,1fr)!important;max-width:420px!important;
+ }
+}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
