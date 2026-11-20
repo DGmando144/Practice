@@ -2077,10 +2077,7 @@ display:block!important;visibility:visible!important;opacity:1!important;
  flex-direction:column!important;align-items:center!important;
 }
 </style>
-<style id="mcb-v232-float-cosmetics">
-#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-control-unit #toggleLoop::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2060%2048%22%3E%3Cpath%20fill%3D%22%23071c31%22%20d%3D%22M11%207%20H37%20V2%20L55%2014%20L37%2026%20V21%20H11%20Z%22%2F%3E%3Cpath%20fill%3D%22%23071c31%22%20d%3D%22M49%2041%20H23%20V46%20L5%2034%20L23%2022%20V27%20H49%20Z%22%2F%3E%3C%2Fsvg%3E")!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important}
-#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-control-unit .mcb-nudge-symbol{font-size:1.4em!important;font-weight:900!important;line-height:.8!important;display:inline-block!important;vertical-align:baseline!important}
-</style></head>
+</head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
 <main>
@@ -3358,7 +3355,7 @@ function makeMediaViewer(file,r,host){
          out.style.setProperty('align-items','center','important');
          out.style.setProperty('visibility','visible','important');
          const b=out.querySelector('button');
-         const iconSvg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="square"/></svg>';
+         const iconSvg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="square"/></svg>';
          b.style.setProperty('background-image','url("data:image/svg+xml,'+encodeURIComponent(iconSvg)+'")','important');
          b.style.setProperty('background-size','100% 100%','important');
          b.style.setProperty('background-position','center','important');
@@ -3469,27 +3466,6 @@ function makeMediaViewer(file,r,host){
            const b=out.querySelector('button');
            if(b){b.style.setProperty('width','44px','important');b.style.setProperty('height','44px','important');}
          }
-       }
-     }
-     // V232: cosmetic adjustments to the detached Float controls only.
-     {
-       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
-       for(const [id,symbol] of [['nudgeLeft','−'],['nudgeRight','+']]){
-         const button=strip?.querySelector('#'+id);
-         const unit=button?.closest('.mcb-control-unit');
-         const label=unit?.querySelector('.mcb-control-label');
-         if(label){
-           label.textContent='';
-           label.append(host.ownerDocument.createTextNode('Nudge '));
-           const sign=host.ownerDocument.createElement('strong');
-           sign.className='mcb-nudge-symbol';sign.textContent=symbol;
-           label.append(sign);
-         }
-       }
-       const clear=strip?.querySelector('#mcbFloatClearMarkOut');
-       if(clear){
-         const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="square"/></svg>';
-         clear.style.setProperty('background-image','url("data:image/svg+xml,'+encodeURIComponent(svg)+'")','important');
        }
      }
      // V231: derive sizes from the *actual* Jump In button, not a fixed 44px.

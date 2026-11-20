@@ -2628,7 +2628,7 @@ body.mcb-pdf-player-active #mcbPdfBuilder[open]{z-index:3100!important}
 <script id="mcb-v209-home-version-script">(function(){
  function init(){
    const heading=document.getElementById('heading');if(!heading)return;
-   const label=document.createElement('div');label.id='mcb-v209-home-version';label.textContent='Practice! V56.5.232';document.body.append(label);
+   const label=document.createElement('div');label.id='mcb-v209-home-version';label.textContent='Practice! V56.5.231';document.body.append(label);
    const update=()=>{const back=document.getElementById('back');const home=document.getElementById('practiceHome');const subjects=heading.textContent.trim()==='Subjects';label.hidden=!(subjects && (!back||back.classList.contains('hidden')) && (!home||home.classList.contains('hidden')));};
    new MutationObserver(update).observe(heading,{childList:true,subtree:true,characterData:true});
    const bar=document.querySelector('main .bar');if(bar)new MutationObserver(update).observe(bar,{attributes:true,subtree:true,attributeFilter:['class']});
