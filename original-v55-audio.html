@@ -2523,6 +2523,21 @@ html body #resourcePreview.pip-video-player.mini-media-player .media-tools.mcb-a
 #resourcePreview.pip-video-player .media-tools.mcb-v243-video-transport .mcb-v209-speed-panel.mcb-v216-side-by-side{width:max-content!important;max-width:none!important;grid-template-columns:284px 236px!important}
 #resourcePreview.pip-video-player .media-tools.mcb-v243-video-transport .mcb-v216-speed-column,#resourcePreview.pip-video-player .media-tools.mcb-v243-video-transport .mcb-v211-pitch-section{min-width:0!important}
 </style>
+
+<style id="mcb-v244-video-float-only">
+/* V244 changes only the detached MP4 window. */
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport>.wave-wrap{display:block!important;visibility:visible!important;width:100%!important;max-width:100%!important;margin:4px auto!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .wave-canvas{display:block!important;width:100%!important;height:65px!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .wave-zoom-controls{display:flex!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport .mcb-v209-speed-panel.mcb-v216-side-by-side{display:grid!important;grid-template-columns:284px 236px!important;gap:6px!important;width:max-content!important;max-width:none!important;margin:6px auto!important;padding:0!important;border:0!important;background:transparent!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport .mcb-v216-speed-column,
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport .mcb-v211-pitch-section{width:100%!important;box-sizing:border-box!important;min-width:0!important;overflow:hidden!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport .mcb-v209-presets{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:3px!important;max-width:100%!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport input[type="range"]{max-width:100%!important;box-sizing:border-box!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport .mcb-float-clear-out-unit{display:flex!important;flex-direction:column!important;align-items:center!important;visibility:visible!important;flex:0 0 39px!important;width:39px!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport #mcbFloatClearMarkOut{display:block!important;visibility:visible!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 88 88'%3E%3Crect x='2' y='2' width='84' height='84' rx='17' fill='%231d416d' stroke='%23153353' stroke-width='4'/%3E%3Cpath d='M31 27 H58 V60 H31' fill='none' stroke='white' stroke-width='12'/%3E%3C/svg%3E")!important;background-size:100% 100%!important;background-repeat:no-repeat!important;border:0!important;font-size:0!important;}
+html body #resourcePreview.pip-video-player.mcb-v244-video-float .media-tools.mcb-v243-video-transport #mediaTimecode{font-size:20px!important;line-height:1.1!important;font-weight:900!important;min-height:0!important;padding:6px 10px!important;white-space:nowrap!important;}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -3660,6 +3675,62 @@ function enablePlayerDrag(host,bar){
 let playerPipWindow=null;
 let pipPlayerRestore=null;
 let trueFullscreenWasFloating=false;
+// V244: MP4 Float setup. Reuse the approved MP3 transport structure without
+// touching normal MP4 or the MP3 player. All mutations are scoped to video PiP.
+function mcbV244VideoFloatSetup(host){
+ const panel=host.querySelector('.media-tools.mcb-v243-video-transport');
+ if(!panel)return;
+ host.classList.add('mcb-v244-video-float');
+ const wave=panel.querySelector('.wave-wrap');
+ if(wave)wave.removeAttribute('aria-hidden');
+ const strip=panel.querySelector('.media-control-strip');
+ const marker=strip?.querySelector('#clearLoop')?.closest('.mcb-control-unit');
+ if(strip&&marker&&!strip.querySelector('.mcb-float-clear-out-unit')){
+   const unit=host.ownerDocument.createElement('div');unit.className='mcb-control-unit mcb-float-clear-out-unit';
+   const button=host.ownerDocument.createElement('button');
+   button.type='button';button.id='mcbFloatClearMarkOut';button.title='Clear Mark Out (F)';
+   button.setAttribute('aria-label','Clear Mark Out');
+   button.addEventListener('click',()=>activeClearOut?.());
+   const label=host.ownerDocument.createElement('span');label.className='mcb-control-label';label.textContent='Clear Mark Out';
+   unit.append(button,label);marker.insertAdjacentElement('afterend',unit);
+ }
+ // Match the MP3 Float transport order: keep Help and clock together at the end.
+ const tail=panel.querySelector('.mcb-audio-tail');
+ if(strip&&tail)strip.appendChild(tail);
+ const help=panel.querySelector('#mediaHelp');
+ const ref=strip?.querySelector('#jumpToIn');
+ const clear=strip?.querySelector('#mcbFloatClearMarkOut');
+ const time=panel.querySelector('#mediaTimecode');
+ const sync=()=>{
+   const w=Math.round(ref?.getBoundingClientRect().width||0);
+   if(w<15)return;
+   for(const b of [help,clear])if(b){
+     for(const k of ['width','min-width','max-width','height','min-height','max-height'])b.style.setProperty(k,w+'px','important');
+     b.style.setProperty('box-sizing','border-box','important');
+   }
+   for(const b of [help,clear]){
+     const unit=b?.closest('.mcb-control-unit');
+     if(unit){unit.style.setProperty('width',w+'px','important');unit.style.setProperty('flex','0 0 '+w+'px','important');}
+   }
+   if(time){time.style.setProperty('font-size','20px','important');time.style.setProperty('font-weight','900','important');}
+ };
+ sync();
+ const view=host.ownerDocument.defaultView;
+ if(view?.ResizeObserver){const observer=new view.ResizeObserver(sync);observer.observe(ref);view.addEventListener('pagehide',()=>observer.disconnect(),{once:true});}
+ else view?.addEventListener('resize',sync);
+}
+function mcbV244VideoFloatRestore(host){
+ host.classList.remove('mcb-v244-video-float');
+ host.querySelector('.mcb-float-clear-out-unit')?.remove();
+ const panel=host.querySelector('.media-tools.mcb-v243-video-transport');
+ const tail=panel?.querySelector('.mcb-audio-tail');
+ const strip=panel?.querySelector('.media-control-strip');
+ if(tail&&strip&&tail.parentElement===strip)strip.parentElement.appendChild(tail);
+ for(const id of ['mediaHelp','mediaTimecode']){
+   const el=panel?.querySelector('#'+id);if(el)el.removeAttribute('style');
+   if(id==='mediaHelp')el?.closest('.mcb-control-unit')?.removeAttribute('style');
+ }
+}
 async function floatVideoInWindow(host,floatButton){
  // V56.4.2: delegate the PiP request to the top-level V56 page.
  if(window.parent!==window && typeof window.parent.MCB_openEmbeddedVideoPiP==='function'){
@@ -3669,11 +3740,12 @@ async function floatVideoInWindow(host,floatButton){
      pip.document.addEventListener('keydown',mcbMediaShortcuts,true);
     host.classList.remove('floating-player','player-expanded','video-practice-view','mini-media-player');
     host.classList.add('pip-video-player');
-    host.querySelector('.wave-wrap')?.setAttribute('aria-hidden','true');
+    mcbV244VideoFloatSetup(host);
     host.style.cssText='';
     floatButton.textContent='Float Player';
     const full=host.querySelector('.media-fullscreen-btn');if(full)full.hidden=false;
    },()=>{
+    mcbV244VideoFloatRestore(host);
     host.classList.remove('pip-video-player');
     host.querySelector('.wave-wrap')?.removeAttribute('aria-hidden');
     host.classList.add('player-expanded','video-practice-view');
@@ -3702,14 +3774,13 @@ async function floatVideoInWindow(host,floatButton){
   pip.document.body.append(host);
   host.classList.remove('floating-player','player-expanded','video-practice-view','mini-media-player');
   host.classList.add('pip-video-player');
-  // Float is playback-only: hide waveform and editing divider. Loop values persist.
-  host.querySelector('.wave-wrap')?.setAttribute('aria-hidden','true');
+  mcbV244VideoFloatSetup(host);
   host.style.cssText='';
   document.body.classList.remove('player-expanded-open');
   floatButton.textContent='Dock Player';
   const fullButton=host.querySelector('.media-fullscreen-btn');if(fullButton)fullButton.hidden=true;
   pipPlayerRestore=()=>{
-   if(placeholder.parentNode){placeholder.replaceWith(host);host.classList.remove('pip-video-player');host.querySelector('.wave-wrap')?.removeAttribute('aria-hidden');host.classList.add('player-expanded','video-practice-view');host.style.cssText='';document.body.classList.add('player-expanded-open');}
+   if(placeholder.parentNode){placeholder.replaceWith(host);mcbV244VideoFloatRestore(host);host.classList.remove('pip-video-player');host.querySelector('.wave-wrap')?.removeAttribute('aria-hidden');host.classList.add('player-expanded','video-practice-view');host.style.cssText='';document.body.classList.add('player-expanded-open');}
    floatButton.textContent='Float Player';if(fullButton)fullButton.hidden=false;
   };
   pip.addEventListener('pagehide',()=>{
