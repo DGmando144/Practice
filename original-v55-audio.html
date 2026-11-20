@@ -2148,6 +2148,14 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mc
  box-sizing:border-box!important;min-width:0!important;padding:3px 5px!important;
 }
 </style>
+<style id="mcb-v238-octave-style">
+.mcb-v216-side-by-side .mcb-v211-pitch-section .mcb-v238-octave-row{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;margin-top:3px;line-height:1.05}
+.mcb-v238-octave-label{font-weight:800;font-size:13px;color:#193956}
+.mcb-v238-octave-controls{display:flex;justify-content:center;align-items:center;gap:4px}
+.mcb-v238-octave-controls button{width:25px;min-width:25px;height:20px;min-height:20px;padding:0!important;border:1px solid #8aa8c2;border-radius:4px;background:#fff;color:#163d61;font-size:15px;font-weight:800;line-height:1;cursor:pointer}
+.mcb-v238-octave-controls button:disabled{opacity:.35;cursor:default}
+.mcb-v238-octave-controls output{display:inline-flex;justify-content:center;align-items:center;min-width:45px;height:20px;padding:0 4px;border:1px solid #8aa8c2;border-radius:4px;background:#fff;color:#193956;font-size:12px;font-weight:800}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2550,7 +2558,7 @@ function addMediaControls(media,r,host,file){
  <button type="button" class="secondary" id="clearLoop">Clear Markers</button>
  
  <div class="speed-picker"><button type="button" class="secondary" id="speedButton" aria-haspopup="true" aria-expanded="false">Speed: 1× ▾</button><div id="speedMenu" class="speed-menu" hidden role="group" aria-label="Choose playback speed"></div></div>
- <div class="mcb-pitch-picker" style="position:relative;flex:0 0 auto"><button type="button" class="secondary" id="mcbPitchButton" aria-haspopup="true" aria-expanded="false">Pitch: 0 st ▾</button><div class="mcb-pitch-menu" id="mcbPitchMenu" hidden style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:10000;background:#fff;color:#172c44;border:1px solid #9bb3cb;border-radius:10px;box-shadow:0 8px 26px #0004;padding:12px;min-width:0;width:680px;max-width:calc(100vw - 24px);box-sizing:border-box"><div style="display:flex;gap:24px;justify-content:space-around;align-items:flex-start"> <label class="mcb-pitch-slider">Octaves<input id="mcbPitchOct" type="range" min="-1" max="1" step="1" value="0"><output id="mcbPitchOctValue">0</output></label><label class="mcb-pitch-slider">Semitones<input id="mcbPitchSemi" type="range" min="-11" max="11" step="1" value="0"><output id="mcbPitchSemiValue">0</output></label><label class="mcb-pitch-slider">Cents<input id="mcbPitchCents" type="range" min="-100" max="100" step="1" value="0"><output id="mcbPitchCentsValue">0</output></label></div><button type="button" class="secondary" id="mcbPitchReset" style="width:100%;margin-top:9px">Reset pitch to 0</button></div></div>
+ <div class="mcb-pitch-picker" style="position:relative;flex:0 0 auto"><button type="button" class="secondary" id="mcbPitchButton" aria-haspopup="true" aria-expanded="false">Pitch: 0 st ▾</button><div class="mcb-pitch-menu" id="mcbPitchMenu" hidden style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:10000;background:#fff;color:#172c44;border:1px solid #9bb3cb;border-radius:10px;box-shadow:0 8px 26px #0004;padding:12px;min-width:0;width:680px;max-width:calc(100vw - 24px);box-sizing:border-box"><div style="display:flex;gap:24px;justify-content:space-around;align-items:flex-start"> <label class="mcb-pitch-slider">Octaves<input id="mcbPitchOct" type="range" min="-2" max="2" step="1" value="0"><output id="mcbPitchOctValue">0</output></label><label class="mcb-pitch-slider">Semitones<input id="mcbPitchSemi" type="range" min="-11" max="11" step="1" value="0"><output id="mcbPitchSemiValue">0</output></label><label class="mcb-pitch-slider">Cents<input id="mcbPitchCents" type="range" min="-100" max="100" step="1" value="0"><output id="mcbPitchCentsValue">0</output></label></div><button type="button" class="secondary" id="mcbPitchReset" style="width:100%;margin-top:9px">Reset pitch to 0</button></div></div>
  <button type="button" class="secondary" id="nudgeLeft">◀ Nudge</button>
  <button type="button" class="secondary" id="nudgeRight">Nudge ▶</button>
  <button type="button" class="secondary" id="jumpBack">◀ −5s</button>
@@ -2682,7 +2690,7 @@ function addMediaControls(media,r,host,file){
  // Independent semitone pitch shift: browser-local Web Audio granular delay shifter.
  // Speed remains on the media element with pitch preservation enabled.
  let pitch=Number(saved.pitch)||0;
- if(!Number.isFinite(pitch)||Math.abs(pitch)>25)pitch=0;
+ if(!Number.isFinite(pitch)||Math.abs(pitch)>36)pitch=0;
  const pitchMenu=q('mcbPitchMenu');
  const pitchOct=q('mcbPitchOct'),pitchSemi=q('mcbPitchSemi'),pitchCents=q('mcbPitchCents');
  function pitchLabel(){const sign=pitch>0?'+':'';return sign+(Math.round(pitch*100)/100)+' st'}
@@ -2690,7 +2698,7 @@ function addMediaControls(media,r,host,file){
  // Restore previous semitone-only projects, and retain three controls in new projects.
  const pitchParts=saved.pitchParts;
  if(pitchParts&&typeof pitchParts==='object'){
-   pitchOct.value=String(Math.max(-1,Math.min(1,Number(pitchParts.oct)||0)));
+   pitchOct.value=String(Math.max(-2,Math.min(2,Math.round(Number(pitchParts.oct)||0))));
    pitchSemi.value=String(Math.max(-11,Math.min(11,Number(pitchParts.semi)||0)));
    pitchCents.value=String(Math.max(-100,Math.min(100,Number(pitchParts.cents)||0)));
  }else{pitchOct.value='0';pitchSemi.value=String(Math.max(-11,Math.min(11,Math.trunc(pitch))));pitchCents.value=String(Math.round((pitch-Number(pitchSemi.value))*100));}
@@ -2880,6 +2888,14 @@ function addMediaControls(media,r,host,file){
        <label class="mcb-v212-slider-group"><input id="mcb-v212-semitones" type="range" min="-11" max="11" step="1" value="0" aria-label="Semitone adjustment"><span>Semitones</span></label>
        <label class="mcb-v212-slider-group"><input id="mcb-v212-cents" type="range" min="-99" max="99" step="1" value="0" aria-label="Cent adjustment"><span>Cents</span></label>
      </div>
+     <div class="mcb-v238-octave-row" role="group" aria-label="Octave adjustment">
+       <span class="mcb-v238-octave-label">Octave</span>
+       <div class="mcb-v238-octave-controls">
+         <button type="button" data-octave-step="-1" aria-label="Lower one octave">−</button>
+         <output id="mcb-v238-octave-value" aria-live="polite">0</output>
+         <button type="button" data-octave-step="1" aria-label="Raise one octave">+</button>
+       </div>
+     </div>
      `;
    panel.append(pitchSection);
    // V216: two independently bordered, centered panels under the MP3 transport.
@@ -2897,13 +2913,18 @@ function addMediaControls(media,r,host,file){
    resetSpeedReadout.addEventListener('dblclick',e=>{e.preventDefault();applySpeed(1)});
    const resetPitchReadout=pitchSection.querySelector('output');
    resetPitchReadout.title='Double-click to reset pitch to zero';
-   resetPitchReadout.addEventListener('dblclick',e=>{e.preventDefault();setPanelPitch(0,0)});
+   resetPitchReadout.addEventListener('dblclick',e=>{e.preventDefault();pitchOct.value='0';setPanelPitch(0,0)});
    // Defensive cleanup: remove any older coarse pitch-button rows.
    panel.querySelectorAll('.mcb-v212-coarse,[data-pitch-semi],[data-pitch-cents]').forEach(el=>el.remove());
    const semiRange=pitchSection.querySelector('#mcb-v212-semitones');
    const centsRange=pitchSection.querySelector('#mcb-v212-cents');
    const pitchOutput=pitchSection.querySelector('#mcb-v211-pitch-value');
+   const octaveOutput=pitchSection.querySelector('#mcb-v238-octave-value');
    function syncPitchPanel(){
+     const oct=Number(pitchOct.value)||0;
+     octaveOutput.textContent=(oct>0?'+':'')+String(oct);
+     pitchSection.querySelector('[data-octave-step="-1"]').disabled=oct<=-2;
+     pitchSection.querySelector('[data-octave-step="1"]').disabled=oct>=2;
      const total=Math.round(pitch*100);
      let semis=Number(pitchSemi.value)||0, cents=Number(pitchCents.value)||0;
      // Retain independent cent and semitone values for the two sliders.
@@ -2916,11 +2937,18 @@ function addMediaControls(media,r,host,file){
      semi=Math.max(-11,Math.min(11,Math.round(Number(semi))));
      cents=Math.max(-99,Math.min(99,Math.round(Number(cents))));
      if(!Number.isFinite(semi)||!Number.isFinite(cents))return;
-     pitchOct.value='0';
      pitchSemi.value=String(semi);
      pitchCents.value=String(cents);
      updatePitch();
      syncPitchPanel();
+   }
+   for(const btn of pitchSection.querySelectorAll('[data-octave-step]')){
+     btn.addEventListener('click',()=>{
+       const next=Math.max(-2,Math.min(2,(Number(pitchOct.value)||0)+Number(btn.dataset.octaveStep)));
+       if(next===Number(pitchOct.value))return;
+       pitchOct.value=String(next);
+       updatePitch();syncPitchPanel();
+     });
    }
    semiRange.addEventListener('input',()=>setPanelPitch(semiRange.value,centsRange.value));
    centsRange.addEventListener('input',()=>setPanelPitch(semiRange.value,centsRange.value));

@@ -886,7 +886,7 @@ window.MCB_openEmbeddedVideoPiP=async function(host, onOpened, onClosed, mediaTy
  };
  pip.addEventListener('pagehide',restore,{once:true});
  try{onOpened(pip,restore)}catch(e){restore();pip.close();throw e}
- // V237: enforce physical slider dimensions on the actual controls in Document PiP.
+ // V238: enforce physical slider dimensions on the actual controls in Document PiP.
  // Inline !important wins over inherited responsive range styling. No transport
  // buttons are modified, and the docked player is not touched.
  if(mediaType==='audio'){
