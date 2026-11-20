@@ -844,6 +844,33 @@ window.MCB_openEmbeddedVideoPiP=async function(host, onOpened, onClosed, mediaTy
    }
   `;
   pip.document.head.append(audioStyle);
+  // V236: apply slider sizing in the actual detached PiP document.
+  // The embedded player's body.v563-audio-mode selectors cannot match here.
+  // This stylesheet is intentionally restricted to three range inputs;
+  // transport buttons and the docked player remain unchanged.
+  const fixedSliderStyle=pip.document.createElement('style');
+  fixedSliderStyle.id='mcb-v236-pip-fixed-90px-sliders';
+  fixedSliderStyle.textContent=`
+    .pip-audio-player .mcb-v216-side-by-side .mcb-v212-speed-track input[type="range"],
+    .pip-audio-player .mcb-v216-side-by-side .mcb-v212-slider-group input[type="range"] {
+      display:block!important;
+      width:90px!important;min-width:90px!important;max-width:90px!important;
+      flex:0 0 90px!important;height:14px!important;box-sizing:border-box!important;
+      margin:0 auto!important;
+    }
+    .pip-audio-player .mcb-v216-side-by-side .mcb-v212-speed-track {
+      display:flex!important;justify-content:center!important;align-items:center!important;
+    }
+    .pip-audio-player .mcb-v216-side-by-side .mcb-v212-pitch-sliders {
+      display:flex!important;justify-content:center!important;align-items:flex-start!important;
+      gap:7px!important;
+    }
+    .pip-audio-player .mcb-v216-side-by-side .mcb-v212-slider-group {
+      display:flex!important;flex-direction:column!important;align-items:center!important;
+      width:90px!important;min-width:90px!important;max-width:90px!important;flex:0 0 90px!important;
+    }
+  `;
+  pip.document.head.append(fixedSliderStyle);
  }
 
  pip.document.body.append(host);
