@@ -2183,6 +2183,36 @@ html body.v563-audio-mode #resourcePreview.floating-player.mini-media-player .mc
   z-index:1;
 }
 </style>
+<style id="mcb-v240-video-controls">
+/* MP4-only layout; no selectors target the MP3 player. */
+.media-tools.mcb-v240-video-transport .mcb-v209-speed-panel.mcb-v216-side-by-side{
+ display:flex!important;flex-direction:row!important;align-items:stretch!important;justify-content:center!important;
+ flex-wrap:wrap!important;gap:10px!important;margin:10px auto!important;width:max-content!important;
+ max-width:100%!important;box-sizing:border-box!important;
+}
+.media-tools.mcb-v240-video-transport .mcb-v216-speed-column,
+.media-tools.mcb-v240-video-transport .mcb-v211-pitch-section{
+ display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;
+ border:1px solid #a4b9d0!important;border-radius:8px!important;padding:8px 10px!important;
+ background:#eef4fa!important;box-sizing:border-box!important;min-width:0!important;
+}
+.media-tools.mcb-v240-video-transport .mcb-v211-heading{width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:4px!important}
+.media-tools.mcb-v240-video-transport .mcb-v212-readout{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important}
+.media-tools.mcb-v240-video-transport .mcb-v212-speed-track{display:flex!important;justify-content:center!important;width:100%!important}
+.media-tools.mcb-v240-video-transport .mcb-v212-speed-track input[type=range]{width:150px;max-width:100%}
+.media-tools.mcb-v240-video-transport .mcb-v212-pitch-sliders{display:flex!important;gap:8px!important;justify-content:center!important}
+.media-tools.mcb-v240-video-transport .mcb-v212-slider-group{display:flex!important;flex-direction:column!important;align-items:center!important;font-weight:700!important}
+.media-tools.mcb-v240-video-transport .mcb-v212-slider-group input[type=range]{width:105px;max-width:100%}
+.media-tools.mcb-v240-video-transport .mcb-v209-presets{display:flex!important;justify-content:center!important;flex-wrap:wrap!important;gap:3px!important;max-width:270px!important}
+.media-tools.mcb-v240-video-transport .mcb-v240-video-clear-out button{width:44px;height:44px;min-width:44px;font-size:0!important;
+ background:#1d416d!important;border-radius:8px!important;position:relative!important}
+.media-tools.mcb-v240-video-transport .mcb-v240-video-clear-out button:after{content:"";display:block;position:absolute;left:13px;top:10px;width:17px;height:23px;border-right:5px solid white;border-top:5px solid white;border-bottom:5px solid white}
+.media-tools.mcb-v240-video-transport .mcb-v240-video-clear-out{display:flex!important;flex-direction:column!important;align-items:center!important}
+.media-tools.mcb-v240-video-transport .mcb-v240-video-clear-out .mcb-control-label{text-align:center!important;font-size:10px!important}
+.pip-video-player .media-tools.mcb-v240-video-transport .mcb-v209-speed-panel{margin:4px auto!important;gap:5px!important}
+.pip-video-player .media-tools.mcb-v240-video-transport .mcb-v216-speed-column,
+.pip-video-player .media-tools.mcb-v240-video-transport .mcb-v211-pitch-section{padding:4px 6px!important}
+</style>
 </head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
@@ -2572,7 +2602,7 @@ async function removeResourceFromPractice(id){const it=selectedItem();if(it?.lin
 let previewURL=null;
 function mediaTime(t){if(!Number.isFinite(t))return '--:--';const m=Math.floor(t/60),sec=Math.floor(t%60);return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')}
 function addMediaControls(media,r,host,file){
- const panel=document.createElement('div');panel.className='media-tools'+(r.kind==='audio'?' mcb-audio-transport':'');
+ const panel=document.createElement('div');panel.className='media-tools'+(r.kind==='audio'?' mcb-audio-transport':r.kind==='video'?' mcb-v240-video-transport':'');
  panel.innerHTML=`
  <div class="wave-wrap"><canvas class="wave-canvas" id="waveCanvas" height="130" aria-label="Audio waveform and loop markers"></canvas><div class="wave-zoom-controls"><button type="button" class="secondary" id="waveZoomOut" title="Zoom out">− Zoom</button><button type="button" class="secondary" id="waveZoomIn" title="Zoom around playhead">+ Zoom</button><button type="button" class="secondary" id="waveZoomFit" title="Show the entire recording">Fit All</button><span id="waveZoomLabel">100%</span></div><div id="waveInfo" class="wave-help" aria-live="polite">Analyzing waveform… Drag to scrub; hold Shift and drag to select or adjust loop markers.</div></div>
  <div class="media-control-scroll" aria-label="Media playback controls"><div class="media-control-strip">
@@ -2606,6 +2636,7 @@ function addMediaControls(media,r,host,file){
  <p>The timecode next to Help shows elapsed time / total duration. In floating video, Full Screen is hidden; use Dock Player to return to the normal view before using Full Screen. Speed, pitch, and loop markers are saved with the resource. Audio floats with compact controls for PDF practice. Video floats in a separate movable, resizable window. V45 restores the original V37 waveform decoder for supported files in Normal Size. Float hides the waveform to keep video practice responsive. Zoom with +/−, Fit All, or scroll the zoomed waveform.</p>
  </div>`;
  host.appendChild(panel);
+ if(r.kind==='video'){const help=panel.querySelector('#mediaHelpText');if(help)help.innerHTML=help.innerHTML.replace('octaves (−1 to +1)','octaves (−2 to +2)');}
  // Visual wrappers are outside the existing buttons, so player event handlers and IDs remain unchanged.
  const approvedLabels={jumpToIn:'Jump In',jumpToOut:'Jump Out',toggleLoop:'Loop',mediaPlayPause:'Play',waveStart:'Mark In',waveEnd:'Mark Out',speedButton:'',nudgeLeft:'Nudge −',nudgeRight:'Nudge +',jumpBack:'−5 sec',jumpForward:'+5 sec',clearLoop:'Clear Markers',mediaHelp:'Help'};
  for(const [id,label] of Object.entries(approvedLabels)){
@@ -2681,6 +2712,20 @@ function addMediaControls(media,r,host,file){
    if(caption){caption.classList.add('mcb-original-pitch-caption');const newCaption=caption.cloneNode(true);newCaption.classList.remove('mcb-original-pitch-caption');newCaption.classList.add('mcb-clear-out-caption');newCaption.innerHTML='Clear<br class="mcb-clear-caption-break">Mark Out';pitchUnit.appendChild(newCaption);}
  }
 
+ // V240: MP4 receives its own Clear Mark Out control directly after Clear Markers.
+ // MP3 retains its approved V239 implementation unchanged.
+ if(r.kind==='video'){
+   const marker=panel.querySelector('#clearLoop');
+   const markerUnit=marker?.closest('.mcb-control-unit');
+   if(markerUnit){
+     const unit=document.createElement('div');unit.className='mcb-control-unit mcb-v240-video-clear-out';
+     const btn=document.createElement('button');btn.type='button';btn.className='secondary';
+     btn.textContent='Clear Mark Out';btn.setAttribute('aria-label','Clear Mark Out');btn.title='Clear Mark Out (F)';
+     btn.addEventListener('click',()=>activeClearOut?.());
+     const caption=document.createElement('span');caption.className='mcb-control-label';caption.innerHTML='Clear<br>Mark Out';
+     unit.append(btn,caption);markerUnit.insertAdjacentElement('afterend',unit);
+   }
+ }
  // Match the native Speed control dimensions, including compact/mobile/floating layouts.
  // Pitch uses the same canonical control geometry as Speed.
  panel.querySelectorAll('.mcb-pitch-slider').forEach(el=>{el.style.cssText='display:flex;flex-direction:column;align-items:center;gap:12px;font-size:19px;font-weight:800;min-width:155px';const slider=el.querySelector('input');slider.style.cssText='writing-mode:vertical-lr;direction:rtl;appearance:slider-vertical;width:38px;height:340px;cursor:pointer';el.querySelector('output').style.cssText='font-size:21px;font-weight:800;font-variant-numeric:tabular-nums'});
@@ -2850,7 +2895,7 @@ function addMediaControls(media,r,host,file){
  });
  showSpeed();
  // V209: Always-visible MP3 speed controls; no dialog, popover, or shortcut.
- if(r.kind==='audio'){
+ if(r.kind==='audio'||r.kind==='video'){
    const strip=speedSelect.closest('.media-control-strip');
    const panel=document.createElement('section');
    panel.className='mcb-v209-speed-panel';
@@ -2886,7 +2931,7 @@ function addMediaControls(media,r,host,file){
 
    // V213: Keep speed presets; pitch readout buttons adjust semitones.
    panel.classList.add('mcb-v211-combined','mcb-v212-combined','mcb-v213-combined','mcb-v214-combined');
-   panel.setAttribute('aria-label','MP3 speed and pitch');
+   panel.setAttribute('aria-label',r.kind==='video'?'MP4 speed and pitch':'MP3 speed and pitch');
    const top=panel.querySelector('.mcb-v209-speed-top');
    top.className='mcb-v211-heading';
    top.innerHTML='<strong>Speed</strong><div class="mcb-v212-readout"><button type="button" class="mcb-v211-step" data-speed-fine="-0.01" aria-label="Decrease speed one percent">−</button><output class="mcb-v209-speed-value mcb-v211-value">100%</output><button type="button" class="mcb-v211-step" data-speed-fine="0.01" aria-label="Increase speed one percent">+</button></div><span></span>';
