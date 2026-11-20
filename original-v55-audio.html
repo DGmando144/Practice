@@ -2027,7 +2027,7 @@ html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .me
  margin:0 auto!important;gap:4px!important;
 }
 html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport #mediaTimecode{
- font-size:clamp(17px,2.2vw,24px)!important;line-height:1.1!important;
+ font-size:clamp(16px,1.8vw,20px)!important;line-height:1.1!important;
  min-width:0!important;width:auto!important;padding:5px 9px!important;
  letter-spacing:0!important;flex:0 0 auto!important;
 }
@@ -2041,7 +2041,46 @@ html body #resourcePreview.pip-audio-player .media-tools.mcb-audio-transport .mc
  background-size:100% 100%!important;
 }
 </style>
-</head>
+<style id="mcb-v229-final-float-fixes">
+#resourcePreview.floating-player .media-tools.mcb-audio-transport #mediaTimecode{
+font-size:20px!important;line-height:1.1!important;padding:4px 8px!important;letter-spacing:0!important;
+}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{
+display:flex!important;visibility:visible!important;opacity:1!important;
+}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit>button{
+display:block!important;visibility:visible!important;opacity:1!important;
+}
+</style>
+<style id="mcb-v230-responsive-float">
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport .media-control-strip{
+ display:flex!important;flex-flow:row wrap!important;align-items:flex-start!important;
+ justify-content:center!important;gap:4px!important;width:100%!important;max-width:100%!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport .mcb-audio-tail{
+ display:inline-flex!important;align-items:flex-start!important;justify-content:center!important;
+ gap:5px!important;flex:0 1 auto!important;min-width:0!important;width:auto!important;
+ margin:0!important;padding:0!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport #mediaTimecode{
+ font-size:20px!important;line-height:1.1!important;min-width:0!important;width:auto!important;
+ max-width:100%!important;padding:5px 8px!important;white-space:nowrap!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport #mediaHelp,
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport #mcbFloatClearMarkOut{
+ box-sizing:border-box!important;width:44px!important;height:44px!important;
+ min-width:44px!important;min-height:44px!important;max-width:44px!important;max-height:44px!important;
+ background-size:100% 100%!important;
+}
+#resourcePreview.floating-player.pip-audio-player .media-tools.mcb-audio-transport .mcb-float-clear-out-unit{
+ display:flex!important;flex:0 0 44px!important;width:44px!important;
+ flex-direction:column!important;align-items:center!important;
+}
+</style>
+<style id="mcb-v232-float-cosmetics">
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-control-unit #toggleLoop::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2060%2048%22%3E%3Cpath%20fill%3D%22%23071c31%22%20d%3D%22M11%207%20H37%20V2%20L55%2014%20L37%2026%20V21%20H11%20Z%22%2F%3E%3Cpath%20fill%3D%22%23071c31%22%20d%3D%22M49%2041%20H23%20V46%20L5%2034%20L23%2022%20V27%20H49%20Z%22%2F%3E%3C%2Fsvg%3E")!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important}
+#resourcePreview.floating-player .media-tools.mcb-audio-transport .mcb-control-unit .mcb-nudge-symbol{font-size:1.4em!important;font-weight:900!important;line-height:.8!important;display:inline-block!important;vertical-align:baseline!important}
+</style></head>
 <body>
 <header><h1>Music Course Builder</h1><p>Build a course, organize classes, and plan focused practice — V55.7.12 · YouTube Titles</p></header>
 <main>
@@ -2510,7 +2549,7 @@ function addMediaControls(media,r,host,file){
    pitchUnit.insertBefore(clearOutBtn,pitchButton.nextSibling);
    // V224: a dedicated float-only control, directly after Clear Markers.
    // Keep the original Clear Mark Out control untouched in the normal player.
-   const clearMarkersControl=panel.querySelector('#clearMarkers');
+   const clearMarkersControl=panel.querySelector('#clearLoop');
    const clearMarkersUnit=clearMarkersControl?.closest('.mcb-control-unit');
    if(clearMarkersUnit && !panel.querySelector('#mcbFloatClearMarkOut')){
      const floatUnit=document.createElement('div');
@@ -3296,7 +3335,7 @@ function makeMediaViewer(file,r,host){
      // Detached PiP can use a different document, so style the control directly.
      {
        const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
-       const marker=strip?.querySelector('#clearMarkers');
+       const marker=strip?.querySelector('#clearLoop');
        const markerUnit=marker?.closest('.mcb-control-unit');
        if(strip && markerUnit){
          let out=strip.querySelector('.mcb-float-clear-out-unit');
@@ -3319,7 +3358,7 @@ function makeMediaViewer(file,r,host){
          out.style.setProperty('align-items','center','important');
          out.style.setProperty('visibility','visible','important');
          const b=out.querySelector('button');
-         const iconSvg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="square"/></svg>';
+         const iconSvg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="square"/></svg>';
          b.style.setProperty('background-image','url("data:image/svg+xml,'+encodeURIComponent(iconSvg)+'")','important');
          b.style.setProperty('background-size','100% 100%','important');
          b.style.setProperty('background-position','center','important');
@@ -3340,7 +3379,7 @@ function makeMediaViewer(file,r,host){
          // Constrain the time readout and let the full control row center as a group.
          const time=strip.querySelector('#mediaTimecode');
          if(time){
-           time.style.setProperty('font-size','clamp(17px, 2.2vw, 24px)','important');
+           time.style.setProperty('font-size','clamp(16px, 1.8vw, 20px)','important');
            time.style.setProperty('line-height','1.1','important');
            time.style.setProperty('min-width','0','important');
            time.style.setProperty('width','auto','important');
@@ -3358,7 +3397,7 @@ function makeMediaViewer(file,r,host){
      // V227: guarantee an independent Clear Mark Out control in the actual detached float.
      // This must not depend on the older Pitch button or its wrapper.
      {
-       const markers=host.querySelector('#clearMarkers');
+       const markers=host.querySelector('#clearLoop');
        const markerUnit=markers?.closest('.mcb-control-unit') || markers?.parentElement;
        if(markerUnit){
          let unit=host.querySelector('.mcb-float-clear-out-unit');
@@ -3379,12 +3418,123 @@ function makeMediaViewer(file,r,host){
      // V226: place Clear Mark Out as a real transport control in the detached float.
      // The original button's handler is retained; this only moves its unit into the strip.
      if(host.querySelector('.media-tools.mcb-audio-transport')){
-       const markerUnit=host.querySelector('#clearMarkers')?.closest('.mcb-control-unit');
+       const markerUnit=host.querySelector('#clearLoop')?.closest('.mcb-control-unit');
        const outUnit=host.querySelector('.mcb-float-clear-out-unit');
        if(markerUnit && outUnit){markerUnit.insertAdjacentElement('afterend',outUnit);
          outUnit.style.setProperty('display','flex','important');
          const outButton=outUnit.querySelector('#mcbFloatClearMarkOut');
          if(outButton){outButton.style.setProperty('display','block','important');outButton.style.setProperty('visibility','visible','important');}
+       }
+     }
+     // V230: the clock and Help are inside .mcb-audio-tail, not the strip.
+     // Put the tail at the end of the same responsive row as all transport buttons.
+     // Keep the proven Clear Mark Out button immediately after Clear Markers.
+     {
+       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
+       const tail=host.querySelector('.media-tools.mcb-audio-transport .mcb-audio-tail');
+       if(strip && tail){
+         strip.appendChild(tail);
+         strip.style.setProperty('display','flex','important');
+         strip.style.setProperty('flex-flow','row wrap','important');
+         strip.style.setProperty('justify-content','center','important');
+         strip.style.setProperty('align-items','flex-start','important');
+         strip.style.setProperty('gap','4px','important');
+         strip.style.setProperty('max-width','100%','important');
+         tail.style.setProperty('display','inline-flex','important');
+         tail.style.setProperty('flex','0 1 auto','important');
+         tail.style.setProperty('align-items','flex-start','important');
+         tail.style.setProperty('justify-content','center','important');
+         tail.style.setProperty('gap','5px','important');
+         tail.style.setProperty('min-width','0','important');
+         tail.style.setProperty('margin','0','important');
+         const help=tail.querySelector('#mediaHelp');
+         const helpUnit=help?.closest('.mcb-control-unit');
+         if(helpUnit){
+           helpUnit.style.setProperty('flex','0 0 44px','important');
+           helpUnit.style.setProperty('width','44px','important');
+         }
+         if(help){
+           for(const [k,v] of Object.entries({width:'44px',height:'44px','min-width':'44px','max-width':'44px','min-height':'44px','max-height':'44px','box-sizing':'border-box'}))help.style.setProperty(k,v,'important');
+         }
+         const time=tail.querySelector('#mediaTimecode');
+         if(time){
+           for(const [k,v] of Object.entries({'font-size':'20px','line-height':'1.1','min-width':'0',width:'auto','max-width':'100%','padding':'5px 8px','letter-spacing':'0',margin:'0','white-space':'nowrap',flex:'0 1 auto'}))time.style.setProperty(k,v,'important');
+         }
+         const out=strip.querySelector('.mcb-float-clear-out-unit');
+         const marker=strip.querySelector('#clearLoop')?.closest('.mcb-control-unit');
+         if(marker && out){
+           marker.insertAdjacentElement('afterend',out);
+           out.style.setProperty('flex','0 0 44px','important');
+           out.style.setProperty('width','44px','important');
+           const b=out.querySelector('button');
+           if(b){b.style.setProperty('width','44px','important');b.style.setProperty('height','44px','important');}
+         }
+       }
+     }
+     // V232: cosmetic adjustments to the detached Float controls only.
+     {
+       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
+       for(const [id,symbol] of [['nudgeLeft','−'],['nudgeRight','+']]){
+         const button=strip?.querySelector('#'+id);
+         const unit=button?.closest('.mcb-control-unit');
+         const label=unit?.querySelector('.mcb-control-label');
+         if(label){
+           label.textContent='';
+           label.append(host.ownerDocument.createTextNode('Nudge '));
+           const sign=host.ownerDocument.createElement('strong');
+           sign.className='mcb-nudge-symbol';sign.textContent=symbol;
+           label.append(sign);
+         }
+       }
+       const clear=strip?.querySelector('#mcbFloatClearMarkOut');
+       if(clear){
+         const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect x="2" y="2" width="84" height="84" rx="17" fill="#1d416d" stroke="#153353" stroke-width="4"/><path d="M31 27 H58 V60 H31" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="square"/></svg>';
+         clear.style.setProperty('background-image','url("data:image/svg+xml,'+encodeURIComponent(svg)+'")','important');
+       }
+     }
+     // V231: derive sizes from the *actual* Jump In button, not a fixed 44px.
+     // Observe the detached window as its width changes; the existing buttons
+     // already respond to resizing and are the single source of truth.
+     {
+       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
+       const reference=strip?.querySelector('#jumpToIn');
+       const clearUnit=strip?.querySelector('.mcb-float-clear-out-unit');
+       const clear=clearUnit?.querySelector('#mcbFloatClearMarkOut');
+       const help=strip?.querySelector('#mediaHelp');
+       const helpUnit=help?.closest('.mcb-control-unit');
+       const clock=strip?.querySelector('#mediaTimecode');
+       const tail=strip?.querySelector('.mcb-audio-tail');
+       if(strip && reference && clear && help){
+         const sync=()=>{
+           const rect=reference.getBoundingClientRect();
+           if(rect.width<8 || rect.height<8)return;
+           const w=rect.width+'px',h=rect.height+'px';
+           for(const btn of [clear,help]){
+             for(const key of ['width','min-width','max-width'])btn.style.setProperty(key,w,'important');
+             for(const key of ['height','min-height','max-height'])btn.style.setProperty(key,h,'important');
+             btn.style.setProperty('flex','0 0 '+w,'important');
+             btn.style.setProperty('box-sizing','border-box','important');
+           }
+           for(const unit of [clearUnit,helpUnit])if(unit){
+             unit.style.setProperty('width',w,'important');
+             unit.style.setProperty('min-width',w,'important');
+             unit.style.setProperty('max-width',w,'important');
+             unit.style.setProperty('flex','0 0 '+w,'important');
+           }
+           if(clock){
+             clock.style.setProperty('margin-left','12px','important');
+             clock.style.setProperty('flex-shrink','0','important');
+           }
+           if(tail){tail.style.setProperty('gap','6px','important');tail.style.setProperty('flex-shrink','0','important');}
+         };
+         sync();
+         const docView=host.ownerDocument.defaultView;
+         if(docView?.ResizeObserver){
+           const observer=new docView.ResizeObserver(sync);
+           observer.observe(reference);
+           observer.observe(strip);
+           docView.addEventListener('pagehide',()=>observer.disconnect(),{once:true});
+         }else docView?.addEventListener('resize',sync);
        }
      }
      full.textContent='Full Screen';
