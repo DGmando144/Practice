@@ -2549,7 +2549,7 @@ function addMediaControls(media,r,host,file){
    pitchUnit.insertBefore(clearOutBtn,pitchButton.nextSibling);
    // V224: a dedicated float-only control, directly after Clear Markers.
    // Keep the original Clear Mark Out control untouched in the normal player.
-   const clearMarkersControl=panel.querySelector('#clearLoop');
+   const clearMarkersControl=panel.querySelector('#clearMarkers');
    const clearMarkersUnit=clearMarkersControl?.closest('.mcb-control-unit');
    if(clearMarkersUnit && !panel.querySelector('#mcbFloatClearMarkOut')){
      const floatUnit=document.createElement('div');
