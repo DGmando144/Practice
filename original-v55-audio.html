@@ -3468,51 +3468,6 @@ function makeMediaViewer(file,r,host){
          }
        }
      }
-     // V231: derive sizes from the *actual* Jump In button, not a fixed 44px.
-     // Observe the detached window as its width changes; the existing buttons
-     // already respond to resizing and are the single source of truth.
-     {
-       const strip=host.querySelector('.media-tools.mcb-audio-transport .media-control-strip');
-       const reference=strip?.querySelector('#jumpToIn');
-       const clearUnit=strip?.querySelector('.mcb-float-clear-out-unit');
-       const clear=clearUnit?.querySelector('#mcbFloatClearMarkOut');
-       const help=strip?.querySelector('#mediaHelp');
-       const helpUnit=help?.closest('.mcb-control-unit');
-       const clock=strip?.querySelector('#mediaTimecode');
-       const tail=strip?.querySelector('.mcb-audio-tail');
-       if(strip && reference && clear && help){
-         const sync=()=>{
-           const rect=reference.getBoundingClientRect();
-           if(rect.width<8 || rect.height<8)return;
-           const w=rect.width+'px',h=rect.height+'px';
-           for(const btn of [clear,help]){
-             for(const key of ['width','min-width','max-width'])btn.style.setProperty(key,w,'important');
-             for(const key of ['height','min-height','max-height'])btn.style.setProperty(key,h,'important');
-             btn.style.setProperty('flex','0 0 '+w,'important');
-             btn.style.setProperty('box-sizing','border-box','important');
-           }
-           for(const unit of [clearUnit,helpUnit])if(unit){
-             unit.style.setProperty('width',w,'important');
-             unit.style.setProperty('min-width',w,'important');
-             unit.style.setProperty('max-width',w,'important');
-             unit.style.setProperty('flex','0 0 '+w,'important');
-           }
-           if(clock){
-             clock.style.setProperty('margin-left','12px','important');
-             clock.style.setProperty('flex-shrink','0','important');
-           }
-           if(tail){tail.style.setProperty('gap','6px','important');tail.style.setProperty('flex-shrink','0','important');}
-         };
-         sync();
-         const docView=host.ownerDocument.defaultView;
-         if(docView?.ResizeObserver){
-           const observer=new docView.ResizeObserver(sync);
-           observer.observe(reference);
-           observer.observe(strip);
-           docView.addEventListener('pagehide',()=>observer.disconnect(),{once:true});
-         }else docView?.addEventListener('resize',sync);
-       }
-     }
      full.textContent='Full Screen';
      host.classList.remove('player-expanded','video-practice-view');
      host.style.cssText='';float.textContent='Float Player';
